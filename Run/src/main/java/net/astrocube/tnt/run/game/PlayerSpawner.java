@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.spawn;
+package net.astrocube.tnt.run.game;
 
 import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
 import org.bukkit.entity.Player;

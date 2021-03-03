@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.spawn;
+package net.astrocube.tnt.run.game;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -9,8 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.Set;
 
 @Singleton
 public class CorePlayerSpawner implements PlayerSpawner {
