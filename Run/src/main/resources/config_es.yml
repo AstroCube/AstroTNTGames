@@ -1,0 +1,9 @@
+game:
+  help:
+    - "%%blue%%-----------------------------------------------------"
+    - " "
+    - "%%center%%%%red%%%%bold%%TNT%%white%% %%bold%%Run"
+    - " "
+    - "%%center%%%%white%%Corre a través de la arena que se caerá a medida que la pisas, evita caer al último piso y se el último en caer para ganar."
+    - " "
+    - "%%blue%%-----------------------------------------------------"
