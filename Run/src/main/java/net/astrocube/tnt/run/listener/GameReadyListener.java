@@ -60,7 +60,6 @@ public class GameReadyListener implements Listener {
 
                 });
 
-
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "There was an error processing game ready event.", e);
                 Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(),false));

@@ -24,6 +24,7 @@ public class FloorRemovalTask implements Runnable {
     private final ActualMatchCache actualMatchCache;
     private final FloorRemover floorRemover;
     private final Plugin plugin;
+    private final FloorCooldownChecker floorCooldownChecker;
     private final Map<Location, Long> delayedLocations = new ConcurrentHashMap<>();
 
     @Override
@@ -42,6 +43,10 @@ public class FloorRemovalTask implements Runnable {
                         matchOptional.get().getStatus() != MatchDoc.Status.RUNNING &&
                         MatchParticipantsProvider.getInvolvedIds(matchOptional.get()).contains(player.getDatabaseIdentifier())
                 ) {
+                    continue;
+                }
+
+                if (floorCooldownChecker.hasCooldown(matchOptional.get().getId())) {
                     continue;
                 }
 
