@@ -18,7 +18,7 @@ public class GamePairEnableListener implements Listener {
     private @Inject ActualMatchCache actualMatchCache;
 
     @EventHandler
-    public void onGameReady(GamePairEnableEvent event) {
+    public void onPairEnable(GamePairEnableEvent event) {
 
         Bukkit.getPluginManager().callEvent(
                 new GameModePairEvent(
