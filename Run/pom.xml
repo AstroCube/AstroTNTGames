@@ -20,7 +20,6 @@
             <groupId>net.astrocube</groupId>
             <artifactId>TNTGames-API</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.astrocube</groupId>
