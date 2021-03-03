@@ -3,8 +3,6 @@ package net.astrocube.tnt.run.spawn;
 import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
 import org.bukkit.entity.Player;
 
-import java.util.Set;
-
 public interface PlayerSpawner {
 
     /**

@@ -8,6 +8,7 @@ import net.astrocube.api.bukkit.game.map.MapConfigurationProvider;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.tnt.run.floor.FloorCooldownChecker;
 import net.astrocube.tnt.run.map.MapConfiguration;
 import net.astrocube.tnt.run.spawn.PlayerSpawner;
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ import java.util.logging.Level;
 public class GameReadyListener implements Listener {
 
     private @Inject FindService<Match> findService;
+    private @Inject FloorCooldownChecker floorCooldownChecker;
+
     private @Inject MapConfigurationProvider mapConfigurationProvider;
     private @Inject Plugin plugin;
 
@@ -41,6 +44,8 @@ public class GameReadyListener implements Listener {
                         mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
 
                 response.ifSuccessful(match -> {
+
+                    floorCooldownChecker.scheduleCooldown(match.getId());
 
                     MatchParticipantsProvider.getOnlinePlayers(match).forEach(player -> {
                         playerSpawner.spawn(player, match.getId(), configuration.getSpawn());
