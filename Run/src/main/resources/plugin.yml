@@ -1,0 +1,7 @@
+name: TNTRun
+main: net.astrocube.tnt.run
+version: 1.0
+load: POSTWORLD
+depend:
+  - Commons
+author: Astrocube Network
