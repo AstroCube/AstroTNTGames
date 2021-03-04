@@ -9,9 +9,11 @@ import javax.annotation.Nullable;
 public class PlayerDisqualificationEvent extends PlayerEvent {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
+    private final String match;
 
-    public PlayerDisqualificationEvent(Player player) {
+    public PlayerDisqualificationEvent(Player player, String match) {
         super(player);
+        this.match = match;
     }
 
     @Override
@@ -23,4 +25,7 @@ public class PlayerDisqualificationEvent extends PlayerEvent {
         return HANDLER_LIST;
     }
 
+    public String getMatch() {
+        return match;
+    }
 }

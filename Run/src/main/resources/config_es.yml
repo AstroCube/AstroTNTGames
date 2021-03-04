@@ -7,6 +7,16 @@ game:
     - "%%center%%%%white%%Corre a través de la arena que se caerá a medida que la pisas, evita caer al último piso y se el último en caer para ganar."
     - " "
     - "%%blue%%-----------------------------------------------------"
+  podium:
+    listing:
+      - "%%blue%%-----------------------------------------------------"
+      - " "
+      - "%%center%%%%green%%%%bold%%Ganador: %%first%%"
+      - "%%center%%%%yellow%%%%bold%%Segundo: %%second%%"
+      - "%%center%%%%red%%%%bold%%Tercero: %%third%%"
+      - " "
+      - "%%blue%%-----------------------------------------------------"
+    empty: "%%gray%%Ninguno"
   board:
     title: "%%red%%%%bold%%TNT%%white%%%%bold%%Run"
     lines:

@@ -43,7 +43,7 @@ public class PlayerDamageListener implements Listener {
                 return;
             }
 
-            Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player));
+            Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player, match.get().getId()));
 
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "There was an error while logging error.");
