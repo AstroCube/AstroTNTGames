@@ -20,6 +20,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 
 public class GameReadyListener implements Listener {
@@ -49,25 +51,23 @@ public class GameReadyListener implements Listener {
 
                 floorCooldownChecker.scheduleCooldown(event.getMatch());
 
+                int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
+
                 response.ifSuccessful(match -> {
 
-                    event.getTeams().stream()
-                            .flatMap(team ->
-                                    team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                            )
-                            .forEach(player -> {
-
-                                Player online = Bukkit.getPlayerByIdentifier(player);
-
-                                if (online != null) {
-
-                                    playerSpawner.spawn(online, match.getId(), configuration.getSpawn());
-                                    playerSpawner.announce(online);
-                                    scoreboardProvider.setupBoard(online);
-
-                                }
-
+                    executeForInvolved(
+                            event.getTeams(),
+                            (p) -> {
+                                playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
+                                playerSpawner.announce(p);
                             });
+
+
+                    Bukkit.getScheduler().runTaskLater(
+                            plugin,
+                            () -> executeForInvolved(event.getTeams(), (p) -> scoreboardProvider.setupBoard(p)),
+                            20L * cooldown
+                    );
 
                     Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
 
@@ -80,6 +80,24 @@ public class GameReadyListener implements Listener {
 
         });
 
+    }
+
+    private void executeForInvolved(Set<MatchDoc.Team> teamSet, Consumer<Player> consumer) {
+        teamSet.stream()
+                .flatMap(team ->
+                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+                )
+                .forEach(player -> {
+
+                    Player online = Bukkit.getPlayerByIdentifier(player);
+
+                    if (online != null) {
+
+                        consumer.accept(online);
+
+                    }
+
+                });
     }
 
 }

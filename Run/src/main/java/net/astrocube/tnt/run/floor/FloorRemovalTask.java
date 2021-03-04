@@ -19,7 +19,7 @@ import java.util.logging.Level;
 @AllArgsConstructor
 public class FloorRemovalTask implements Runnable {
 
-    private static final long DELAY_MS = 90;
+    private static final long DELAY_MS = 160;
 
     private final ActualMatchCache actualMatchCache;
     private final FloorRemover floorRemover;
