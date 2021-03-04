@@ -1,5 +1,5 @@
 name: TNTRun
-main: net.astrocube.tnt.run
+main: net.astrocube.tnt.run.TNTRun
 version: 1.0
 load: POSTWORLD
 depend:

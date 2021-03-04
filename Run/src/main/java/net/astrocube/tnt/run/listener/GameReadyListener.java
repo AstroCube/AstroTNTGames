@@ -8,12 +8,14 @@ import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.game.map.MapConfigurationProvider;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
+import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.tnt.run.floor.FloorCooldownChecker;
 import net.astrocube.tnt.run.game.ScoreboardProvider;
 import net.astrocube.tnt.run.map.MapConfiguration;
 import net.astrocube.tnt.run.game.PlayerSpawner;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -42,19 +44,30 @@ public class GameReadyListener implements Listener {
                     throw new GameControlException("The requested match was not found");
                 }
 
-
                 MapConfiguration configuration =
                         mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
 
+                floorCooldownChecker.scheduleCooldown(event.getMatch());
+
                 response.ifSuccessful(match -> {
 
-                    floorCooldownChecker.scheduleCooldown(match.getId());
+                    event.getTeams().stream()
+                            .flatMap(team ->
+                                    team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+                            )
+                            .forEach(player -> {
 
-                    MatchParticipantsProvider.getOnlinePlayers(match).forEach(player -> {
-                        playerSpawner.spawn(player, match.getId(), configuration.getSpawn());
-                        playerSpawner.announce(player);
-                        scoreboardProvider.setupBoard(player);
-                    });
+                                Player online = Bukkit.getPlayerByIdentifier(player);
+
+                                if (online != null) {
+
+                                    playerSpawner.spawn(online, match.getId(), configuration.getSpawn());
+                                    playerSpawner.announce(online);
+                                    scoreboardProvider.setupBoard(online);
+
+                                }
+
+                            });
 
                     Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
 
