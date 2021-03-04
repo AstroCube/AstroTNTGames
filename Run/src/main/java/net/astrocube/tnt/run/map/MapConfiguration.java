@@ -4,7 +4,7 @@ import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
 import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 
-public interface LayoutMapConfiguration extends GameMapConfiguration {
+public interface MapConfiguration extends GameMapConfiguration {
 
     /**
      * @return center of map where players will spawn.
