@@ -10,6 +10,8 @@ public class GameModule extends ProtectedModule {
     public void configure() {
         bind(PlayerSpawner.class).to(CorePlayerSpawner.class);
         bind(ScoreboardProvider.class).to(CoreScoreboardProvider.class);
+        bind(DoubleJumpProvider.class).to(CoreDoubleJumpProvider.class);
+        bind(CachedDoubleJumpHandler.class).to(CoreCachedDoubleJumpHandler.class);
     }
 
 }

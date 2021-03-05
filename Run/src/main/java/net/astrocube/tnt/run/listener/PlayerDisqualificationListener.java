@@ -11,6 +11,8 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.tnt.event.PlayerDisqualificationEvent;
 import net.astrocube.tnt.podium.MatchProgress;
 import net.astrocube.tnt.podium.MatchProgressHandler;
+import net.astrocube.tnt.run.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.run.game.DoubleJumpProvider;
 import net.astrocube.tnt.run.game.ScoreboardProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,6 +30,7 @@ public class PlayerDisqualificationListener implements Listener {
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject ScoreboardProvider scoreboardProvider;
     private @Inject MatchProgressHandler matchProgressHandler;
+    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -43,6 +46,7 @@ public class PlayerDisqualificationListener implements Listener {
 
                 Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get());
                 matchProgressHandler.disqualify(match.get().getId(), event.getPlayer().getDatabaseIdentifier());
+
                 players.forEach(p -> scoreboardProvider.setupBoard(p));
 
                 MatchProgress progress = matchProgressHandler.getMatchProgress(match.get().getId())
@@ -51,6 +55,8 @@ public class PlayerDisqualificationListener implements Listener {
                 Set<MatchProgress.Participant> alive =
                         progress.getDisqualifiedPlayers()
                                 .stream().filter(p -> p.getDisqualificationDate() == null).collect(Collectors.toSet());
+
+                cachedDoubleJumpHandler.clearJumps(event.getPlayer());
 
                 if (alive.size() <= 1) {
                     Bukkit.getPluginManager().callEvent(

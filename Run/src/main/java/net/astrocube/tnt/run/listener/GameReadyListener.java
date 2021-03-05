@@ -12,6 +12,7 @@ import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.tnt.podium.MatchProgressHandler;
 import net.astrocube.tnt.run.floor.FloorCooldownChecker;
+import net.astrocube.tnt.run.game.CachedDoubleJumpHandler;
 import net.astrocube.tnt.run.game.ScoreboardProvider;
 import net.astrocube.tnt.run.map.MapConfiguration;
 import net.astrocube.tnt.run.game.PlayerSpawner;
@@ -37,6 +38,7 @@ public class GameReadyListener implements Listener {
     private @Inject PlayerSpawner playerSpawner;
     private @Inject ScoreboardProvider scoreboardProvider;
     private @Inject MatchProgressHandler matchProgressHandler;
+    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
 
     @EventHandler
     public void onGameReady(GameReadyEvent event) {
@@ -65,6 +67,7 @@ public class GameReadyListener implements Listener {
                             event.getTeams(),
                             (p) -> {
                                 playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
+                                cachedDoubleJumpHandler.registerJumps(p);
                                 playerSpawner.announce(p);
                             });
 

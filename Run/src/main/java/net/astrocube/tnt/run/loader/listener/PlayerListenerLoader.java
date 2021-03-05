@@ -11,13 +11,15 @@ public class PlayerListenerLoader implements ListenerLoader {
 
     private @Inject PlayerDamageListener playerDamageListener;
     private @Inject PlayerDisqualificationListener playerDisqualificationListener;
+    private @Inject DoubleJumpListener doubleJumpListener;
 
     @Override
     public void registerEvents() {
         registerEvent(
                 plugin,
                 playerDamageListener,
-                playerDisqualificationListener
+                playerDisqualificationListener,
+                doubleJumpListener
         );
     }
 

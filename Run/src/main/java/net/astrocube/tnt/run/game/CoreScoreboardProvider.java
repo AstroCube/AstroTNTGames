@@ -22,6 +22,7 @@ import java.util.logging.Level;
 public class CoreScoreboardProvider implements ScoreboardProvider {
 
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
     private @Inject MessageHandler messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
@@ -49,6 +50,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
                         .flatMap(u -> u.stream().filter(MatchDoc.TeamMember::isActive))
                         .count();
 
+
             } else {
                 return;
             }
@@ -61,7 +63,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
                 "%%survivors%%", alive,
-                "%%jumps%%", 1
+                "%%jumps%%", cachedDoubleJumpHandler.getRemainingJumps(player)
         );
 
         if (!objectiveOptional.isPresent()) {
