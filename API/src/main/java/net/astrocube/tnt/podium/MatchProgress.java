@@ -15,6 +15,8 @@ public interface MatchProgress {
      */
     Set<Participant> getDisqualifiedPlayers();
 
+    void setDisqualifiedPlayers(Set<Participant> participants);
+
     /**
      * @return match where player was disqualified
      */
@@ -40,8 +42,6 @@ public interface MatchProgress {
          * @return get player who got disqualified
          */
         String getPlayerId();
-
-        boolean isAlive();
 
     }
 

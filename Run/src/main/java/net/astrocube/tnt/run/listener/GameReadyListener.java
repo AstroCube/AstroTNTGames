@@ -10,6 +10,7 @@ import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
+import net.astrocube.tnt.podium.MatchProgressHandler;
 import net.astrocube.tnt.run.floor.FloorCooldownChecker;
 import net.astrocube.tnt.run.game.ScoreboardProvider;
 import net.astrocube.tnt.run.map.MapConfiguration;
@@ -23,6 +24,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class GameReadyListener implements Listener {
 
@@ -34,6 +36,7 @@ public class GameReadyListener implements Listener {
 
     private @Inject PlayerSpawner playerSpawner;
     private @Inject ScoreboardProvider scoreboardProvider;
+    private @Inject MatchProgressHandler matchProgressHandler;
 
     @EventHandler
     public void onGameReady(GameReadyEvent event) {
@@ -50,6 +53,9 @@ public class GameReadyListener implements Listener {
                         mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
 
                 floorCooldownChecker.scheduleCooldown(event.getMatch());
+                matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
+                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+                ).collect(Collectors.toSet()));
 
                 int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
 

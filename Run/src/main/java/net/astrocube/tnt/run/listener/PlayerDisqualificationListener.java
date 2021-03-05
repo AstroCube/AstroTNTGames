@@ -42,8 +42,8 @@ public class PlayerDisqualificationListener implements Listener {
                 Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(event.getPlayer(), match.get().getId()));
 
                 Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get());
-                players.forEach(p -> scoreboardProvider.setupBoard(p));
                 matchProgressHandler.disqualify(match.get().getId(), event.getPlayer().getDatabaseIdentifier());
+                players.forEach(p -> scoreboardProvider.setupBoard(p));
 
                 MatchProgress progress = matchProgressHandler.getMatchProgress(match.get().getId())
                         .orElseThrow(() -> new GameControlException("Error obtaining match progress"));
@@ -64,7 +64,7 @@ public class PlayerDisqualificationListener implements Listener {
             }
 
         } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error during match disqualification.");
+            plugin.getLogger().log(Level.SEVERE, "There was an error during match disqualification.", e);
             Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
         }
 

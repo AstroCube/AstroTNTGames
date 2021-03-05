@@ -23,31 +23,34 @@ public class PlayerDamageListener implements Listener {
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
 
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
+        if (!event.isCancelled()) {
+            if (!(event.getEntity() instanceof Player)) {
+                return;
+            }
 
-        Player player = (Player) event.getEntity();
+            Player player = (Player) event.getEntity();
 
-        if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
-            event.setCancelled(true);
-            return;
-        }
-
-        try {
-
-            Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
-
-            if (!match.isPresent() || !MatchParticipantsProvider.getOnlineIds(match.get()).contains(player.getDatabaseIdentifier())) {
+            if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
                 event.setCancelled(true);
                 return;
             }
 
-            Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player, match.get().getId()));
+            try {
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error while logging error.");
-            event.setCancelled(true);
+                Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
+
+                if (!match.isPresent() || !MatchParticipantsProvider.getOnlineIds(match.get()).contains(player.getDatabaseIdentifier())) {
+                    event.setCancelled(true);
+                    return;
+                }
+
+                Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player, match.get().getId()));
+                event.setCancelled(true);
+
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "There was an error while logging error.");
+                event.setCancelled(true);
+            }
         }
 
     }

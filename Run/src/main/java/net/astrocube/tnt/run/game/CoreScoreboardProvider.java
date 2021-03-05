@@ -64,8 +64,6 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
                 "%%jumps%%", 1
         );
 
-        Collections.reverse(scoreTranslation);
-
         if (!objectiveOptional.isPresent()) {
             ScoreboardBuilder builder =
                     scoreboardManagerProvider.getScoreboard().newScoreboard("tntrun_" + player.getDatabaseIdentifier());

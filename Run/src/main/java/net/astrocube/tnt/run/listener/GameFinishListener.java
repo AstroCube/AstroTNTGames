@@ -43,13 +43,17 @@ public class GameFinishListener implements Listener {
         findService.find(event.getMatch()).callback(matchCallback ->
                 matchCallback.ifSuccessful(match -> {
 
-                    MatchParticipantsProvider.getInvolved(match).forEach(participant -> messageHandler.sendReplacing(
-                            participant,
-                            "game.podium.listing",
-                            "%%first%%", generatePodiumSlug(podium, participant, 0),
-                            "%%second%%", generatePodiumSlug(podium, participant, 1),
-                            "%%third%%", generatePodiumSlug(podium, participant, 2)
-                    ));
+                    MatchParticipantsProvider.getInvolved(match).forEach(participant -> {
+
+                        messageHandler.sendReplacing(
+                                participant,
+                                "game.podium.listing",
+                                "%%first%%", generatePodiumSlug(podium, participant, 0),
+                                "%%second%%", generatePodiumSlug(podium, participant, 1),
+                                "%%third%%", generatePodiumSlug(podium, participant, 2)
+                        );
+
+                    });
 
                     matchProgressHandler.clearMatch(event.getMatch());
 
@@ -60,7 +64,7 @@ public class GameFinishListener implements Listener {
 
     private String generatePodiumSlug(List<MatchProgress.Participant> podium, Player player, int position) {
 
-        if (podium.size() < position) {
+        if (podium.size() <= position) {
             return messageHandler.get(player, "game.podium.empty");
         }
 

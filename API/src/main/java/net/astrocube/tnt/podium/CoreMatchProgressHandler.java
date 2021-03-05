@@ -18,7 +18,12 @@ public class CoreMatchProgressHandler implements MatchProgressHandler {
 
         return progressOptional.map(matchProgress -> matchProgress.getDisqualifiedPlayers()
                 .stream()
-                .sorted(Comparator.comparing(MatchProgress.Participant::getDisqualificationDate))
+                .sorted(
+                        Comparator.comparing(
+                                MatchProgress.Participant::getDisqualificationDate,
+                                Comparator.nullsLast(Comparator.reverseOrder())
+                        ).reversed()
+                )
                 .collect(Collectors.toList())).orElseGet(ArrayList::new);
     }
 
@@ -35,59 +40,30 @@ public class CoreMatchProgressHandler implements MatchProgressHandler {
     @Override
     public void disqualify(String match, String id) {
 
-        Optional<MatchProgress> progress = getMatchProgress(match);
+        for (MatchProgress progress : disqualifications) {
 
-        progress.ifPresent(matchProgress ->
-                matchProgress.getDisqualifiedPlayers().forEach(player -> {
-                    if (player.getDisqualificationDate() == null) {
-                        player.setDisqualificationDate(new Date());
-                    }
-                })
-        );
+            if (progress.getMatch().equalsIgnoreCase(match)) {
+
+                Set<MatchProgress.Participant> participants = progress.getDisqualifiedPlayers()
+                        .stream().peek(participant -> {
+                            if (participant.getPlayerId().equalsIgnoreCase(id)) {
+                                participant.setDisqualificationDate(new Date());
+                            }
+                        }).collect(Collectors.toSet());
+
+                progress.setDisqualifiedPlayers(participants);
+
+                return;
+
+            }
+
+        }
 
     }
 
     @Override
     public void registerMatch(String match, Set<String> participants) {
-        disqualifications.add(new MatchProgress() {
-            @Override
-            public Date getStartDate() {
-                return new Date();
-            }
-
-            @Override
-            public Set<Participant> getDisqualifiedPlayers() {
-                return participants.stream().map(id -> new Participant() {
-
-                    private Date date;
-
-                    @Override
-                    public Date getDisqualificationDate() {
-                        return date;
-                    }
-
-                    @Override
-                    public void setDisqualificationDate(Date date) {
-                        this.date = date;
-                    }
-
-                    @Override
-                    public String getPlayerId() {
-                        return id;
-                    }
-
-                    @Override
-                    public boolean isAlive() {
-                        return true;
-                    }
-                }).collect(Collectors.toSet());
-            }
-
-            @Override
-            public String getMatch() {
-                return match;
-            }
-        });
+        disqualifications.add(new CoreProgressHandler(participants.stream().map(CoreParticipant::new).collect(Collectors.toSet()), match));
     }
 
 

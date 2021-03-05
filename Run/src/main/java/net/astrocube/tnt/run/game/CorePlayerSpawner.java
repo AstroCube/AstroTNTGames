@@ -9,11 +9,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 @Singleton
 public class CorePlayerSpawner implements PlayerSpawner {
 
     private @Inject MessageHandler messageHandler;
+    private @Inject
+    Plugin plugin;
 
     @Override
     public void spawn(Player player, String match, CoordinatePoint point) {
@@ -27,8 +30,7 @@ public class CorePlayerSpawner implements PlayerSpawner {
 
         Location location = new Location(world, point.getX(), point.getY(), point.getZ());
 
-        player.teleport(location);
-
+        Bukkit.getScheduler().runTask(plugin, () -> player.teleport(location));
     }
 
     @Override
