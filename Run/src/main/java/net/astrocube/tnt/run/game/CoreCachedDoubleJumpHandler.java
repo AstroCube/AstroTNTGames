@@ -32,7 +32,7 @@ public class CoreCachedDoubleJumpHandler implements CachedDoubleJumpHandler {
 
     @Override
     public boolean hasRemainingJumps(Player player) {
-        return getRemainingJumps(player) < 1;
+        return getRemainingJumps(player) > 0;
     }
 
     @Override

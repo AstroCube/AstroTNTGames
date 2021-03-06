@@ -7,6 +7,7 @@ import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
+import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import org.bukkit.entity.Player;
@@ -14,7 +15,6 @@ import org.bukkit.plugin.Plugin;
 import team.unnamed.uboard.ScoreboardObjective;
 import team.unnamed.uboard.builder.ScoreboardBuilder;
 
-import java.util.Collections;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -33,6 +33,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
         Optional<ScoreboardObjective> objectiveOptional =
                 scoreboardManagerProvider.getScoreboard().getScoreboard("tntrun_" + player.getDatabaseIdentifier());
         int alive;
+        boolean playing = false;
 
         try {
             Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
@@ -41,15 +42,14 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
 
                 Match match = matchOptional.get();
 
-                if (UserMatchJoiner.checkOrigin(player.getDatabaseIdentifier(), match) != UserMatchJoiner.Origin.PLAYING) {
-                    return;
-                }
-
                 alive = (int) match.getTeams().parallelStream()
                         .map(MatchDoc.Team::getMembers)
                         .flatMap(u -> u.stream().filter(MatchDoc.TeamMember::isActive))
                         .count();
 
+                if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+                    playing = true;
+                }
 
             } else {
                 return;
@@ -63,7 +63,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
                 "%%survivors%%", alive,
-                "%%jumps%%", cachedDoubleJumpHandler.getRemainingJumps(player)
+                "%%jumps%%", playing ? cachedDoubleJumpHandler.getRemainingJumps(player) : messageHandler.get(player, "game.board.empty")
         );
 
         if (!objectiveOptional.isPresent()) {

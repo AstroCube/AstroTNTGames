@@ -6,6 +6,7 @@ import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.tnt.run.game.CachedDoubleJumpHandler;
 import net.astrocube.tnt.run.game.ScoreboardProvider;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -28,6 +29,10 @@ public class DoubleJumpListener implements Listener {
     @EventHandler
     public void onFlightToggled(PlayerToggleFlightEvent event) {
 
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE || event.getPlayer().getGameMode () == GameMode.SPECTATOR) {
+            return;
+        }
+
         Player player = event.getPlayer();
 
         try {
@@ -45,17 +50,17 @@ public class DoubleJumpListener implements Listener {
                     return;
                 }
 
+
                 event.setCancelled(true);
-
-                Block block = player.getWorld().getBlockAt(player.getLocation().subtract(0,2,0));
-
-                if (block.getType() != Material.AIR) {
-                    Vector velocity = player.getLocation().getDirection().setY(1);
-                    player.setVelocity(velocity);
-                }
+                event.getPlayer().setAllowFlight(false);
+                event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.4d).setY(1.0d));
 
                 cachedDoubleJumpHandler.useJump(player);
                 scoreboardProvider.setupBoard(player);
+
+                if (cachedDoubleJumpHandler.hasRemainingJumps(player)) {
+                    player.setAllowFlight(true);
+                }
 
             });
 

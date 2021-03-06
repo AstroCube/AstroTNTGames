@@ -74,7 +74,10 @@ public class GameReadyListener implements Listener {
 
                     Bukkit.getScheduler().runTaskLater(
                             plugin,
-                            () -> executeForInvolved(event.getTeams(), (p) -> scoreboardProvider.setupBoard(p)),
+                            () -> executeForInvolved(event.getTeams(), (p) -> {
+                                p.setAllowFlight(true);
+                                scoreboardProvider.setupBoard(p);
+                            }),
                             20L * cooldown
                     );
 

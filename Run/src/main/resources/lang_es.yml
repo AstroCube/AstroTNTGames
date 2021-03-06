@@ -19,9 +19,10 @@ game:
     empty: "%%gray%%Ninguno"
   board:
     title: "%%red%%%%bold%%TNT%%white%%%%bold%%Run"
+    empty: "N/A"
     lines:
       - "%%green%%"
       - "%%aqua%%%%bold%%| %%white%%Quedan: %%survivors%%"
-      - "%%dark_blue%%%%bold%%| %%white%%Doble saltos: %%jumps%%"
+      - "%%blue%%%%bold%%| %%white%%Doble saltos: %%jumps%%"
       - "%%yellow%%"
       - "%%blue%%www.astrocube.net"
