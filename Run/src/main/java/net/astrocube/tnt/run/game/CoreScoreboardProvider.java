@@ -6,10 +6,11 @@ import me.yushust.message.MessageHandler;
 import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
-import net.astrocube.api.bukkit.game.match.UserMatchJoiner;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
+import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.uboard.ScoreboardObjective;
@@ -22,7 +23,8 @@ import java.util.logging.Level;
 public class CoreScoreboardProvider implements ScoreboardProvider {
 
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
+    private @Inject
+    CachedDoubleJumpHandler cachedDoubleJumpHandler;
     private @Inject MessageHandler messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;

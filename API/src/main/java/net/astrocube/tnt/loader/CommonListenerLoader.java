@@ -1,27 +1,27 @@
-package net.astrocube.tnt.run.loader.listener;
+package net.astrocube.tnt.loader;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.server.ListenerLoader;
-import net.astrocube.tnt.run.listener.*;
+import net.astrocube.tnt.listener.*;
 import org.bukkit.plugin.Plugin;
 
-public class PlayerListenerLoader implements ListenerLoader {
+public class CommonListenerLoader implements ListenerLoader {
 
     private @Inject Plugin plugin;
 
+    private @Inject DoubleJumpListener doubleJumpListener;
     private @Inject PlayerDamageListener playerDamageListener;
     private @Inject PlayerDisqualificationListener playerDisqualificationListener;
-    private @Inject DoubleJumpListener doubleJumpListener;
+    private @Inject SpectatorAssignListener spectatorAssignListener;
 
     @Override
     public void registerEvents() {
         registerEvent(
                 plugin,
+                doubleJumpListener,
                 playerDamageListener,
                 playerDisqualificationListener,
-                doubleJumpListener
+                spectatorAssignListener
         );
     }
-
-
 }

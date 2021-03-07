@@ -1,20 +1,17 @@
-package net.astrocube.tnt.run.listener;
+package net.astrocube.tnt.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.tnt.run.game.CachedDoubleJumpHandler;
-import net.astrocube.tnt.run.game.ScoreboardProvider;
+import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.Vector;
 
 import java.util.Optional;
 import java.util.logging.Level;

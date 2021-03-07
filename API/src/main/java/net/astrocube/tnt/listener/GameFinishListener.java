@@ -1,12 +1,8 @@
-package net.astrocube.tnt.run.listener;
+package net.astrocube.tnt.listener;
 
 import com.google.inject.Inject;
 import me.yushust.message.MessageHandler;
-import net.astrocube.api.bukkit.game.event.game.GameModePairEvent;
-import net.astrocube.api.bukkit.game.event.game.GamePairEnableEvent;
 import net.astrocube.api.bukkit.game.event.match.MatchFinishEvent;
-import net.astrocube.api.bukkit.game.match.ActualMatchCache;
-import net.astrocube.api.bukkit.game.match.MatchService;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.user.display.DisplayMatcher;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
@@ -14,10 +10,6 @@ import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.user.User;
 import net.astrocube.tnt.podium.MatchProgress;
 import net.astrocube.tnt.podium.MatchProgressHandler;
-import net.astrocube.tnt.run.floor.FloorCooldownChecker;
-import net.astrocube.tnt.run.floor.FloorRemovalTask;
-import net.astrocube.tnt.run.floor.FloorRemover;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

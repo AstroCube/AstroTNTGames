@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.listener;
+package net.astrocube.tnt.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.game.GameUserDisconnectEvent;

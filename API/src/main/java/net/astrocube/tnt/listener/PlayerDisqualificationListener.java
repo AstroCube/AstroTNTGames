@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.listener;
+package net.astrocube.tnt.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.match.MatchFinishEvent;
@@ -11,9 +11,8 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.tnt.event.PlayerDisqualificationEvent;
 import net.astrocube.tnt.podium.MatchProgress;
 import net.astrocube.tnt.podium.MatchProgressHandler;
-import net.astrocube.tnt.run.game.CachedDoubleJumpHandler;
-import net.astrocube.tnt.run.game.DoubleJumpProvider;
-import net.astrocube.tnt.run.game.ScoreboardProvider;
+import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

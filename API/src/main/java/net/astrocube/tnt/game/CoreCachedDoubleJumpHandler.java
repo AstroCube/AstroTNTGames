@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.game;
+package net.astrocube.tnt.game;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

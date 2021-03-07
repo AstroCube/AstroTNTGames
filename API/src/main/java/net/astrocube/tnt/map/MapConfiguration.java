@@ -1,8 +1,7 @@
-package net.astrocube.tnt.run.map;
+package net.astrocube.tnt.map;
 
 import net.astrocube.api.bukkit.game.map.configuration.CoordinatePoint;
 import net.astrocube.api.bukkit.game.map.configuration.GameMapConfiguration;
-import net.astrocube.api.core.virtual.gamemode.GameMode;
 
 public interface MapConfiguration extends GameMapConfiguration {
 

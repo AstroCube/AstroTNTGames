@@ -2,10 +2,9 @@ package net.astrocube.tnt.run.loader.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.server.ListenerLoader;
-import net.astrocube.tnt.run.listener.GameFinishListener;
 import net.astrocube.tnt.run.listener.GamePairEnableListener;
 import net.astrocube.tnt.run.listener.GameReadyListener;
-import net.astrocube.tnt.run.listener.GameUserDisconnectListener;
+import net.astrocube.tnt.listener.GameUserDisconnectListener;
 import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
@@ -15,7 +14,6 @@ public class GameListenerLoader implements ListenerLoader {
     private @Inject GameReadyListener gameReadyListener;
     private @Inject GamePairEnableListener gamePairEnableListener;
     private @Inject GameUserDisconnectListener gameUserDisconnectListener;
-    private @Inject GameFinishListener gameFinishListener;
 
     @Override
     public void registerEvents() {
@@ -23,8 +21,7 @@ public class GameListenerLoader implements ListenerLoader {
                 plugin,
                 gameReadyListener,
                 gameUserDisconnectListener,
-                gamePairEnableListener,
-                gameFinishListener
+                gamePairEnableListener
         );
     }
 
