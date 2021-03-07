@@ -10,6 +10,7 @@
     <modules>
         <module>API</module>
         <module>Run</module>
+        <module>BowSpleef</module>
     </modules>
 
     <properties>
