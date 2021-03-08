@@ -1,4 +1,4 @@
-package net.astrocube.tnt.run.listener;
+package net.astrocube.tnt.spleef.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.event.game.GameReadyEvent;
@@ -9,12 +9,11 @@ import net.astrocube.api.bukkit.game.map.MapConfigurationProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
 import net.astrocube.api.core.service.find.FindService;
-import net.astrocube.tnt.podium.MatchProgressHandler;
-import net.astrocube.tnt.run.floor.FloorCooldownChecker;
-import net.astrocube.tnt.perk.CachedPerkHandler;
+import net.astrocube.tnt.game.PlayerSpawner;
 import net.astrocube.tnt.game.ScoreboardProvider;
 import net.astrocube.tnt.map.MapConfiguration;
-import net.astrocube.tnt.game.PlayerSpawner;
+import net.astrocube.tnt.perk.CachedPerkHandler;
+import net.astrocube.tnt.podium.MatchProgressHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
 public class GameReadyListener implements Listener {
 
     private @Inject FindService<Match> findService;
-    private @Inject FloorCooldownChecker floorCooldownChecker;
 
     private @Inject MapConfigurationProvider mapConfigurationProvider;
     private @Inject Plugin plugin;
@@ -39,6 +37,7 @@ public class GameReadyListener implements Listener {
     private @Inject ScoreboardProvider scoreboardProvider;
     private @Inject MatchProgressHandler matchProgressHandler;
     private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
+    private @Inject @Named("tripleShot") CachedPerkHandler tripleShotHandler;
 
     @EventHandler
     public void onGameReady(GameReadyEvent event) {
@@ -53,8 +52,6 @@ public class GameReadyListener implements Listener {
 
                 MapConfiguration configuration =
                         mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
-
-                floorCooldownChecker.scheduleCooldown(event.getMatch());
                 matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
                         team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
                 ).collect(Collectors.toSet()));
@@ -68,9 +65,9 @@ public class GameReadyListener implements Listener {
                             (p) -> {
                                 playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
                                 cachedPerkHandler.registerJumps(p);
+                                tripleShotHandler.registerJumps(p);
                                 playerSpawner.announce(p);
                             });
-
 
                     Bukkit.getScheduler().runTaskLater(
                             plugin,

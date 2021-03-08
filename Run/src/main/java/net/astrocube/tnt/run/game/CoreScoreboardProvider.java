@@ -9,13 +9,14 @@ import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
-import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.perk.CachedPerkHandler;
 import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.uboard.ScoreboardObjective;
 import team.unnamed.uboard.builder.ScoreboardBuilder;
 
+import javax.inject.Named;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -23,8 +24,7 @@ import java.util.logging.Level;
 public class CoreScoreboardProvider implements ScoreboardProvider {
 
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject
-    CachedDoubleJumpHandler cachedDoubleJumpHandler;
+    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
     private @Inject MessageHandler messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
@@ -65,7 +65,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
                 "%%survivors%%", alive,
-                "%%jumps%%", playing ? cachedDoubleJumpHandler.getRemainingJumps(player) : messageHandler.get(player, "game.board.empty")
+                "%%jumps%%", playing ? cachedPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty")
         );
 
         if (!objectiveOptional.isPresent()) {

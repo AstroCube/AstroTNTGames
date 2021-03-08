@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.match.ActualMatchCache;
 import net.astrocube.api.bukkit.game.match.control.MatchParticipantsProvider;
 import net.astrocube.api.bukkit.virtual.game.match.Match;
-import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.perk.CachedPerkHandler;
 import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -13,13 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.plugin.Plugin;
 
+import javax.inject.Named;
 import java.util.Optional;
 import java.util.logging.Level;
 
 public class DoubleJumpListener implements Listener {
 
     private @Inject ActualMatchCache actualMatchCache;
-    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
+    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
     private @Inject ScoreboardProvider scoreboardProvider;
     private @Inject Plugin plugin;
 
@@ -41,7 +42,7 @@ public class DoubleJumpListener implements Listener {
                     return;
                 }
 
-                if (!cachedDoubleJumpHandler.hasRemainingJumps(player)) {
+                if (!cachedPerkHandler.hasRemainingUses(player)) {
                     event.setCancelled(true);
                     player.setAllowFlight(false);
                     return;
@@ -52,10 +53,10 @@ public class DoubleJumpListener implements Listener {
                 event.getPlayer().setAllowFlight(false);
                 event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.4d).setY(1.0d));
 
-                cachedDoubleJumpHandler.useJump(player);
+                cachedPerkHandler.usePerk(player);
                 scoreboardProvider.setupBoard(player);
 
-                if (cachedDoubleJumpHandler.hasRemainingJumps(player)) {
+                if (cachedPerkHandler.hasRemainingUses(player)) {
                     player.setAllowFlight(true);
                 }
 

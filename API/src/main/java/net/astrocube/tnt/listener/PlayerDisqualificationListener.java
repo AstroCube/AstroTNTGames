@@ -11,7 +11,7 @@ import net.astrocube.api.bukkit.virtual.game.match.Match;
 import net.astrocube.tnt.event.PlayerDisqualificationEvent;
 import net.astrocube.tnt.podium.MatchProgress;
 import net.astrocube.tnt.podium.MatchProgressHandler;
-import net.astrocube.tnt.game.CachedDoubleJumpHandler;
+import net.astrocube.tnt.perk.CachedPerkHandler;
 import net.astrocube.tnt.game.ScoreboardProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import javax.inject.Named;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ public class PlayerDisqualificationListener implements Listener {
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject ScoreboardProvider scoreboardProvider;
     private @Inject MatchProgressHandler matchProgressHandler;
-    private @Inject CachedDoubleJumpHandler cachedDoubleJumpHandler;
+    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -55,7 +56,7 @@ public class PlayerDisqualificationListener implements Listener {
                         progress.getDisqualifiedPlayers()
                                 .stream().filter(p -> p.getDisqualificationDate() == null).collect(Collectors.toSet());
 
-                cachedDoubleJumpHandler.clearJumps(event.getPlayer());
+                cachedPerkHandler.clearUses(event.getPlayer());
 
                 if (alive.size() <= 1) {
                     Bukkit.getPluginManager().callEvent(

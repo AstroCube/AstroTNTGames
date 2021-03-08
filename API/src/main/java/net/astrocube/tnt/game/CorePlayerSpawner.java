@@ -15,8 +15,7 @@ import org.bukkit.plugin.Plugin;
 public class CorePlayerSpawner implements PlayerSpawner {
 
     private @Inject MessageHandler messageHandler;
-    private @Inject
-    Plugin plugin;
+    private @Inject Plugin plugin;
 
     @Override
     public void spawn(Player player, String match, CoordinatePoint point) {

@@ -13,6 +13,7 @@ public class CommonListenerLoader implements ListenerLoader {
     private @Inject PlayerDamageListener playerDamageListener;
     private @Inject PlayerDisqualificationListener playerDisqualificationListener;
     private @Inject SpectatorAssignListener spectatorAssignListener;
+    private @Inject GameFinishListener gameFinishListener;
 
     @Override
     public void registerEvents() {
@@ -21,6 +22,7 @@ public class CommonListenerLoader implements ListenerLoader {
                 doubleJumpListener,
                 playerDamageListener,
                 playerDisqualificationListener,
+                gameFinishListener,
                 spectatorAssignListener
         );
     }
