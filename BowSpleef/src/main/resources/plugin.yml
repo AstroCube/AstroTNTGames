@@ -1,0 +1,7 @@
+name: BowSpleef
+main: net.astrocube.tnt.spleef.BowSpleef
+version: 1.0
+load: POSTWORLD
+depend:
+  - Commons
+author: Astrocube Network

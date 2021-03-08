@@ -1,7 +1,9 @@
-package net.astrocube.tnt.run.game;
+package net.astrocube.tnt.spleef.game;
 
 import me.fixeddev.inject.ProtectedModule;
-import net.astrocube.tnt.game.*;
+import net.astrocube.tnt.game.CommonGameModule;
+import net.astrocube.tnt.game.DoubleJumpProvider;
+import net.astrocube.tnt.game.ScoreboardProvider;
 
 public class GameModule extends ProtectedModule {
 

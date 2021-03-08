@@ -1,10 +1,11 @@
-package net.astrocube.tnt.game;
+package net.astrocube.tnt.run.game;
 
 import com.google.inject.Singleton;
+import net.astrocube.tnt.game.DoubleJumpProvider;
 import org.bukkit.entity.Player;
 
 @Singleton
-public class CoreDoubleJumpProvider implements DoubleJumpProvider{
+public class CoreDoubleJumpProvider implements DoubleJumpProvider {
 
     @Override
     public int getPlayerJumps(Player player) {
