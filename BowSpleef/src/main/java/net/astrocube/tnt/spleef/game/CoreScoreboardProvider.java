@@ -25,6 +25,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
 
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
     private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
+    private @Inject @Named("tripleShot") CachedPerkHandler tripleShotPerkHandler;
     private @Inject MessageHandler messageHandler;
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
@@ -65,12 +66,13 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
                 "%%survivors%%", alive,
-                "%%jumps%%", playing ? cachedPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty")
+                "%%jumps%%", playing ? cachedPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty"),
+                "%%shots%%", playing ? tripleShotPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty")
         );
 
         if (!objectiveOptional.isPresent()) {
             ScoreboardBuilder builder =
-                    scoreboardManagerProvider.getScoreboard().newScoreboard("tntrun_" + player.getDatabaseIdentifier());
+                    scoreboardManagerProvider.getScoreboard().newScoreboard("bs_" + player.getDatabaseIdentifier());
             scoreTranslation.forEach(builder::addLine);
             builder.setTitle(messageHandler.get(player, "game.board.title"));
             scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());

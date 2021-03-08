@@ -1,6 +1,7 @@
 package net.astrocube.tnt.spleef.listener;
 
 import com.google.inject.Inject;
+import net.astrocube.tnt.game.ScoreboardProvider;
 import net.astrocube.tnt.perk.CachedPerkHandler;
 import net.astrocube.tnt.perk.PerkProvider;
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ import javax.inject.Named;
 public class TripleShotListener implements Listener {
 
     private @Inject @Named("tripleShot") CachedPerkHandler cachedPerkHandler;
+    private @Inject ScoreboardProvider scoreboardProvider;
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -37,6 +39,7 @@ public class TripleShotListener implements Listener {
                     player.launchProjectile(Arrow.class, leftArrow);
 
                     cachedPerkHandler.usePerk(player);
+                    scoreboardProvider.setupBoard(player);
                 }
 
             }

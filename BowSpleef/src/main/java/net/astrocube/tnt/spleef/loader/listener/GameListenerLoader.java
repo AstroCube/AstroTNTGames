@@ -2,10 +2,7 @@ package net.astrocube.tnt.spleef.loader.listener;
 
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.server.ListenerLoader;
-import net.astrocube.tnt.spleef.listener.GamePairEnableListener;
-import net.astrocube.tnt.spleef.listener.GameReadyListener;
-import net.astrocube.tnt.spleef.listener.ProjectileLaunchListener;
-import net.astrocube.tnt.spleef.listener.TripleShotListener;
+import net.astrocube.tnt.spleef.listener.*;
 import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
@@ -16,6 +13,7 @@ public class GameListenerLoader implements ListenerLoader {
     private @Inject GamePairEnableListener gamePairEnableListener;
     private @Inject GameReadyListener gameReadyListener;
     private @Inject ProjectileLaunchListener projectileLaunchListener;
+    private @Inject EntityExplodeListener entityExplodeListener;
 
     @Override
     public void registerEvents() {
@@ -24,7 +22,8 @@ public class GameListenerLoader implements ListenerLoader {
                 tripleShotListener,
                 gameReadyListener,
                 gamePairEnableListener,
-                projectileLaunchListener
+                projectileLaunchListener,
+                entityExplodeListener
         );
     }
 

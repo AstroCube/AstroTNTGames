@@ -15,9 +15,12 @@ import net.astrocube.tnt.map.MapConfiguration;
 import net.astrocube.tnt.perk.CachedPerkHandler;
 import net.astrocube.tnt.podium.MatchProgressHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import javax.inject.Named;
@@ -67,6 +70,14 @@ public class GameReadyListener implements Listener {
                                 cachedPerkHandler.registerJumps(p);
                                 tripleShotHandler.registerJumps(p);
                                 playerSpawner.announce(p);
+
+                                ItemStack bow = new ItemStack(Material.BOW);
+                                bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
+                                bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+
+                                p.getInventory().clear();
+                                p.getInventory().setItem(0, bow);
+                                
                             });
 
                     Bukkit.getScheduler().runTaskLater(

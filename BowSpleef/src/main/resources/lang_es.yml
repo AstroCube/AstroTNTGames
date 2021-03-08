@@ -1,0 +1,29 @@
+game:
+  help:
+    - "%%blue%%-----------------------------------------------------"
+    - " "
+    - "%%center%%%%red%%%%bold%%Bow%%white%% %%bold%%Spleef"
+    - " "
+    - "%%center%%%%white%%Utiliza tu arco para disparar a la dinamita y hacer que los demás caigan. ¡Se el ultimo en pie para ganar!"
+    - " "
+    - "%%blue%%-----------------------------------------------------"
+  podium:
+    listing:
+      - "%%blue%%-----------------------------------------------------"
+      - " "
+      - "%%center%%%%green%%%%bold%%Ganador: %%first%%"
+      - "%%center%%%%yellow%%%%bold%%Segundo: %%second%%"
+      - "%%center%%%%red%%%%bold%%Tercero: %%third%%"
+      - " "
+      - "%%blue%%-----------------------------------------------------"
+    empty: "%%gray%%Ninguno"
+  board:
+    title: "%%red%%%%bold%%TNT%%white%%%%bold%%Run"
+    empty: "N/A"
+    lines:
+      - "%%green%%"
+      - "%%aqua%%%%bold%%| %%white%%Quedan: %%survivors%%"
+      - "%%blue%%%%bold%%| %%white%%Doble saltos: %%jumps%%"
+      - "%%aqua%%%%bold%%| %%white%%Trispleshot: %%shots%%"
+      - "%%yellow%%"
+      - "%%blue%%www.astrocube.net"

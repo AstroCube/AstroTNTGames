@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -34,6 +35,8 @@ public class ProjectileLaunchListener implements Listener {
 
             player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1f, 1f);
 
+            event.getEntity().setFireTicks(10);
+
             projectileTaskTracker.schedule(
                     event.getEntity().getEntityId(),
                     new BukkitRunnable() {
@@ -47,7 +50,10 @@ public class ProjectileLaunchListener implements Listener {
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
+
         projectileTaskTracker.unlink(event.getEntity().getEntityId());
+        event.getEntity().remove();
+
     }
 
 }
