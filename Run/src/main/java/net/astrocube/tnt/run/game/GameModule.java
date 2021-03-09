@@ -1,6 +1,7 @@
 package net.astrocube.tnt.run.game;
 
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.tnt.game.*;
@@ -19,7 +20,7 @@ public class GameModule extends ProtectedModule {
         bind(PerkProvider.class).annotatedWith(Names.named("doubleJump")).to(CoreDoubleJumpProvider.class);
     }
 
-    @Provides @Named("doubleJump")
+    @Provides @Named("doubleJump") @Singleton
     public CachedPerkHandler createDoubleJumpHandler(@Named("doubleJump") PerkProvider provider) {
         return new CoreCachedPerkHandler(provider);
     }

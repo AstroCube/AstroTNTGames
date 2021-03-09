@@ -10,7 +10,8 @@ public class CommonListenerLoader implements ListenerLoader {
     private @Inject Plugin plugin;
 
     private @Inject DoubleJumpListener doubleJumpListener;
-    private @Inject PlayerDamageListener playerDamageListener;
+    private @Inject
+    PlayerActionsListener playerActionsListener;
     private @Inject PlayerDisqualificationListener playerDisqualificationListener;
     private @Inject SpectatorAssignListener spectatorAssignListener;
     private @Inject GameFinishListener gameFinishListener;
@@ -20,7 +21,7 @@ public class CommonListenerLoader implements ListenerLoader {
         registerEvent(
                 plugin,
                 doubleJumpListener,
-                playerDamageListener,
+                playerActionsListener,
                 playerDisqualificationListener,
                 gameFinishListener,
                 spectatorAssignListener

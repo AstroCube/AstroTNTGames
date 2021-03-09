@@ -77,6 +77,7 @@ public class GameReadyListener implements Listener {
 
                                 p.getInventory().clear();
                                 p.getInventory().setItem(0, bow);
+                                p.getInventory().setItem(9, new ItemStack(Material.ARROW));
                                 
                             });
 

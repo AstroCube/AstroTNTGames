@@ -10,12 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
 import java.util.logging.Level;
 
-public class PlayerDamageListener implements Listener {
+public class PlayerActionsListener implements Listener {
 
     private @Inject ActualMatchCache actualMatchCache;
     private @Inject Plugin plugin;
@@ -53,6 +54,11 @@ public class PlayerDamageListener implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void onPlayerItemDrop(PlayerDropItemEvent event) {
+        event.setCancelled(true);
     }
 
 }

@@ -1,6 +1,7 @@
 package net.astrocube.tnt.spleef.game;
 
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import me.fixeddev.inject.ProtectedModule;
 import net.astrocube.tnt.game.CommonGameModule;
@@ -21,12 +22,12 @@ public class GameModule extends ProtectedModule {
         bind(PerkProvider.class).annotatedWith(Names.named("tripleShot")).to(CoreTripleShotProvider.class);
     }
 
-    @Provides @Named("doubleJump")
+    @Provides @Named("doubleJump") @Singleton
     public CachedPerkHandler provideDoubleJump(@Named("doubleJump") PerkProvider perkProvider) {
         return new CoreCachedPerkHandler(perkProvider);
     }
 
-    @Provides @Named("tripleShot")
+    @Provides @Named("tripleShot") @Singleton
     public CachedPerkHandler provideTripleShot(@Named("tripleShot") PerkProvider perkProvider) {
         return new CoreCachedPerkHandler(perkProvider);
     }

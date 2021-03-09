@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
 public class CoreCachedPerkHandler implements CachedPerkHandler {
 
     private final PerkProvider perkProvider;
@@ -40,7 +39,7 @@ public class CoreCachedPerkHandler implements CachedPerkHandler {
 
     @Override
     public int getRemainingUses(Player player) {
-        return cachedPerk.getOrDefault(player.getDatabaseIdentifier(), 3);
+        return cachedPerk.get(player.getDatabaseIdentifier());
     }
 
     @Override

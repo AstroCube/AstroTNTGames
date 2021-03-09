@@ -63,11 +63,14 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
             return;
         }
 
+        int jumps = cachedPerkHandler.getRemainingUses(player);
+        int tripleShot = tripleShotPerkHandler.getRemainingUses(player);
+
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
                 "%%survivors%%", alive,
-                "%%jumps%%", playing ? cachedPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty"),
-                "%%shots%%", playing ? tripleShotPerkHandler.getRemainingUses(player) : messageHandler.get(player, "game.board.empty")
+                "%%jumps%%", playing ? jumps : messageHandler.get(player, "game.board.empty"),
+                "%%shots%%", playing ? tripleShot : messageHandler.get(player, "game.board.empty")
         );
 
         if (!objectiveOptional.isPresent()) {
