@@ -11,6 +11,7 @@
         <module>API</module>
         <module>Run</module>
         <module>BowSpleef</module>
+        <module>Lobby</module>
     </modules>
 
     <properties>

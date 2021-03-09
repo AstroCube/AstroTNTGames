@@ -1,0 +1,8 @@
+name: TNTLobby
+main: net.astrocube.tnt.spleef.BowSpleef
+version: 1.0
+load: POSTWORLD
+depend:
+  - Commons
+  - Lobby
+author: Astrocube Network
