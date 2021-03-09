@@ -5,6 +5,7 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
@@ -44,6 +45,7 @@ public class TNTLobbyLoader implements Loader {
             listenerLoader.load();
 
         } catch (Exception e) {
+            Bukkit.getPluginManager().disablePlugin(plugin);
             plugin.getLogger().log(Level.SEVERE, "Error while validating registered modes.");
         }
     }

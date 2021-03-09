@@ -5,7 +5,7 @@ import net.astrocube.tnt.podium.CoreMatchProgressHandler;
 import net.astrocube.tnt.podium.MatchProgressHandler;
 import net.astrocube.tnt.run.floor.FloorModule;
 import net.astrocube.tnt.run.game.GameModule;
-import net.astrocube.tnt.translation.TranslationModule;
+import net.astrocube.tnt.shared.translation.TranslationModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
 

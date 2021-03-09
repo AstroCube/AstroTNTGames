@@ -14,11 +14,17 @@ public class TNTLobby extends JavaPlugin {
     @Override
     public void onEnable() {
         loader.load();
+        copyDefaults();
     }
 
     @Override
     public void configure(ProtectedBinder binder) {
         binder.install(new InjectionLoaderModule());
+    }
+
+    public void copyDefaults() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
     }
 
 }

@@ -1,4 +1,4 @@
-package net.astrocube.tnt.translation.interceptor;
+package net.astrocube.tnt.shared.translation.interceptor;
 
 import org.bukkit.ChatColor;
 

@@ -1,4 +1,4 @@
-package net.astrocube.tnt.translation;
+package net.astrocube.tnt.shared.translation;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -9,8 +9,8 @@ import me.yushust.message.bukkit.BukkitMessageAdapt;
 import me.yushust.message.source.MessageSource;
 import me.yushust.message.source.MessageSourceDecorator;
 import net.astrocube.api.bukkit.translation.mode.CoreMessenger;
-import net.astrocube.tnt.translation.interceptor.CenterMessageInterceptor;
-import net.astrocube.tnt.translation.interceptor.ColorMessageInterceptor;
+import net.astrocube.tnt.shared.translation.interceptor.CenterMessageInterceptor;
+import net.astrocube.tnt.shared.translation.interceptor.ColorMessageInterceptor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

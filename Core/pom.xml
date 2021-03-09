@@ -8,7 +8,7 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>TNTGames-API</artifactId>
+    <artifactId>TNTGames-Core</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

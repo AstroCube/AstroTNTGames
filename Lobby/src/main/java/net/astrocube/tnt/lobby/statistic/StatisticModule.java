@@ -1,6 +1,8 @@
 package net.astrocube.tnt.lobby.statistic;
 
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.tnt.shared.money.CoreMoneyTransactionHandler;
+import net.astrocube.tnt.shared.money.MoneyTransactionHandler;
 
 public class StatisticModule extends ProtectedModule {
 

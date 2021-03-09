@@ -1,4 +1,4 @@
-package net.astrocube.tnt.translation;
+package net.astrocube.tnt.shared.translation;
 
 import com.google.inject.Inject;
 import me.yushust.message.language.Linguist;

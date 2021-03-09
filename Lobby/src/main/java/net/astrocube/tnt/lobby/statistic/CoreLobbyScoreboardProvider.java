@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.board.ScoreboardManagerProvider;
+import net.astrocube.tnt.shared.money.MoneyTransactionHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.uboard.ScoreboardObjective;
@@ -17,7 +18,8 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
 
     private @Inject MessageHandler messageHandler;
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject MoneyTransactionHandler moneyTransactionHandler;
+    private @Inject
+    MoneyTransactionHandler moneyTransactionHandler;
     private @Inject ModeVictoryProvider modeVictoryProvider;
     private @Inject Plugin plugin;
 
@@ -50,7 +52,7 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
             ScoreboardBuilder builder =
                     scoreboardManagerProvider.getScoreboard().newScoreboard("tntlobby_" + player.getDatabaseIdentifier());
             scoreTranslation.forEach(builder::addLine);
-            builder.setTitle(messageHandler.get(player, "game.board.title"));
+            builder.setTitle(messageHandler.get(player, "board.title"));
             scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
         } else {
             objectiveOptional.get().setStringLines(scoreTranslation);

@@ -9,4 +9,6 @@ board:
     - "    %%dark_aqua%%Victorias%%dark_gray%%: %%white%%%%spleef_victories%%"
     - "    %%dark_aqua%%Disparos%%dark_gray%%: %%white%%0"
     - "%%gray%%"
-    - "  %%dark_aqua%%Monedas%%dark_gray%%: %%money%%"
+    - "  %%dark_aqua%%Monedas%%dark_gray%%: %%white%%%%money%%"
+    - "%%gold%%"
+    - "%%gray%%astrocube.net"

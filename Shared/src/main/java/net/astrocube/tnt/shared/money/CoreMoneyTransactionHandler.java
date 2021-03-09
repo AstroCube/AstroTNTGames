@@ -1,4 +1,4 @@
-package net.astrocube.tnt.lobby.statistic;
+package net.astrocube.tnt.shared.money;
 
 import com.google.inject.Singleton;
 

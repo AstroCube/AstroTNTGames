@@ -24,6 +24,11 @@
         </dependency>
         <dependency>
             <groupId>net.astrocube</groupId>
+            <artifactId>TNTGames-Shared</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.astrocube</groupId>
             <artifactId>gammaspigot</artifactId>
             <version>1.8-SNAPSHOT</version>
             <scope>provided</scope>
