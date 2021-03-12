@@ -18,8 +18,7 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
 
     private @Inject MessageHandler messageHandler;
     private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject
-    MoneyTransactionHandler moneyTransactionHandler;
+    private @Inject MoneyTransactionHandler moneyTransactionHandler;
     private @Inject ModeVictoryProvider modeVictoryProvider;
     private @Inject Plugin plugin;
 

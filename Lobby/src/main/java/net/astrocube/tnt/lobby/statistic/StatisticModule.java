@@ -10,7 +10,6 @@ public class StatisticModule extends ProtectedModule {
     public void configure() {
         bind(LobbyScoreboardProvider.class).to(CoreLobbyScoreboardProvider.class);
         bind(ModeVictoryProvider.class).to(CoreModeVictoryProvider.class);
-        bind(MoneyTransactionHandler.class).to(CoreMoneyTransactionHandler.class);
     }
 
 }

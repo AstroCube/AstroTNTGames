@@ -5,6 +5,7 @@ import net.astrocube.tnt.podium.CoreMatchProgressHandler;
 import net.astrocube.tnt.podium.MatchProgressHandler;
 import net.astrocube.tnt.run.floor.FloorModule;
 import net.astrocube.tnt.run.game.GameModule;
+import net.astrocube.tnt.shared.SharedModule;
 import net.astrocube.tnt.shared.translation.TranslationModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
@@ -15,6 +16,7 @@ public class InjectionLoaderModule extends ProtectedModule {
         install(new TranslationModule());
         install(new GameModule());
         install(new FloorModule());
+        install(new SharedModule());
 
         bind(MatchProgressHandler.class).to(CoreMatchProgressHandler.class);
 
