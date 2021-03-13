@@ -1,6 +1,8 @@
 package net.astrocube.tnt.shared.perk;
 
-public interface TNTPerkManifest {
+import net.astrocube.api.bukkit.perk.AbstractPerk;
+
+public interface TNTPerkManifest extends AbstractPerk {
 
     /**
      * @return actual money of the player

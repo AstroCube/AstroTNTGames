@@ -12,3 +12,32 @@ board:
     - "  %%dark_aqua%%Monedas%%dark_gray%%: %%white%%%%money%%"
     - "%%gold%%"
     - "%%gray%%astrocube.net"
+store:
+  title: "Tienda TNT Games"
+  close: "%%red%%Cerrar"
+  item: "%%blue%%Tienda de TNT Games %%gray%%(Click derecho)"
+  percentage:
+    title: "%%gray%%Monedas totales: %%gold%%%%money%%"
+    lore:
+      - ""
+      - "%%red%%\u2022 TNT Run%%gray%%: 2 Monedas por minuto."
+      - "%%red%%\u2022 Victoria%%gray%%: 30 Monedas."
+      - ""
+      - "%%red%%\u2022 Bow Spleef%%gray%%: 5 Monedas por jugador que"
+      - "%%gray%%muera antes que tú."
+      - "%%red%%\u2022 Victoria%%gray%%: 10 Monedas."
+  categories:
+    spleef:
+      title: "%%blue%%Bow Spleef"
+      lore:
+        - "%%gray%%Compra mejoras para"
+        - "%%gray%%Bow Spleef"
+        - ""
+        - "%%aqua%%¡Click izquierdo para ver!"
+    run:
+      title: "%%blue%%TNT Run"
+      lore:
+        - "%%gray%%Compra mejoras para"
+        - "%%gray%%TNT Run"
+        - ""
+        - "%%aqua%%¡Click izquierdo para ver!"

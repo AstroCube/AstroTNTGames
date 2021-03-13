@@ -1,13 +1,12 @@
 package net.astrocube.tnt.lobby.listener;
 
-import com.google.api.client.http.HttpResponseException;
 import com.google.inject.Inject;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.lobby.event.LobbyJoinEvent;
-import net.astrocube.api.bukkit.virtual.game.match.MatchDoc;
-import net.astrocube.api.core.http.exception.NotFound;
+import net.astrocube.api.bukkit.perk.PerkManifestProvider;
+import net.astrocube.tnt.lobby.menu.MainShopMenu;
 import net.astrocube.tnt.lobby.statistic.LobbyScoreboardProvider;
-import net.astrocube.tnt.shared.perk.PerkManifestProvider;
+import net.astrocube.tnt.shared.perk.TNTPerkProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,7 +19,9 @@ import java.util.logging.Level;
 public class GameLobbyJoinListener implements Listener {
 
     private @Inject LobbyScoreboardProvider lobbyScoreboardProvider;
+    private @Inject TNTPerkProvider perkProvider;
     private @Inject PerkManifestProvider perkManifestProvider;
+    private @Inject MainShopMenu mainShopMenu;
     private @Inject Plugin plugin;
 
     @EventHandler
@@ -30,11 +31,18 @@ public class GameLobbyJoinListener implements Listener {
             lobbyScoreboardProvider.setup(event.getPlayer());
 
             try {
-                perkManifestProvider.getManifest(event.getPlayer().getDatabaseIdentifier())
+                perkProvider.getManifest(event.getPlayer().getDatabaseIdentifier())
                         .orElseThrow(() -> new GameControlException("Manifest not found"));
+                event.getPlayer().getInventory().setItem(4, mainShopMenu.generateItem(event.getPlayer()));
             } catch (GameControlException e) {
                 try {
-                    perkManifestProvider.createRegistry(event.getPlayer().getDatabaseIdentifier(), plugin.getConfig().getString("registry.mode"));
+                    perkManifestProvider.createRegistry(
+                            event.getPlayer().getDatabaseIdentifier(),
+                            plugin.getConfig().getString("registry.mode"),
+                            null,
+                            "tnt_games_manifest",
+                            TNTPerkProvider.generateDefault()
+                    );
                 } catch (Exception exception) {
                     kickOnError(event.getPlayer(), e);
                 }
