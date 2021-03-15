@@ -31,28 +31,28 @@ public interface TNTPerkProvider {
             public void setMoney(int money) { }
 
             @Override
-            public DoubleJumpTier getRunJumpTier() {
-                return DoubleJumpTier.I;
+            public String getRunJumpTier() {
+                return "rookie";
             }
 
             @Override
-            public void setRunJumpTier(DoubleJumpTier tier) { }
+            public void setRunJumpTier(String tier) { }
 
             @Override
-            public DoubleJumpTier getSpleefJumpTier() {
-                return DoubleJumpTier.I;
+            public String getSpleefJumpTier() {
+                return "rookie";
             }
 
             @Override
-            public void setSpleefJumpTier(DoubleJumpTier tier) { }
+            public void setSpleefJumpTier(String tier) { }
 
             @Override
-            public TripleShotTier getSpleefTripleShot() {
-                return TripleShotTier.I;
+            public String getSpleefTripleShot() {
+                return "rookie";
             }
 
             @Override
-            public void setSpleefTripleShot(TripleShotTier tier) { }
+            public void setSpleefTripleShot(String tier) { }
         };
     }
 

@@ -17,31 +17,31 @@ public interface TNTPerkManifest extends AbstractPerk {
     /**
      * @return actual tier of user's TNT run double jump.
      */
-    DoubleJumpTier getRunJumpTier();
+    String getRunJumpTier();
 
     /**
      * @param tier to be updated at user's TNT run double jump.
      */
-    void setRunJumpTier(DoubleJumpTier tier);
+    void setRunJumpTier(String tier);
 
     /**
      * @return actual tier of user's BowSpleef double jump.
      */
-    DoubleJumpTier getSpleefJumpTier();
+    String getSpleefJumpTier();
 
     /**
      * @param tier to be updated at user's Bow Spleef double jump.
      */
-    void setSpleefJumpTier(DoubleJumpTier tier);
+    void setSpleefJumpTier(String tier);
 
     /**
      * @return actual tier of user's Bow Spleef triple shot.
      */
-    TripleShotTier getSpleefTripleShot();
+    String getSpleefTripleShot();
 
     /**
      * @param tier to be updated at user's Triple Shot.
      */
-    void setSpleefTripleShot(TripleShotTier tier);
+    void setSpleefTripleShot(String tier);
 
 }

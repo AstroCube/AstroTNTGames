@@ -16,8 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
+import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.logging.Level;
 
 @Singleton
@@ -26,7 +26,11 @@ public class CoreMainShopMenu implements MainShopMenu {
     private @Inject MessageHandler messageHandler;
     private @Inject GenericHeadHelper genericHeadHelper;
     private @Inject TNTPerkProvider tntPerkProvider;
+    private @Inject TNTMenuHelper tntMenuHelper;
     private @Inject Plugin plugin;
+
+    private @Inject @Named("spleef") MainShopMenu.SubMenu spleefMenu;
+    private @Inject @Named("run") MainShopMenu.SubMenu runMenu;
 
     @Override
     public void open(Player player) {
@@ -47,6 +51,7 @@ public class CoreMainShopMenu implements MainShopMenu {
                 6
         );
 
+        int finalMoney = money;
         builder.addItem(
             genericHeadHelper.generateDefaultClickable(
                     genericHeadHelper.generateMetaAndPlace(
@@ -56,7 +61,7 @@ public class CoreMainShopMenu implements MainShopMenu {
                     ),
                     20,
                     ClickType.LEFT,
-                    (p) -> {}
+                    (p) -> runMenu.open(player, finalMoney)
             )
         );
 
@@ -69,38 +74,15 @@ public class CoreMainShopMenu implements MainShopMenu {
                         ),
                         24,
                         ClickType.LEFT,
-                        (p) -> {}
+                        (p) -> spleefMenu.open(player, finalMoney)
                 )
         );
 
-        builder.addItem(
-                genericHeadHelper.generateDefaultClickable(
-                        genericHeadHelper.generateMetaAndPlace(
-                                new ItemStack(Material.DIAMOND),
-                                messageHandler.replacing(
-                                        player, "store.percentage.title",
-                                        "%%money%%",
-                                        money
-                                ),
-                                messageHandler.getMany(player, "store.percentage.lore")
-                        ),
-                        49,
-                        ClickType.LEFT,
-                        (p) -> {}
-                )
-        );
-
-        builder.addItem(
-                genericHeadHelper.generateDefaultClickable(
-                        genericHeadHelper.generateMetaAndPlace(
-                                genericHeadHelper.backButton(player),
-                                messageHandler.get(player, "store.close"),
-                                new ArrayList<>()
-                        ),
-                        48,
-                        ClickType.LEFT,
-                        HumanEntity::closeInventory
-                )
+        tntMenuHelper.addDefaultButtons(
+                builder,
+                player,
+                money,
+                HumanEntity::closeInventory
         );
 
         player.openInventory(builder.build());

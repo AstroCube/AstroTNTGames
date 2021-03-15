@@ -18,4 +18,15 @@ public interface MainShopMenu {
      */
     ItemStack generateItem(Player player);
 
+    interface SubMenu {
+
+        /**
+         * Open category menu for a player
+         * @param player to open menu.
+         * @param money of the player
+         */
+        void open(Player player, int money);
+
+    }
+
 }

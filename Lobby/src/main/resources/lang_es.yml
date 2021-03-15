@@ -41,3 +41,48 @@ store:
         - "%%gray%%TNT Run"
         - ""
         - "%%aqua%%¡Click izquierdo para ver!"
+child:
+  run:
+    title: "Tienda TNT Run"
+    double-jump:
+      title: "%%aqua%%Doble Saltos"
+      lore:
+        - "%%gray%%Aumenta la cantidad de saltos"
+        - "%%gray%%dobles."
+        - ""
+        - "%%blue%%¡Click izquierdo para abrir!"
+  spleef:
+    title: "Tienda Bow Spleef"
+    triple-shot:
+      title: "%%aqua%%Disparo Triple"
+      lore:
+        - "%%gray%%Aumenta la disparos triples"
+        - "%%gray%%disponibles."
+        - ""
+        - "%%blue%%¡Click izquierdo para abrir!"
+    double-jump:
+      title: "%%aqua%%Doble Saltos"
+      lore:
+        - "%%gray%%Aumenta la cantidad de saltos"
+        - "%%gray%%dobles"
+        - ""
+        - "%%blue%%¡Click izquierdo para abrir!"
+upgrade:
+  title: "Mejorar habilidad"
+  action:
+    owned: "%%green%%¡Ya desbloqueaste esta mejora!"
+    next: "%%aqua%%¡Desbloquea esta mejora!"
+    money: "%%red%%¡No tienes dinero suficiente!"
+    insufficent: "%%red%%¡Desbloquea las mejoras anteriores!"
+  run:
+    double-jump:
+      title:
+        rookie: "%%gray%%Recluta"
+        beginner: "%%yellow%%Principiante"
+        amateur: "%%green%%Amateur"
+        advanced: "%%blue%%Avanzado"
+        senior: "%%red%%Senior"
+      lore:
+        - "Mejora tu habilidad para obtener"
+        - "%%blue%%%%jumps%% saltos."
+        - " "

@@ -1,0 +1,57 @@
+{
+  "tiers": [
+    {
+      "name": "rookie",
+      "type": "RUN_JUMP",
+      "order": 1,
+      "quantity": 2,
+      "price": 0,
+      "default": true,
+      "required": []
+    },
+    {
+      "name": "beginner",
+      "type": "RUN_JUMP",
+      "order": 2,
+      "quantity": 3,
+      "price": 5000,
+      "default": false,
+      "required": [
+        "newbie"
+      ]
+    },
+    {
+      "name": "amateur",
+      "type": "RUN_JUMP",
+      "order": 3,
+      "quantity": 4,
+      "price": 10000,
+      "default": false,
+      "required": [
+        "beginner"
+      ]
+    },
+    {
+      "name": "advanced",
+      "type": "RUN_JUMP",
+      "order": 4,
+      "quantity": 5,
+      "price": 20000,
+      "default": false,
+      "required": [
+        "amateur"
+      ]
+    },
+    {
+      "name": "senior",
+      "type": "RUN_JUMP",
+      "order": 5,
+      "quantity": 6,
+      "price": 50000,
+      "default": false,
+      "required": [
+        "advanced"
+      ]
+    }
+  ]
+}

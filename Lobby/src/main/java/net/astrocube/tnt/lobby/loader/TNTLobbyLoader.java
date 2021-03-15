@@ -5,6 +5,7 @@ import net.astrocube.api.core.loader.Loader;
 import net.astrocube.api.core.service.find.FindService;
 import net.astrocube.api.core.virtual.gamemode.GameMode;
 import net.astrocube.api.core.virtual.gamemode.SubGameMode;
+import net.astrocube.tnt.shared.perk.configuration.PerkConfigurationCache;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -19,6 +20,7 @@ public class TNTLobbyLoader implements Loader {
 
     private @Inject FindService<GameMode> findService;
     private @Inject Plugin plugin;
+    private @Inject PerkConfigurationCache perkConfigurationCache;
 
     @Override
     public void load() {
@@ -41,6 +43,8 @@ public class TNTLobbyLoader implements Loader {
             }
 
             plugin.getLogger().info("Successfully paired with modes.");
+
+            perkConfigurationCache.generate();
 
             listenerLoader.load();
 
