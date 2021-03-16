@@ -17,12 +17,14 @@ import net.astrocube.tnt.shared.perk.configuration.PerkConfigurationCache;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class UpgradeShopMenu {
@@ -32,6 +34,7 @@ public class UpgradeShopMenu {
     private @Inject PerkConfigurationCache perkConfigurationCache;
     private @Inject TNTPerkProvider tntPerkProvider;
     private @Inject GenericHeadHelper genericHeadHelper;
+    private @Inject Plugin plugin;
 
     public void open(Player player, int money, PerkConfiguration.Purchasable.Type type) {
 
@@ -48,8 +51,29 @@ public class UpgradeShopMenu {
 
         try {
 
-            TNTPerkManifest manifest = tntPerkProvider.getManifest(player.getDatabaseIdentifier()).orElseThrow(() ->
-                    new GameControlException("Manifest not found."));
+            TNTPerkManifest manifest = tntPerkProvider
+                    .getManifest(player.getDatabaseIdentifier())
+                    .orElseThrow(() -> new GameControlException("Manifest not found."));
+
+            String typeSort = "";
+
+            switch (type) {
+                case SPLEEF_JUMP: {
+                    typeSort = manifest.getSpleefJumpTier();
+                    break;
+                }
+                case RUN_JUMP: {
+                    typeSort = manifest.getRunJumpTier();
+                    break;
+                }
+                case SPLEEF_SHOT: {
+                    typeSort = manifest.getSpleefTripleShot();
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
 
             List<PerkConfiguration.Purchasable> purchasableList = perkConfigurationCache.getCachedItems().stream()
                     .filter(purchasable -> purchasable.getType() == type)
@@ -62,12 +86,56 @@ public class UpgradeShopMenu {
 
                 if (!active) {
 
+                    if (purchasable.getName().equalsIgnoreCase(typeSort)) {
+                        active = true;
+                    }
+
+                    generatePurchasableGlass(
+                            purchasable,
+                            player,
+                            PurchasableGlass.OWNED
+                    );
+
+                    continue;
+
                 }
+
+                if (!upgradable) {
+
+                    upgradable = true;
+
+                    if (purchasable.getPrice() > manifest.getMoney()) {
+
+                        generatePurchasableGlass(
+                                purchasable,
+                                player,
+                                PurchasableGlass.MONEY
+                        );
+
+                    } else {
+
+                        generatePurchasableGlass(
+                                purchasable,
+                                player,
+                                PurchasableGlass.NEXT
+                        );
+
+                    }
+
+                    continue;
+
+                }
+
+                generatePurchasableGlass(
+                        purchasable,
+                        player,
+                        PurchasableGlass.INSUFFICIENT
+                );
 
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            plugin.getLogger().log(Level.SEVERE, "Error while opening upgrade shop menu", e);
         }
 
     }
