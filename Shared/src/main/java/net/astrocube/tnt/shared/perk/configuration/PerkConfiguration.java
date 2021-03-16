@@ -1,5 +1,8 @@
 package net.astrocube.tnt.shared.perk.configuration;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Set;
 
 public interface PerkConfiguration {
@@ -49,8 +52,15 @@ public interface PerkConfiguration {
          */
         Set<String> getRequired();
 
+        @Getter
+        @AllArgsConstructor
         enum Type {
-            RUN_JUMP, SPLEEF_JUMP, SPLEEF_SHOT
+
+            RUN_JUMP("upgrade.run.double-jump"),
+            SPLEEF_JUMP("upgrade.spleef.double-jump"),
+            SPLEEF_SHOT("upgrade.spleef.triple-shot");
+
+            private final String translation;
         }
 
     }

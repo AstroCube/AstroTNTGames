@@ -73,7 +73,11 @@ upgrade:
     owned: "%%green%%¡Ya desbloqueaste esta mejora!"
     next: "%%aqua%%¡Desbloquea esta mejora!"
     money: "%%red%%¡No tienes dinero suficiente!"
-    insufficent: "%%red%%¡Desbloquea las mejoras anteriores!"
+    insufficient: "%%red%%¡Desbloquea las mejoras anteriores!"
+  click:
+    money: "No tienes dinero suficiente para comprar esta mejora."
+    owned: "Ya tienes esta mejora, intenta comprar la siguiente."
+    insufficient: "Debes desbloquear una mejora anterior para poder comprar esta."
   run:
     double-jump:
       title:
