@@ -85,6 +85,9 @@ public class UpgradeShopMenu {
             int index = 19;
             for (PerkConfiguration.Purchasable purchasable : purchasableList) {
 
+                System.out.println("Starting translation");
+                System.out.println("Purchasable: " + purchasable.getName());
+
                 while (MenuUtils.isMarkedSlot(index)) {
                     index++;
                 }
@@ -94,6 +97,8 @@ public class UpgradeShopMenu {
                     if (purchasable.getName().equalsIgnoreCase(typeSort)) {
                         active = true;
                     }
+
+                    System.out.println("Status: OWNED");
 
                     addToGUI(
                             builder,
@@ -126,6 +131,8 @@ public class UpgradeShopMenu {
                                 index
                         );
 
+                        System.out.println("Status: UNAVAILABLE-MONEY");
+
                     } else {
 
                         addToGUI(
@@ -137,6 +144,9 @@ public class UpgradeShopMenu {
                                 ),
                                 index
                         );
+
+
+                        System.out.println("Status: NEXT");
 
                     }
 
@@ -154,6 +164,9 @@ public class UpgradeShopMenu {
                         ),
                         index
                 );
+
+
+                System.out.println("Status: INSUFFICIENT PERKS");
 
                 index++;
 
