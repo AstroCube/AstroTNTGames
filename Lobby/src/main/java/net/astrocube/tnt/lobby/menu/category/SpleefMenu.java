@@ -6,6 +6,8 @@ import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.tnt.lobby.menu.MainShopMenu;
 import net.astrocube.tnt.lobby.menu.TNTMenuHelper;
+import net.astrocube.tnt.lobby.menu.UpgradeShopMenu;
+import net.astrocube.tnt.shared.perk.configuration.PerkConfiguration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -19,6 +21,7 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
     private @Inject MessageHandler messageHandler;
     private @Inject MainShopMenu mainShopMenu;
     private @Inject GenericHeadHelper genericHeadHelper;
+    private @Inject UpgradeShopMenu upgradeShopMenu;
 
     @Override
     public void open(Player player, int money) {
@@ -43,7 +46,7 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
                         ),
                         20,
                         ClickType.LEFT,
-                        (p) -> {}
+                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_JUMP)
                 )
         );
 
@@ -56,7 +59,7 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
                         ),
                         24,
                         ClickType.LEFT,
-                        (p) -> {}
+                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_SHOT)
                 )
         );
 
