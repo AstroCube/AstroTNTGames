@@ -1,14 +1,13 @@
 package net.astrocube.tnt.lobby.menu;
 
 import com.google.inject.Inject;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import lombok.AllArgsConstructor;
 import me.yushust.message.MessageHandler;
 import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
+import net.astrocube.api.bukkit.menu.MenuUtils;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
-import net.astrocube.api.bukkit.perk.PerkManifestProvider;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.tnt.shared.perk.TNTPerkManifest;
 import net.astrocube.tnt.shared.perk.TNTPerkProvider;
@@ -82,7 +81,12 @@ public class UpgradeShopMenu {
 
             boolean active = false;
             boolean upgradable = false;
+            int index = 19;
             for (PerkConfiguration.Purchasable purchasable : purchasableList) {
+
+                while (MenuUtils.isMarkedSlot(index)) {
+                    index++;
+                }
 
                 if (!active) {
 
@@ -96,6 +100,7 @@ public class UpgradeShopMenu {
                             PurchasableGlass.OWNED
                     );
 
+                    index++;
                     continue;
 
                 }
@@ -122,6 +127,7 @@ public class UpgradeShopMenu {
 
                     }
 
+                    index++;
                     continue;
 
                 }
@@ -131,6 +137,8 @@ public class UpgradeShopMenu {
                         player,
                         PurchasableGlass.INSUFFICIENT
                 );
+
+                index++;
 
             }
 

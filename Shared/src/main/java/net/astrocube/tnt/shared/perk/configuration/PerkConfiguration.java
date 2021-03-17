@@ -2,6 +2,7 @@ package net.astrocube.tnt.shared.perk.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.bukkit.Material;
 
 import java.util.Set;
 
@@ -56,11 +57,12 @@ public interface PerkConfiguration {
         @AllArgsConstructor
         enum Type {
 
-            RUN_JUMP("upgrade.run.double-jump"),
-            SPLEEF_JUMP("upgrade.spleef.double-jump"),
-            SPLEEF_SHOT("upgrade.spleef.triple-shot");
+            RUN_JUMP("upgrade.run.double-jump", Material.DIAMOND_BOOTS),
+            SPLEEF_JUMP("upgrade.spleef.double-jump", Material.DIAMOND_BOOTS),
+            SPLEEF_SHOT("upgrade.spleef.triple-shot", Material.ARROW);
 
             private final String translation;
+            private final Material material;
         }
 
     }
