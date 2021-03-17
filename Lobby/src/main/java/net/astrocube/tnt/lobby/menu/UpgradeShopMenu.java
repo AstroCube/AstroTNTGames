@@ -20,6 +20,7 @@ import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
+import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -35,8 +36,14 @@ public class UpgradeShopMenu {
     private @Inject TNTPerkProvider tntPerkProvider;
     private @Inject GenericHeadHelper genericHeadHelper;
     private @Inject Plugin plugin;
+    private @Inject NumberFormat numberFormat;
 
-    public void open(Player player, int money, PerkConfiguration.Purchasable.Type type) {
+    public void open(
+            Player player,
+            int money,
+            PerkConfiguration.Purchasable.Type type,
+            Consumer<Player> goBack
+    ) {
 
         GUIBuilder builder = GUIBuilder.builder(
                 messageHandler.get(player, "child.run.title")
@@ -46,7 +53,7 @@ public class UpgradeShopMenu {
                 builder,
                 player,
                 money,
-                (p) -> { }
+                goBack
         );
 
         try {
@@ -85,9 +92,6 @@ public class UpgradeShopMenu {
             int index = 19;
             for (PerkConfiguration.Purchasable purchasable : purchasableList) {
 
-                System.out.println("Starting translation");
-                System.out.println("Purchasable: " + purchasable.getName());
-
                 while (MenuUtils.isMarkedSlot(index)) {
                     index++;
                 }
@@ -97,8 +101,6 @@ public class UpgradeShopMenu {
                     if (purchasable.getName().equalsIgnoreCase(typeSort)) {
                         active = true;
                     }
-
-                    System.out.println("Status: OWNED");
 
                     addToGUI(
                             builder,
@@ -131,8 +133,6 @@ public class UpgradeShopMenu {
                                 index
                         );
 
-                        System.out.println("Status: UNAVAILABLE-MONEY");
-
                     } else {
 
                         addToGUI(
@@ -144,9 +144,6 @@ public class UpgradeShopMenu {
                                 ),
                                 index
                         );
-
-
-                        System.out.println("Status: NEXT");
 
                     }
 
@@ -164,9 +161,6 @@ public class UpgradeShopMenu {
                         ),
                         index
                 );
-
-
-                System.out.println("Status: INSUFFICIENT PERKS");
 
                 index++;
 
@@ -213,7 +207,11 @@ public class UpgradeShopMenu {
 
     private ShapedMenuGenerator.BaseClickable generatePurchasableGlass(PerkConfiguration.Purchasable purchasable, Player player, PurchasableGlass glassType) {
 
-        StringList list = messageHandler.getMany(player, purchasable.getType().getTranslation() + ".lore");
+        StringList list = messageHandler.replacingMany(
+                player, purchasable.getType().getTranslation() + ".lore",
+                "%%jumps%%", purchasable.getOrder(),
+                "%%price%%", numberFormat.format(purchasable.getPrice())
+        );
 
         String translation = messageHandler.get(player, glassType.getTranslation());
 

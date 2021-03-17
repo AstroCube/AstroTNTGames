@@ -75,9 +75,9 @@ upgrade:
     money: "%%red%%¡No tienes dinero suficiente!"
     insufficient: "%%red%%¡Desbloquea las mejoras anteriores!"
   click:
-    money: "No tienes dinero suficiente para comprar esta mejora."
-    owned: "Ya tienes esta mejora, intenta comprar la siguiente."
-    insufficient: "Debes desbloquear una mejora anterior para poder comprar esta."
+    money: "%%red%%No tienes dinero suficiente para comprar esta mejora."
+    owned: "%%red%%Ya tienes esta mejora, intenta comprar la siguiente."
+    insufficient: "%%red%%Debes desbloquear una mejora anterior para poder comprar esta."
   run:
     double-jump:
       title:
@@ -87,6 +87,8 @@ upgrade:
         advanced: "%%blue%%Avanzado"
         senior: "%%red%%Senior"
       lore:
-        - "Mejora tu habilidad para obtener"
-        - "%%blue%%%%jumps%% saltos."
+        - "%%gray%%Mejora tu habilidad para obtener"
+        - "%%blue%%%%jumps%% %%gray%%saltos."
+        - " "
+        - "%%gray%%Precio: %%gold%%%%price%%"
         - " "

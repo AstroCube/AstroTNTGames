@@ -13,9 +13,9 @@ import java.util.logging.Level;
 @Singleton
 public class CoreMoneyTransactionHandler implements MoneyTransactionHandler {
 
-    private @Inject
-    TNTPerkProvider TNTPerkProvider;
+    private @Inject TNTPerkProvider TNTPerkProvider;
     private @Inject Plugin plugin;
+    private @Inject NumberFormat numberFormat;
 
     @Override
     public int getActualMoney(String player) {
@@ -33,8 +33,7 @@ public class CoreMoneyTransactionHandler implements MoneyTransactionHandler {
 
     @Override
     public String getFormattedMoney(String player) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        return formatter.format(getActualMoney(player));
+        return numberFormat.format(getActualMoney(player));
     }
 
     @Override

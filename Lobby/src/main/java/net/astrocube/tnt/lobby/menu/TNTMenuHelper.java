@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -17,6 +18,7 @@ public class TNTMenuHelper {
 
     private @Inject GenericHeadHelper genericHeadHelper;
     private @Inject MessageHandler messageHandler;
+    private @Inject NumberFormat numberFormat;
 
     public void addDefaultButtons(GUIBuilder builder, Player player, int money, Consumer<Player> back) {
         builder.addItem(
@@ -26,7 +28,7 @@ public class TNTMenuHelper {
                                 messageHandler.replacing(
                                         player, "store.percentage.title",
                                         "%%money%%",
-                                        money
+                                        numberFormat.format(money)
                                 ),
                                 messageHandler.getMany(player, "store.percentage.lore")
                         ),

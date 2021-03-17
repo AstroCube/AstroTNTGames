@@ -46,7 +46,10 @@ public class TNTRunMenu implements MainShopMenu.SubMenu {
                         ),
                         22,
                         ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.RUN_JUMP)
+                        (p) -> upgradeShopMenu.open(
+                                p, money, PerkConfiguration.Purchasable.Type.RUN_JUMP,
+                                (back) -> open(back, money)
+                        )
                 )
         );
 

@@ -46,7 +46,7 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
                         ),
                         20,
                         ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_JUMP)
+                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_JUMP, (back) -> open(back, money))
                 )
         );
 
@@ -59,7 +59,7 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
                         ),
                         24,
                         ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_SHOT)
+                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_SHOT, (back) -> open(back, money))
                 )
         );
 
