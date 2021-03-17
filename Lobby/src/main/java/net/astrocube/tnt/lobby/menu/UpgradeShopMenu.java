@@ -17,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import team.unnamed.gui.abstraction.item.ItemClickable;
 import team.unnamed.gui.core.gui.GUIBuilder;
 
 import java.util.Comparator;
@@ -94,10 +95,14 @@ public class UpgradeShopMenu {
                         active = true;
                     }
 
-                    generatePurchasableGlass(
-                            purchasable,
-                            player,
-                            PurchasableGlass.OWNED
+                    addToGUI(
+                            builder,
+                            generatePurchasableGlass(
+                                    purchasable,
+                                    player,
+                                    PurchasableGlass.OWNED
+                            ),
+                            index
                     );
 
                     index++;
@@ -111,18 +116,26 @@ public class UpgradeShopMenu {
 
                     if (purchasable.getPrice() > manifest.getMoney()) {
 
-                        generatePurchasableGlass(
-                                purchasable,
-                                player,
-                                PurchasableGlass.MONEY
+                        addToGUI(
+                                builder,
+                                generatePurchasableGlass(
+                                        purchasable,
+                                        player,
+                                        PurchasableGlass.MONEY
+                                ),
+                                index
                         );
 
                     } else {
 
-                        generatePurchasableGlass(
-                                purchasable,
-                                player,
-                                PurchasableGlass.NEXT
+                        addToGUI(
+                                builder,
+                                generatePurchasableGlass(
+                                        purchasable,
+                                        player,
+                                        PurchasableGlass.NEXT
+                                ),
+                                index
                         );
 
                     }
@@ -132,20 +145,37 @@ public class UpgradeShopMenu {
 
                 }
 
-                generatePurchasableGlass(
-                        purchasable,
-                        player,
-                        PurchasableGlass.INSUFFICIENT
+                addToGUI(
+                        builder,
+                        generatePurchasableGlass(
+                                purchasable,
+                                player,
+                                PurchasableGlass.INSUFFICIENT
+                        ),
+                        index
                 );
 
                 index++;
 
             }
 
+            player.openInventory(builder.build());
+
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error while opening upgrade shop menu", e);
         }
 
+    }
+
+    private void addToGUI(GUIBuilder builder, ShapedMenuGenerator.BaseClickable baseClickable, int slot) {
+        builder.addItem(
+                ItemClickable.builder(slot)
+                .setItemStack(baseClickable.getStack())
+                .setAction(event ->  {
+                    baseClickable.getClick().accept((Player) event.getWhoClicked());
+                    return true;
+                }).build()
+        );
     }
 
     @AllArgsConstructor
