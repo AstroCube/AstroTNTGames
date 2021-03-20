@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
+import net.astrocube.tnt.lobby.menu.CoreUpgradeShopMenu;
 import net.astrocube.tnt.lobby.menu.MainShopMenu;
 import net.astrocube.tnt.lobby.menu.TNTMenuHelper;
 import net.astrocube.tnt.lobby.menu.UpgradeShopMenu;
@@ -37,29 +38,49 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
                 (p) -> mainShopMenu.open(player)
         );
 
-        builder.addItem(
-                genericHeadHelper.generateDefaultClickable(
-                        genericHeadHelper.generateMetaAndPlace(
-                                new ItemStack(Material.DIAMOND_BOOTS),
-                                messageHandler.get(player, "child.spleef.double-jump.title"),
-                                messageHandler.getMany(player, "child.spleef.double-jump.lore")
-                        ),
-                        20,
-                        ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_JUMP, (back) -> open(back, money))
-                )
+
+        ItemStack jumpIcon = genericHeadHelper.generateMetaAndPlace(
+                new ItemStack(Material.DIAMOND_BOOTS),
+                messageHandler.get(player, "child.spleef.double-jump.title"),
+                messageHandler.getMany(player, "child.spleef.double-jump.lore")
         );
 
         builder.addItem(
                 genericHeadHelper.generateDefaultClickable(
-                        genericHeadHelper.generateMetaAndPlace(
-                                new ItemStack(Material.ARROW),
-                                messageHandler.get(player, "child.spleef.double-jump.title"),
-                                messageHandler.getMany(player, "child.spleef.double-jump.lore")
-                        ),
+                        jumpIcon,
+                        20,
+                        ClickType.LEFT,
+                        (p) -> upgradeShopMenu.open(
+                                p,
+                                money,
+                                PerkConfiguration.Purchasable.Type.SPLEEF_JUMP,
+                                jumpIcon,
+                                (back) -> open(
+                                        back,
+                                        money
+                                )
+                        )
+                )
+        );
+
+        ItemStack tripleShotIcon = genericHeadHelper.generateMetaAndPlace(
+                new ItemStack(Material.ARROW),
+                messageHandler.get(player, "child.spleef.double-jump.title"),
+                messageHandler.getMany(player, "child.spleef.double-jump.lore")
+        );
+
+        builder.addItem(
+                genericHeadHelper.generateDefaultClickable(
+                        tripleShotIcon,
                         24,
                         ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(p, money, PerkConfiguration.Purchasable.Type.SPLEEF_SHOT, (back) -> open(back, money))
+                        (p) -> upgradeShopMenu.open(
+                                p,
+                                money,
+                                PerkConfiguration.Purchasable.Type.SPLEEF_SHOT,
+                                tripleShotIcon,
+                                (back) -> open(back, money)
+                        )
                 )
         );
 
