@@ -14,6 +14,8 @@ public class MenuModule extends ProtectedModule {
         bind(MainShopMenu.class).to(CoreMainShopMenu.class);
         bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("spleef")).to(SpleefMenu.class);
         bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("run")).to(TNTRunMenu.class);
+        bind(UpgradeConfirmationMenu.class).to(CoreUpgradeConfirmationMenu.class);
+        bind(UpgradeShopMenu.class).to(CoreUpgradeShopMenu.class);
         bind(NumberFormat.class).toProvider(() -> {
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             formatter.setMinimumIntegerDigits(0);

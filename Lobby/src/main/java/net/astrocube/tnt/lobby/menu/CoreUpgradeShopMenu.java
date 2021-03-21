@@ -9,6 +9,7 @@ import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.MenuUtils;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
+import net.astrocube.tnt.shared.money.MoneyTransactionHandler;
 import net.astrocube.tnt.shared.perk.TNTPerkManifest;
 import net.astrocube.tnt.shared.perk.TNTPerkProvider;
 import net.astrocube.tnt.shared.perk.configuration.PerkConfiguration;
@@ -34,9 +35,11 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
     private @Inject TNTMenuHelper tntMenuHelper;
     private @Inject PerkConfigurationCache perkConfigurationCache;
     private @Inject TNTPerkProvider tntPerkProvider;
+    private @Inject MoneyTransactionHandler moneyTransactionHandler;
     private @Inject GenericHeadHelper genericHeadHelper;
     private @Inject Plugin plugin;
     private @Inject NumberFormat numberFormat;
+    private @Inject UpgradeConfirmationMenu upgradeConfirmationMenu;
 
     public void open(
             Player player,
@@ -115,7 +118,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                             generatePurchasableGlass(
                                     purchasable,
                                     player,
-                                    PurchasableGlass.OWNED
+                                    PurchasableGlass.OWNED,
+                                    null
                             ),
                             index
                     );
@@ -136,7 +140,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                 generatePurchasableGlass(
                                         purchasable,
                                         player,
-                                        PurchasableGlass.MONEY
+                                        PurchasableGlass.MONEY,
+                                        null
                                 ),
                                 index
                         );
@@ -148,7 +153,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                 generatePurchasableGlass(
                                         purchasable,
                                         player,
-                                        PurchasableGlass.NEXT
+                                        PurchasableGlass.NEXT,
+                                        null
                                 ),
                                 index
                         );
@@ -165,7 +171,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                         generatePurchasableGlass(
                                 purchasable,
                                 player,
-                                PurchasableGlass.INSUFFICIENT
+                                PurchasableGlass.INSUFFICIENT,
+                                () -> open(player, money, type, icon, goBack)
                         ),
                         index
                 );
@@ -213,7 +220,12 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
     }
 
-    private ShapedMenuGenerator.BaseClickable generatePurchasableGlass(PerkConfiguration.Purchasable purchasable, Player player, PurchasableGlass glassType) {
+    private ShapedMenuGenerator.BaseClickable generatePurchasableGlass(
+            PerkConfiguration.Purchasable purchasable,
+            Player player,
+            PurchasableGlass glassType,
+            Runnable reject
+    ) {
 
         StringList list = messageHandler.replacingMany(
                 player, purchasable.getType().getTranslation() + ".lore",
@@ -225,11 +237,13 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
         list.add(translation);
 
+        String title = purchasable.getType().getTranslation() + ".title." + purchasable.getName().toLowerCase(Locale.ROOT);
+
         ItemStack stack = genericHeadHelper.generateMetaAndPlace(
                 new ItemStack(Material.STAINED_GLASS_PANE, 1, glassType.getColor()),
                 messageHandler.get(
                         player,
-                        purchasable.getType().getTranslation() + ".title." + purchasable.getName().toLowerCase(Locale.ROOT)
+                        title
                 ),
                 list
         );
@@ -241,7 +255,50 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
                     switch (glassType) {
                         case NEXT: {
-                            //TODO: Create money exchange
+                            upgradeConfirmationMenu.open(
+                                    player,
+                                    () -> {
+
+                                        try {
+                                            TNTPerkManifest manifest =
+                                                    tntPerkProvider.getManifest(player.getDatabaseIdentifier())
+                                                    .orElseThrow(() -> new GameControlException("Manifest not found"));
+
+                                            switch (purchasable.getType()) {
+                                                case SPLEEF_JUMP: {
+                                                    manifest.setSpleefJumpTier(purchasable.getName());
+                                                    break;
+                                                }
+                                                case RUN_JUMP: {
+                                                    manifest.setRunJumpTier(purchasable.getName());
+                                                    break;
+                                                }
+                                                case SPLEEF_SHOT: {
+                                                    manifest.setSpleefTripleShot(purchasable.getName());
+                                                    break;
+                                                }
+                                                default: {
+                                                    throw new GameControlException("Purchasable type not found");
+                                                }
+                                            }
+
+                                            tntPerkProvider.update(player.getDatabaseIdentifier(), manifest);
+                                            moneyTransactionHandler.withdrawMoney(player.getDatabaseIdentifier(), purchasable.getQuantity());
+                                            messageHandler.sendIn(player, AlertModes.INFO, "upgrade.confirm.announce");
+                                            player.closeInventory();
+
+                                        } catch (Exception e) {
+                                            plugin.getLogger().log(Level.SEVERE, "Error while updating user perks", e);
+                                            messageHandler.sendReplacingIn(
+                                                    player, AlertModes.ERROR, "upgrade.error",
+                                                    "%%upgrade%%", title
+                                            );
+                                        }
+
+                                    },
+                                    reject,
+                                    title
+                            );
                             break;
                         }
                         case MONEY: {

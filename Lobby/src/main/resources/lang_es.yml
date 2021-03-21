@@ -69,10 +69,12 @@ child:
         - "%%blue%%¡Click izquierdo para abrir!"
 upgrade:
   title: "Mejorar habilidad"
+  error: "%%red%%Ha ocurrido un error al efectuar la mejora"
   confirm:
     title: "Confirmar mejora"
     confirm: "Confirmar compra de mejora %%upgrade%%"
     cancel: "Cancelar compra"
+    announce: "%%blue%%Actualizaste correctamente a %%upgrade%%%%blue%%."
   action:
     owned: "%%green%%¡Ya desbloqueaste esta mejora!"
     next: "%%aqua%%¡Desbloquea esta mejora!"
