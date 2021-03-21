@@ -9,7 +9,7 @@ import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.MenuUtils;
 import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
-import net.astrocube.tnt.shared.money.MoneyTransactionHandler;
+import net.astrocube.tnt.lobby.statistic.LobbyScoreboardProvider;
 import net.astrocube.tnt.shared.perk.TNTPerkManifest;
 import net.astrocube.tnt.shared.perk.TNTPerkProvider;
 import net.astrocube.tnt.shared.perk.configuration.PerkConfiguration;
@@ -35,11 +35,11 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
     private @Inject TNTMenuHelper tntMenuHelper;
     private @Inject PerkConfigurationCache perkConfigurationCache;
     private @Inject TNTPerkProvider tntPerkProvider;
-    private @Inject MoneyTransactionHandler moneyTransactionHandler;
     private @Inject GenericHeadHelper genericHeadHelper;
     private @Inject Plugin plugin;
     private @Inject NumberFormat numberFormat;
     private @Inject UpgradeConfirmationMenu upgradeConfirmationMenu;
+    private @Inject LobbyScoreboardProvider lobbyScoreboardProvider;
 
     public void open(
             Player player,
@@ -154,7 +154,13 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                         purchasable,
                                         player,
                                         PurchasableGlass.NEXT,
-                                        null
+                                        () -> open(
+                                                player,
+                                                money,
+                                                type,
+                                                icon,
+                                                goBack
+                                        )
                                 ),
                                 index
                         );
@@ -172,7 +178,7 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                 purchasable,
                                 player,
                                 PurchasableGlass.INSUFFICIENT,
-                                () -> open(player, money, type, icon, goBack)
+                                null
                         ),
                         index
                 );
@@ -259,6 +265,7 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                     player,
                                     () -> {
 
+
                                         try {
                                             TNTPerkManifest manifest =
                                                     tntPerkProvider.getManifest(player.getDatabaseIdentifier())
@@ -282,17 +289,20 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                                 }
                                             }
 
+                                            manifest.setMoney(manifest.getMoney() - purchasable.getPrice());
+
                                             tntPerkProvider.update(player.getDatabaseIdentifier(), manifest);
-                                            moneyTransactionHandler.withdrawMoney(player.getDatabaseIdentifier(), purchasable.getQuantity());
-                                            messageHandler.sendIn(player, AlertModes.INFO, "upgrade.confirm.announce");
+                                            messageHandler.sendReplacingIn(player, AlertModes.INFO,
+                                                    "upgrade.confirm.announce",
+                                                    "%%upgrade%%", messageHandler.get(player, title)
+                                            );
+                                            lobbyScoreboardProvider.setup(player);
                                             player.closeInventory();
 
                                         } catch (Exception e) {
                                             plugin.getLogger().log(Level.SEVERE, "Error while updating user perks", e);
-                                            messageHandler.sendReplacingIn(
-                                                    player, AlertModes.ERROR, "upgrade.error",
-                                                    "%%upgrade%%", title
-                                            );
+                                            messageHandler.sendIn(player, AlertModes.ERROR, "upgrade.error");
+                                            player.closeInventory();
                                         }
 
                                     },
@@ -314,9 +324,6 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                             break;
                         }
                     }
-
-
-                    p.closeInventory();
 
                 };
             }

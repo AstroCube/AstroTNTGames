@@ -35,7 +35,7 @@ public class CoreTNTPerkProvider implements TNTPerkProvider {
         );
 
         perk.setStored(manifest);
-        updateService.update(perk);
+        updateService.updateSync(perk);
 
     }
 

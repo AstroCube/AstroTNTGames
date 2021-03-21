@@ -14,18 +14,4 @@ public interface MoneyTransactionHandler {
      */
     String getFormattedMoney(String player);
 
-    /**
-     * Add balance to the user actual money.
-     * @param player to add
-     * @param quantity to add
-     */
-    void addMoney(String player, int quantity);
-
-    /**
-     * Remove balance to the user actual money.
-     * @param player to add
-     * @param quantity to add
-     */
-    void withdrawMoney(String player, int quantity);
-
 }

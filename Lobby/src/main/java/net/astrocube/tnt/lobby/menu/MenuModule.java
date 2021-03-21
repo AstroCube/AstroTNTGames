@@ -18,7 +18,7 @@ public class MenuModule extends ProtectedModule {
         bind(UpgradeShopMenu.class).to(CoreUpgradeShopMenu.class);
         bind(NumberFormat.class).toProvider(() -> {
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            formatter.setMinimumIntegerDigits(0);
+            formatter.setMinimumFractionDigits(0);
             return formatter;
         });
     }
