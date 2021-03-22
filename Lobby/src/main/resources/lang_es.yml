@@ -86,19 +86,19 @@ upgrade:
     insufficient: "%%red%%Debes desbloquear una mejora anterior para poder comprar esta."
   spleef:
     triple-shot:
-      rookie: "%%gray%%Recluta"
-      beginner: "%%yellow%%Principiante"
-      amateur: "%%green%%Amateur"
-      advanced: "%%blue%%Avanzado"
-      senior: "%%red%%Senior"
-      master: "%%dark_purple%%Maestro"
-    double-jump:
       blind: "%%gray%%Ceguete"
       recruit: "%%yellow%%Recluta"
       sniper: "%%green%%Francotirador"
       marksman: "%%blue%%Marksman"
       hawkeye: "%%red%%Hawkeye"
       ripper: "%%dark_purple%%Destripador"
+    double-jump:
+      rookie: "%%gray%%Recluta"
+      beginner: "%%yellow%%Principiante"
+      amateur: "%%green%%Amateur"
+      advanced: "%%blue%%Avanzado"
+      senior: "%%red%%Senior"
+      master: "%%dark_purple%%Maestro"
   run:
     double-jump:
       title:
