@@ -86,19 +86,33 @@ upgrade:
     insufficient: "%%red%%Debes desbloquear una mejora anterior para poder comprar esta."
   spleef:
     triple-shot:
-      blind: "%%gray%%Ceguete"
-      recruit: "%%yellow%%Recluta"
-      sniper: "%%green%%Francotirador"
-      marksman: "%%blue%%Marksman"
-      hawkeye: "%%red%%Hawkeye"
-      ripper: "%%dark_purple%%Destripador"
+      title:
+        blind: "%%gray%%Ceguete"
+        recruit: "%%yellow%%Recluta"
+        sniper: "%%green%%Francotirador"
+        marksman: "%%blue%%Marksman"
+        hawkeye: "%%red%%Hawkeye"
+        ripper: "%%dark_purple%%Destripador"
+      lore:
+        - "%%gray%%Mejora tu habilidad para disparar"
+        - "%%blue%%%%jumps%% %%gray%%flechas triples."
+        - " "
+        - "%%gray%%Precio: %%gold%%%%price%%"
+        - " "
     double-jump:
-      rookie: "%%gray%%Recluta"
-      beginner: "%%yellow%%Principiante"
-      amateur: "%%green%%Amateur"
-      advanced: "%%blue%%Avanzado"
-      senior: "%%red%%Senior"
-      master: "%%dark_purple%%Maestro"
+      title:
+        rookie: "%%gray%%Recluta"
+        beginner: "%%yellow%%Principiante"
+        amateur: "%%green%%Amateur"
+        advanced: "%%blue%%Avanzado"
+        senior: "%%red%%Senior"
+        master: "%%dark_purple%%Maestro"
+      lore:
+        - "%%gray%%Mejora tu habilidad para obtener"
+        - "%%blue%%%%jumps%% %%gray%%saltos."
+        - " "
+        - "%%gray%%Precio: %%gold%%%%price%%"
+        - " "
   run:
     double-jump:
       title:
