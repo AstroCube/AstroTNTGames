@@ -8,6 +8,8 @@ import net.astrocube.tnt.shared.perk.TNTPerkProvider;
 import net.astrocube.tnt.shared.perk.configuration.CorePerkConfigurationCache;
 import net.astrocube.tnt.shared.perk.configuration.PerkConfigurationCache;
 
+import java.text.NumberFormat;
+
 public class SharedModule extends ProtectedModule {
 
     @Override
@@ -15,6 +17,11 @@ public class SharedModule extends ProtectedModule {
         bind(MoneyTransactionHandler.class).to(CoreMoneyTransactionHandler.class);
         bind(TNTPerkProvider.class).to(CoreTNTPerkProvider.class);
         bind(PerkConfigurationCache.class).to(CorePerkConfigurationCache.class);
+        bind(NumberFormat.class).toProvider(() -> {
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            formatter.setMinimumFractionDigits(0);
+            return formatter;
+        });
     }
 
 }
