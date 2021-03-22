@@ -84,6 +84,21 @@ upgrade:
     money: "%%red%%No tienes dinero suficiente para comprar esta mejora."
     owned: "%%red%%Ya tienes esta mejora, intenta comprar la siguiente."
     insufficient: "%%red%%Debes desbloquear una mejora anterior para poder comprar esta."
+  spleef:
+    triple-shot:
+      rookie: "%%gray%%Recluta"
+      beginner: "%%yellow%%Principiante"
+      amateur: "%%green%%Amateur"
+      advanced: "%%blue%%Avanzado"
+      senior: "%%red%%Senior"
+      master: "%%dark_purple%%Maestro"
+    double-jump:
+      blind: "%%gray%%Ceguete"
+      recruit: "%%yellow%%Recluta"
+      sniper: "%%green%%Francotirador"
+      marksman: "%%blue%%Marksman"
+      hawkeye: "%%red%%Hawkeye"
+      ripper: "%%dark_purple%%Destripador"
   run:
     double-jump:
       title:
@@ -92,6 +107,7 @@ upgrade:
         amateur: "%%green%%Amateur"
         advanced: "%%blue%%Avanzado"
         senior: "%%red%%Senior"
+        master: "%%dark_purple%%Maestro"
       lore:
         - "%%gray%%Mejora tu habilidad para obtener"
         - "%%blue%%%%jumps%% %%gray%%saltos."
