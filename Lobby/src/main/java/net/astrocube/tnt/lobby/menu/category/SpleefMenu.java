@@ -65,8 +65,8 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
 
         ItemStack tripleShotIcon = genericHeadHelper.generateMetaAndPlace(
                 new ItemStack(Material.ARROW),
-                messageHandler.get(player, "child.spleef.double-jump.title"),
-                messageHandler.getMany(player, "child.spleef.double-jump.lore")
+                messageHandler.get(player, "child.spleef.triple-shot.title"),
+                messageHandler.getMany(player, "child.spleef.triple-shot.lore")
         );
 
         builder.addItem(
