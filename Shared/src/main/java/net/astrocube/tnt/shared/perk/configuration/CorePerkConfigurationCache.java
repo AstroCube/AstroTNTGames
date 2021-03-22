@@ -41,8 +41,8 @@ public class CorePerkConfigurationCache implements PerkConfigurationCache {
                         cache.addAll(configuration.getTiers());
                     } catch (IOException ex) {
                         plugin.getLogger().log(Level.WARNING, "Error while parsing {0}", file.getName());
-                        ex.printStackTrace();
                     }
+
                 }
 
             }

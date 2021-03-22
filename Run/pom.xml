@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>net.astrocube</groupId>
-            <artifactId>TNTGames-API</artifactId>
+            <artifactId>TNTGames-Core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
