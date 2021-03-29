@@ -28,6 +28,7 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
         Optional<ScoreboardObjective> objectiveOptional =
                 scoreboardManagerProvider.getScoreboard().getScoreboard("tntlobby_" + player.getDatabaseIdentifier());
 
+
         StringList scoreTranslation = messageHandler.replacingMany(
 
                 player, "board.lines",
@@ -37,13 +38,13 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
                 modeVictoryProvider.getWonMatches(
                         plugin.getConfig().getString("registry.tnt-run"),
                         player.getDatabaseIdentifier()
-                ),
+                ) + "",
 
                 "%%spleef_victories%%",
                 modeVictoryProvider.getWonMatches(
                         plugin.getConfig().getString("registry.bow-spleef"),
                         player.getDatabaseIdentifier()
-                )
+                ) + ""
 
         );
 

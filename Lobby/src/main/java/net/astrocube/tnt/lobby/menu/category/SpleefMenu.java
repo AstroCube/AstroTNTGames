@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import me.yushust.message.MessageHandler;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
-import net.astrocube.tnt.lobby.menu.CoreUpgradeShopMenu;
 import net.astrocube.tnt.lobby.menu.MainShopMenu;
 import net.astrocube.tnt.lobby.menu.TNTMenuHelper;
 import net.astrocube.tnt.lobby.menu.UpgradeShopMenu;

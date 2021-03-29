@@ -3,10 +3,10 @@ board:
   lines:
     - "%%green%%"
     - "  %%aqua%%%%bold%%TNT Run"
-    - "    %%dark_aqua%%Victorias%%dark_gray%%: %%white%%%%run_victories%%"
+    - "    %%red%%%%dark_aqua%%Victorias%%dark_gray%%: %%white%%%%run_victories%%"
     - "%%yellow%%"
     - "  %%aqua%%%%bold%%Bow Spleef"
-    - "    %%dark_aqua%%Victorias%%dark_gray%%: %%white%%%%spleef_victories%%"
+    - "    %%green%%%%dark_aqua%%Victorias%%dark_gray%%: %%white%%%%spleef_victories%%"
     - "    %%dark_aqua%%Disparos%%dark_gray%%: %%white%%0"
     - "%%gray%%"
     - "  %%dark_aqua%%Monedas%%dark_gray%%: %%white%%%%money%%"
