@@ -40,9 +40,12 @@ public class FloorRemovalTask implements Runnable {
                 }
 
                 if (
-                        matchOptional.get().getStatus() != MatchDoc.Status.RUNNING &&
-                        MatchParticipantsProvider.getInvolvedIds(matchOptional.get()).contains(player.getDatabaseIdentifier())
+                        matchOptional.get().getStatus() != MatchDoc.Status.RUNNING
                 ) {
+                    continue;
+                }
+
+                if (!MatchParticipantsProvider.getInvolvedIds(matchOptional.get()).contains(player.getDatabaseIdentifier())){
                     continue;
                 }
 
