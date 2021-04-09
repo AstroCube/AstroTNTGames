@@ -26,7 +26,7 @@ public class TNTMenuHelper {
                                 new ItemStack(Material.DIAMOND),
                                 messageHandler.replacing(
                                         player, "store.percentage.title",
-                                        "%%money%%",
+                                        "%money%",
                                         numberFormat.format(money)
                                 ),
                                 messageHandler.getMany(player, "store.percentage.lore")

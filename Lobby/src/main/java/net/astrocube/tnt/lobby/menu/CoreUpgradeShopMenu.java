@@ -235,8 +235,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
         StringList list = messageHandler.replacingMany(
                 player, purchasable.getType().getTranslation() + ".lore",
-                "%%jumps%%", purchasable.getOrder(),
-                "%%price%%", numberFormat.format(purchasable.getPrice())
+                "%jumps%", purchasable.getOrder(),
+                "%price%", numberFormat.format(purchasable.getPrice())
         );
 
         String translation = messageHandler.get(player, glassType.getTranslation());
@@ -294,7 +294,7 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
                                             tntPerkProvider.update(player.getDatabaseIdentifier(), manifest);
                                             messageHandler.sendReplacingIn(player, AlertModes.INFO,
                                                     "upgrade.confirm.announce",
-                                                    "%%upgrade%%", messageHandler.get(player, title)
+                                                    "%upgrade%", messageHandler.get(player, title)
                                             );
                                             lobbyScoreboardProvider.setup(player);
                                             player.closeInventory();

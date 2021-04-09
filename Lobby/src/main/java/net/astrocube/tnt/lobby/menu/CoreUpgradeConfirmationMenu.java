@@ -30,7 +30,7 @@ public class CoreUpgradeConfirmationMenu implements UpgradeConfirmationMenu {
                                 new ItemStack(Material.STAINED_CLAY, 1, (short) 13),
                                 messageHandler.replacing(
                                         player, "upgrade.confirm.confirm",
-                                        "%%upgrade%%", messageHandler.get(player, upgrade)
+                                        "%upgrade%", messageHandler.get(player, upgrade)
                                 ),
                                 new ArrayList<>()
                         ),

@@ -68,9 +68,9 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
 
         StringList scoreTranslation = messageHandler.replacingMany(
                 player, "game.board.lines",
-                "%%survivors%%", alive,
-                "%%jumps%%", playing ? jumps : messageHandler.get(player, "game.board.empty"),
-                "%%shots%%", playing ? tripleShot : messageHandler.get(player, "game.board.empty")
+                "%survivors%", alive,
+                "%jumps%", playing ? jumps : messageHandler.get(player, "game.board.empty"),
+                "%shots%", playing ? tripleShot : messageHandler.get(player, "game.board.empty")
         );
 
         if (!objectiveOptional.isPresent()) {

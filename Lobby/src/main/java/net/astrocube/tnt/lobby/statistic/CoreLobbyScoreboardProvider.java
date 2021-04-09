@@ -32,15 +32,15 @@ public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
         StringList scoreTranslation = messageHandler.replacingMany(
 
                 player, "board.lines",
-                "%%money%%", moneyTransactionHandler.getFormattedMoney(player.getDatabaseIdentifier()),
+                "%money%", moneyTransactionHandler.getFormattedMoney(player.getDatabaseIdentifier()),
 
-                "%%run_victories%%",
+                "%run_victories%",
                 modeVictoryProvider.getWonMatches(
                         plugin.getConfig().getString("registry.tnt-run"),
                         player.getDatabaseIdentifier()
                 ) + "",
 
-                "%%spleef_victories%%",
+                "%spleef_victories%",
                 modeVictoryProvider.getWonMatches(
                         plugin.getConfig().getString("registry.bow-spleef"),
                         player.getDatabaseIdentifier()

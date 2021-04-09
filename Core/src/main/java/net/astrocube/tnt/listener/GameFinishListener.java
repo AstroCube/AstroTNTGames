@@ -40,9 +40,9 @@ public class GameFinishListener implements Listener {
                         messageHandler.sendReplacing(
                                 participant,
                                 "game.podium.listing",
-                                "%%first%%", generatePodiumSlug(podium, participant, 0),
-                                "%%second%%", generatePodiumSlug(podium, participant, 1),
-                                "%%third%%", generatePodiumSlug(podium, participant, 2)
+                                "%first%", generatePodiumSlug(podium, participant, 0),
+                                "%second%", generatePodiumSlug(podium, participant, 1),
+                                "%third%", generatePodiumSlug(podium, participant, 2)
                         );
 
                     });
