@@ -1,10 +1,10 @@
 package net.astrocube.tnt.lobby.loader;
 
 import me.fixeddev.inject.ProtectedModule;
+import net.astrocube.api.bukkit.translation.TranslationModule;
 import net.astrocube.tnt.lobby.menu.MenuModule;
 import net.astrocube.tnt.lobby.statistic.StatisticModule;
 import net.astrocube.tnt.shared.SharedModule;
-import net.astrocube.tnt.shared.translation.TranslationModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
