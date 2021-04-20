@@ -28,8 +28,9 @@ public class GamePairEnableListener implements Listener {
                         plugin.getConfig().getString("centauri.subMode"))
         );
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
+        /*Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
                 new FloorRemovalTask(actualMatchCache, floorRemover, plugin, floorCooldownChecker), 0L, 1L);
+    */
 
     }
 
