@@ -11,6 +11,7 @@ public class LoaderModule extends ProtectedModule {
     public void configure() {
         bind(Loader.class).to(LayoutLoader.class).in(Scopes.SINGLETON);
         bind(Loader.class).annotatedWith(Names.named("listener")).to(ListenerLoader.class);
+        bind(Loader.class).annotatedWith(Names.named("task-block")).to(LoaderBlockUpdaterTask.class);
     }
 
 }

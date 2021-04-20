@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import javax.inject.Named;
@@ -69,6 +70,7 @@ public class GameReadyListener implements Listener {
                                 playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
                                 cachedPerkHandler.registerJumps(p);
                                 playerSpawner.announce(p);
+                                p.setMetadata("playing", new FixedMetadataValue(plugin, true));
                             });
 
 

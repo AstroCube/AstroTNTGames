@@ -8,10 +8,12 @@ import javax.inject.Named;
 public class LayoutLoader implements Loader {
 
     private @Inject @Named("listener") Loader listenerLoader;
+    private @Inject @Named("task-block") Loader loaderTask;
 
     @Override
     public void load() {
-        this.listenerLoader.load();
+        listenerLoader.load();
+        loaderTask.load();
     }
 
 }

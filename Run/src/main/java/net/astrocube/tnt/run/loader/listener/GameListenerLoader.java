@@ -5,6 +5,7 @@ import net.astrocube.api.bukkit.server.ListenerLoader;
 import net.astrocube.tnt.run.listener.GamePairEnableListener;
 import net.astrocube.tnt.run.listener.GameReadyListener;
 import net.astrocube.tnt.listener.GameUserDisconnectListener;
+import net.astrocube.tnt.run.listener.PlayerDisqualificationStatusListener;
 import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
@@ -14,6 +15,7 @@ public class GameListenerLoader implements ListenerLoader {
     private @Inject GameReadyListener gameReadyListener;
     private @Inject GamePairEnableListener gamePairEnableListener;
     private @Inject GameUserDisconnectListener gameUserDisconnectListener;
+    private @Inject PlayerDisqualificationStatusListener playerDisqualificationStatusListener;
 
     @Override
     public void registerEvents() {
@@ -21,7 +23,8 @@ public class GameListenerLoader implements ListenerLoader {
                 plugin,
                 gameReadyListener,
                 gameUserDisconnectListener,
-                gamePairEnableListener
+                gamePairEnableListener,
+                playerDisqualificationStatusListener
         );
     }
 
