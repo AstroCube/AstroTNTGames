@@ -6,8 +6,7 @@ import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import org.bukkit.inventory.ItemStack;import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

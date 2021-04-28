@@ -11,8 +11,7 @@ import net.astrocube.tnt.shared.perk.configuration.PerkConfiguration;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import org.bukkit.inventory.ItemStack;import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 @Singleton
 public class SpleefMenu implements MainShopMenu.SubMenu {

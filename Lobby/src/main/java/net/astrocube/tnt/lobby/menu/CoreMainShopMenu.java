@@ -13,8 +13,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import team.unnamed.gui.core.gui.GUIBuilder;
+import org.bukkit.plugin.Plugin;import team.unnamed.gui.core.gui.type.GUIBuilder;
 
 import javax.inject.Named;
 import java.util.ArrayList;
