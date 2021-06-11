@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>AstroTNTGames</artifactId>
+		<artifactId>tnt-games</artifactId>
 		<groupId>net.astrocube</groupId>
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>TNTGames-Run</artifactId>
+	<artifactId>tnt-run</artifactId>
 
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -19,12 +19,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.astrocube</groupId>
-			<artifactId>TNTGames-Shared</artifactId>
+			<artifactId>tnt-games-shared</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.astrocube</groupId>
-			<artifactId>TNTGames-Core</artifactId>
+			<artifactId>tnt-games-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>net.astrocube</groupId>
 			<artifactId>gammaspigot</artifactId>
-			<version>1.8-20210426.225436-4</version>
+			<version>1.8-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.astrocube</groupId>
-	<artifactId>AstroTNTGames</artifactId>
+	<artifactId>tnt-games</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1</version>
 
 	<modules>
-		<module>Core</module>
-		<module>Run</module>
-		<module>BowSpleef</module>
-		<module>Lobby</module>
-		<module>Shared</module>
+		<module>core</module>
+		<module>run</module>
+		<module>bow-spleef</module>
+		<module>lobby</module>
+		<module>shared</module>
 	</modules>
 
 	<properties>
