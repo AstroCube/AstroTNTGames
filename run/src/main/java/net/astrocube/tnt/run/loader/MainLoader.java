@@ -3,13 +3,9 @@ package net.astrocube.tnt.run.loader;
 import com.google.inject.Inject;
 import net.astrocube.api.core.loader.Loader;
 
-import javax.inject.Named;
+public class MainLoader implements Loader {
 
-public class LayoutLoader implements Loader {
-
-	private @Inject
-	@Named("listener")
-	Loader listenerLoader;
+	@Inject private ListenerLoader listenerLoader;
 
 	@Override
 	public void load() {

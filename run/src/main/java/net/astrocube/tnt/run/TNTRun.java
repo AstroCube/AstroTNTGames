@@ -2,13 +2,13 @@ package net.astrocube.tnt.run;
 
 import com.google.inject.Inject;
 import me.fixeddev.inject.ProtectedBinder;
-import net.astrocube.api.core.loader.Loader;
 import net.astrocube.tnt.run.loader.InjectionLoaderModule;
+import net.astrocube.tnt.run.loader.MainLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TNTRun extends JavaPlugin {
 
-	private @Inject Loader loader;
+	@Inject private MainLoader loader;
 
 	@Override
 	public void onEnable() {
