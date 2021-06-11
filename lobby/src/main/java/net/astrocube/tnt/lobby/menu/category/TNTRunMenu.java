@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 @Singleton
 public class TNTRunMenu implements MainShopMenu.SubMenu {
@@ -35,26 +36,21 @@ public class TNTRunMenu implements MainShopMenu.SubMenu {
 				builder,
 				player,
 				money,
-				(p) -> mainShopMenu.open(player)
+				() -> mainShopMenu.open(player)
 		);
 
-		ItemStack doubleJump = genericHeadHelper.generateMetaAndPlace(
-				new ItemStack(Material.DIAMOND_BOOTS),
-				messageHandler.get(player, "child.run.double-jump.title"),
-				messageHandler.getMany(player, "child.run.double-jump.lore")
-		);
+		ItemStack doubleJumpIcon = ItemBuilder.newBuilder(Material.DIAMOND_BOOTS)
+				.setName(messageHandler.get(player, "child.run.double-jump.title"))
+				.setLore(messageHandler.getMany(player, "child.run.double-jump.lore"))
+				.build();
 
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						doubleJump,
-						22,
-						ClickType.LEFT,
-						(p) -> upgradeShopMenu.open(
-								p, money, PerkConfiguration.Purchasable.Type.RUN_JUMP,
-								doubleJump,
-								(back) -> open(back, money)
-						)
-				)
+		builder.addItem(genericHeadHelper.generateItem(
+				doubleJumpIcon, 22, ClickType.LEFT,
+				() -> upgradeShopMenu.open(
+						player, money, PerkConfiguration.Purchasable.Type.RUN_JUMP,
+						doubleJumpIcon,
+						() -> open(player, money)
+				))
 		);
 
 		player.openInventory(builder.build());

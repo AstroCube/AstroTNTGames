@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 @Singleton
 public class SpleefMenu implements MainShopMenu.SubMenu {
@@ -34,54 +35,38 @@ public class SpleefMenu implements MainShopMenu.SubMenu {
 				builder,
 				player,
 				money,
-				(p) -> mainShopMenu.open(player)
+				() -> mainShopMenu.open(player)
 		);
 
 
-		ItemStack jumpIcon = genericHeadHelper.generateMetaAndPlace(
-				new ItemStack(Material.DIAMOND_BOOTS),
-				messageHandler.get(player, "child.spleef.double-jump.title"),
-				messageHandler.getMany(player, "child.spleef.double-jump.lore")
-		);
+		ItemStack jumpIcon = ItemBuilder.newBuilder(Material.DIAMOND_BOOTS)
+				.setName(messageHandler.get(player, "child.spleef.double-jump.title"))
+				.setLore(messageHandler.getMany(player, "child.spleef.double-jump.lore"))
+				.build();
 
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
+		ItemStack tripleShotIcon = ItemBuilder.newBuilder(Material.ARROW)
+				.setName(messageHandler.get(player, "child.spleef.triple-shot.title"))
+				.setLore(messageHandler.getMany(player, "child.spleef.triple-shot.lore"))
+				.build();
+
+		builder.addItem(genericHeadHelper.generateItem(
+				jumpIcon, 20, ClickType.LEFT,
+				() -> upgradeShopMenu.open(
+						player, money,
+						PerkConfiguration.Purchasable.Type.SPLEEF_JUMP,
 						jumpIcon,
-						20,
-						ClickType.LEFT,
-						(p) -> upgradeShopMenu.open(
-								p,
-								money,
-								PerkConfiguration.Purchasable.Type.SPLEEF_JUMP,
-								jumpIcon,
-								(back) -> open(
-										back,
-										money
-								)
-						)
+						() -> open(player, money)
 				)
-		);
-
-		ItemStack tripleShotIcon = genericHeadHelper.generateMetaAndPlace(
-				new ItemStack(Material.ARROW),
-				messageHandler.get(player, "child.spleef.triple-shot.title"),
-				messageHandler.getMany(player, "child.spleef.triple-shot.lore")
-		);
-
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						tripleShotIcon,
-						24,
-						ClickType.LEFT,
-						(p) -> upgradeShopMenu.open(
-								p,
-								money,
+		))
+				.addItem(genericHeadHelper.generateItem(
+						tripleShotIcon, 24, ClickType.LEFT,
+						() -> upgradeShopMenu.open(
+								player, money,
 								PerkConfiguration.Purchasable.Type.SPLEEF_SHOT,
 								tripleShotIcon,
-								(back) -> open(back, money)
+								() -> open(player, money)
 						)
-				)
-		);
+				));
 
 		player.openInventory(builder.build());
 

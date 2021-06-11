@@ -9,12 +9,12 @@ import net.astrocube.api.bukkit.user.inventory.nbt.NBTUtils;
 import net.astrocube.tnt.shared.perk.TNTPerkManifest;
 import net.astrocube.tnt.shared.perk.TNTPerkProvider;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -50,47 +50,36 @@ public class CoreMainShopMenu implements MainShopMenu {
 			plugin.getLogger().log(Level.SEVERE, "There was an error opening menu for player", e);
 		}
 
-		GUIBuilder builder = GUIBuilder.builder(
-				messageHandler.get(player, "store.title"),
-				6
-		);
-
 		int finalMoney = money;
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						genericHeadHelper.generateMetaAndPlace(
-								new ItemStack(Material.TNT),
-								messageHandler.get(player, "store.categories.run.title"),
-								messageHandler.getMany(player, "store.categories.run.lore")
-						),
+		GUIBuilder builder = GUIBuilder.builder(messageHandler.get(player, "store.title"))
+				.addItem(genericHeadHelper.generateItem(
+						ItemBuilder.newBuilder(Material.TNT)
+								.setName(messageHandler.get(player, "store.categories.run.title"))
+								.setLore(messageHandler.getMany(player, "store.categories.run.lore"))
+								.build(),
 						20,
 						ClickType.LEFT,
-						(p) -> runMenu.open(player, finalMoney)
-				)
-		);
-
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						genericHeadHelper.generateMetaAndPlace(
-								new ItemStack(Material.BOW),
-								messageHandler.get(player, "store.categories.spleef.title"),
-								messageHandler.getMany(player, "store.categories.spleef.lore")
-						),
+						() -> runMenu.open(player, finalMoney)
+				))
+				.addItem(genericHeadHelper.generateItem(
+						ItemBuilder.newBuilder(Material.BOW)
+								.setName(messageHandler.get(player, "store.categories.spleef.title"))
+								.setLore(messageHandler.getMany(player, "store.categories.spleef.lore"))
+								.build(),
 						24,
 						ClickType.LEFT,
-						(p) -> spleefMenu.open(player, finalMoney)
-				)
-		);
+						() -> spleefMenu.open(player, finalMoney)
+				));
+
 
 		tntMenuHelper.addDefaultButtons(
 				builder,
 				player,
 				money,
-				HumanEntity::closeInventory
+				player::closeInventory
 		);
 
 		player.openInventory(builder.build());
-
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
+import team.unnamed.gui.core.item.type.ItemBuilder;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -19,37 +20,27 @@ public class TNTMenuHelper {
 	private @Inject MessageHandler messageHandler;
 	private @Inject NumberFormat numberFormat;
 
-	public void addDefaultButtons(GUIBuilder builder, Player player, int money, Consumer<Player> back) {
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						genericHeadHelper.generateMetaAndPlace(
-								new ItemStack(Material.DIAMOND),
-								messageHandler.replacing(
-										player, "store.percentage.title",
-										"%money%",
-										numberFormat.format(money)
-								),
-								messageHandler.getMany(player, "store.percentage.lore")
-						),
-						49,
-						ClickType.LEFT,
-						(p) -> {
-						}
-				)
-		);
-
-		builder.addItem(
-				genericHeadHelper.generateDefaultClickable(
-						genericHeadHelper.generateMetaAndPlace(
-								genericHeadHelper.backButton(player),
-								messageHandler.get(player, "store.close"),
-								new ArrayList<>()
-						),
-						48,
-						ClickType.LEFT,
-						back
-				)
-		);
+	public void addDefaultButtons(GUIBuilder builder, Player player, int money, Runnable back) {
+		builder.addItem(genericHeadHelper.generateItemCancellingEvent(
+				ItemBuilder.newBuilder(Material.DIAMOND)
+						.setName(messageHandler.replacing(
+								player, "store.percentage.title",
+								"%money%", numberFormat.format(money)
+						))
+						.setLore(messageHandler.getMany(player, "store.percentage.lore"))
+						.build(),
+				49,
+				ClickType.LEFT
+		)).addItem(genericHeadHelper.generateItem(
+				genericHeadHelper.generateMetaAndPlace(
+						genericHeadHelper.backButton(player),
+						messageHandler.get(player, "store.close"),
+						new ArrayList<>()
+				),
+				48,
+				ClickType.LEFT,
+				back
+		));
 	}
 
 }

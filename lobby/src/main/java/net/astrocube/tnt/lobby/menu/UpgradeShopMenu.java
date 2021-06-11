@@ -21,7 +21,7 @@ public interface UpgradeShopMenu {
 			int money,
 			PerkConfiguration.Purchasable.Type type,
 			ItemStack icon,
-			Consumer<Player> goBack
+			Runnable goBack
 	);
 
 }

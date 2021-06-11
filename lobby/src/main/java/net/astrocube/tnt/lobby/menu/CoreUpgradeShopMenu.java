@@ -24,7 +24,6 @@ import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -45,7 +44,7 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 			int money,
 			PerkConfiguration.Purchasable.Type type,
 			ItemStack icon,
-			Consumer<Player> goBack
+			Runnable goBack
 	) {
 
 		GUIBuilder builder = GUIBuilder.builder(
@@ -102,10 +101,9 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 			int index = 19;
 			for (PerkConfiguration.Purchasable purchasable : purchasableList) {
 
-				// TODO: Didn't know what this shit does while refactoring so...
-				//while (MenuUtils.isMarkedSlot(index)) {
-				//	index++;
-				//}
+				while (MenuUtils.isMarkedSlot(index)) {
+					index++;
+				}
 
 				if (!active) {
 
