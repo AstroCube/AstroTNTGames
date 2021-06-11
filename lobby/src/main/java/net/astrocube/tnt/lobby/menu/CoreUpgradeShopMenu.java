@@ -7,7 +7,6 @@ import me.yushust.message.util.StringList;
 import net.astrocube.api.bukkit.game.exception.GameControlException;
 import net.astrocube.api.bukkit.menu.GenericHeadHelper;
 import net.astrocube.api.bukkit.menu.MenuUtils;
-import net.astrocube.api.bukkit.menu.ShapedMenuGenerator;
 import net.astrocube.api.bukkit.translation.mode.AlertModes;
 import net.astrocube.tnt.lobby.statistic.LobbyScoreboardProvider;
 import net.astrocube.tnt.shared.perk.TNTPerkManifest;
@@ -103,9 +102,10 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 			int index = 19;
 			for (PerkConfiguration.Purchasable purchasable : purchasableList) {
 
-				while (MenuUtils.isMarkedSlot(index)) {
-					index++;
-				}
+				// TODO: Didn't know what this shit does while refactoring so...
+				//while (MenuUtils.isMarkedSlot(index)) {
+				//	index++;
+				//}
 
 				if (!active) {
 
@@ -113,17 +113,13 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 						active = true;
 					}
 
-					addToGUI(
-							builder,
-							generatePurchasableGlass(
-									purchasable,
-									player,
-									PurchasableGlass.OWNED,
-									null
-							),
-							index
-					);
-
+					builder.addItem(generatePurchasableGlass(
+							index,
+							purchasable,
+							player,
+							PurchasableGlass.OWNED,
+							null
+					));
 					index++;
 					continue;
 
@@ -135,35 +131,29 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
 					if (purchasable.getPrice() > manifest.getMoney()) {
 
-						addToGUI(
-								builder,
-								generatePurchasableGlass(
-										purchasable,
-										player,
-										PurchasableGlass.MONEY,
-										null
-								),
-								index
-						);
+						builder.addItem(generatePurchasableGlass(
+								index,
+								purchasable,
+								player,
+								PurchasableGlass.MONEY,
+								null
+						));
 
 					} else {
 
-						addToGUI(
-								builder,
-								generatePurchasableGlass(
-										purchasable,
+						builder.addItem(generatePurchasableGlass(
+								index,
+								purchasable,
+								player,
+								PurchasableGlass.NEXT,
+								() -> open(
 										player,
-										PurchasableGlass.NEXT,
-										() -> open(
-												player,
-												money,
-												type,
-												icon,
-												goBack
-										)
-								),
-								index
-						);
+										money,
+										type,
+										icon,
+										goBack
+								)
+						));
 
 					}
 
@@ -172,16 +162,13 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
 				}
 
-				addToGUI(
-						builder,
-						generatePurchasableGlass(
-								purchasable,
-								player,
-								PurchasableGlass.INSUFFICIENT,
-								null
-						),
-						index
-				);
+				builder.addItem(generatePurchasableGlass(
+						index,
+						purchasable,
+						player,
+						PurchasableGlass.INSUFFICIENT,
+						null
+				));
 
 				index++;
 
@@ -195,18 +182,8 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 
 	}
 
-	private void addToGUI(GUIBuilder builder, ShapedMenuGenerator.BaseClickable baseClickable, int slot) {
-		builder.addItem(
-				ItemClickable.builder(slot)
-						.setItemStack(baseClickable.getStack())
-						.setAction(event -> {
-							baseClickable.getClick().accept((Player) event.getWhoClicked());
-							return true;
-						}).build()
-		);
-	}
-
-	private ShapedMenuGenerator.BaseClickable generatePurchasableGlass(
+	private ItemClickable generatePurchasableGlass(
+			int slot,
 			PerkConfiguration.Purchasable purchasable,
 			Player player,
 			PurchasableGlass glassType,
@@ -234,11 +211,9 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 				list
 		);
 
-		return new ShapedMenuGenerator.BaseClickable() {
-			@Override
-			public Consumer<Player> getClick() {
-				return (p) -> {
-
+		return ItemClickable.builder(slot)
+				.setItemStack(stack)
+				.setAction(event -> {
 					switch (glassType) {
 						case NEXT: {
 							upgradeConfirmationMenu.open(
@@ -304,16 +279,9 @@ public class CoreUpgradeShopMenu implements UpgradeShopMenu {
 							break;
 						}
 					}
-
-				};
-			}
-
-			@Override
-			public ItemStack getStack() {
-				return stack;
-			}
-		};
-
+					return true;
+				})
+				.build();
 	}
 
 	@AllArgsConstructor
