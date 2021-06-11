@@ -10,17 +10,17 @@ import org.bukkit.plugin.Plugin;
 
 public class GamePairEnableListener implements Listener {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onPairEnable(GamePairEnableEvent event) {
+	@EventHandler
+	public void onPairEnable(GamePairEnableEvent event) {
 
-        Bukkit.getPluginManager().callEvent(
-                new GameModePairEvent(
-                        plugin.getConfig().getString("centauri.mode"),
-                        plugin.getConfig().getString("centauri.subMode"))
-        );
+		Bukkit.getPluginManager().callEvent(
+				new GameModePairEvent(
+						plugin.getConfig().getString("centauri.mode"),
+						plugin.getConfig().getString("centauri.subMode"))
+		);
 
-    }
+	}
 
 }

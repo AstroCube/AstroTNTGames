@@ -31,94 +31,98 @@ import java.util.stream.Collectors;
 
 public class GameReadyListener implements Listener {
 
-    private @Inject FindService<Match> findService;
+	private @Inject FindService<Match> findService;
 
-    private @Inject MapConfigurationProvider mapConfigurationProvider;
-    private @Inject Plugin plugin;
+	private @Inject MapConfigurationProvider mapConfigurationProvider;
+	private @Inject Plugin plugin;
 
-    private @Inject PlayerSpawner playerSpawner;
-    private @Inject ScoreboardProvider scoreboardProvider;
-    private @Inject MatchProgressHandler matchProgressHandler;
-    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
-    private @Inject @Named("tripleShot") CachedPerkHandler tripleShotHandler;
+	private @Inject PlayerSpawner playerSpawner;
+	private @Inject ScoreboardProvider scoreboardProvider;
+	private @Inject MatchProgressHandler matchProgressHandler;
+	private @Inject
+	@Named("doubleJump")
+	CachedPerkHandler cachedPerkHandler;
+	private @Inject
+	@Named("tripleShot")
+	CachedPerkHandler tripleShotHandler;
 
-    @EventHandler
-    public void onGameReady(GameReadyEvent event) {
+	@EventHandler
+	public void onGameReady(GameReadyEvent event) {
 
-        findService.find(event.getMatch()).callback(response -> {
+		findService.find(event.getMatch()).callback(response -> {
 
-            try {
+			try {
 
-                if (!response.isSuccessful()) {
-                    throw new GameControlException("The requested match was not found");
-                }
+				if (!response.isSuccessful()) {
+					throw new GameControlException("The requested match was not found");
+				}
 
-                MapConfiguration configuration =
-                        mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
-                matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
-                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                ).collect(Collectors.toSet()));
+				MapConfiguration configuration =
+						mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
+				matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
+						team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+				).collect(Collectors.toSet()));
 
-                int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
+				int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
 
-                response.ifSuccessful(match -> {
+				response.ifSuccessful(match -> {
 
-                    executeForInvolved(
-                            event.getTeams(),
-                            (p) -> {
-                                playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
-                                cachedPerkHandler.registerJumps(p);
-                                tripleShotHandler.registerJumps(p);
-                                playerSpawner.announce(p);
+					executeForInvolved(
+							event.getTeams(),
+							(p) -> {
+								playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
+								cachedPerkHandler.registerJumps(p);
+								tripleShotHandler.registerJumps(p);
+								playerSpawner.announce(p);
 
-                                ItemStack bow = new ItemStack(Material.BOW);
-                                bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
-                                bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+								ItemStack bow = new ItemStack(Material.BOW);
+								bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
+								bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 
-                                p.getInventory().clear();
-                                p.getInventory().setItem(0, bow);
-                                p.getInventory().setItem(9, new ItemStack(Material.ARROW));
-                                
-                            });
+								p.getInventory().clear();
+								p.getInventory().setItem(0, bow);
+								p.getInventory().setItem(9, new ItemStack(Material.ARROW));
 
-                    Bukkit.getScheduler().runTaskLater(
-                            plugin,
-                            () -> executeForInvolved(event.getTeams(), (p) -> {
-                                p.setAllowFlight(true);
-                                scoreboardProvider.setupBoard(p);
-                            }),
-                            20L * cooldown
-                    );
+							});
 
-                    Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
+					Bukkit.getScheduler().runTaskLater(
+							plugin,
+							() -> executeForInvolved(event.getTeams(), (p) -> {
+								p.setAllowFlight(true);
+								scoreboardProvider.setupBoard(p);
+							}),
+							20L * cooldown
+					);
 
-                });
+					Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error processing game ready event.", e);
-                Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(),false));
-            }
+				});
 
-        });
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "There was an error processing game ready event.", e);
+				Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+			}
 
-    }
+		});
 
-    private void executeForInvolved(Set<MatchDoc.Team> teamSet, Consumer<Player> consumer) {
-        teamSet.stream()
-                .flatMap(team ->
-                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                )
-                .forEach(player -> {
+	}
 
-                    Player online = Bukkit.getPlayerByIdentifier(player);
+	private void executeForInvolved(Set<MatchDoc.Team> teamSet, Consumer<Player> consumer) {
+		teamSet.stream()
+				.flatMap(team ->
+						team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+				)
+				.forEach(player -> {
 
-                    if (online != null) {
+					Player online = Bukkit.getPlayerByIdentifier(player);
 
-                        consumer.accept(online);
+					if (online != null) {
 
-                    }
+						consumer.accept(online);
 
-                });
-    }
+					}
+
+				});
+	}
 
 }

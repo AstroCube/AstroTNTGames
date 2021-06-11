@@ -16,49 +16,49 @@ import java.util.Optional;
 @Singleton
 public class CoreLobbyScoreboardProvider implements LobbyScoreboardProvider {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject MoneyTransactionHandler moneyTransactionHandler;
-    private @Inject ModeVictoryProvider modeVictoryProvider;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject MoneyTransactionHandler moneyTransactionHandler;
+	private @Inject ModeVictoryProvider modeVictoryProvider;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void setup(Player player) {
+	@Override
+	public void setup(Player player) {
 
-        Optional<ScoreboardObjective> objectiveOptional =
-                scoreboardManagerProvider.getScoreboard().getScoreboard("tntlobby_" + player.getDatabaseIdentifier());
+		Optional<ScoreboardObjective> objectiveOptional =
+				scoreboardManagerProvider.getScoreboard().getScoreboard("tntlobby_" + player.getDatabaseIdentifier());
 
 
-        StringList scoreTranslation = messageHandler.replacingMany(
+		StringList scoreTranslation = messageHandler.replacingMany(
 
-                player, "board.lines",
-                "%money%", moneyTransactionHandler.getFormattedMoney(player.getDatabaseIdentifier()),
+				player, "board.lines",
+				"%money%", moneyTransactionHandler.getFormattedMoney(player.getDatabaseIdentifier()),
 
-                "%run_victories%",
-                modeVictoryProvider.getWonMatches(
-                        plugin.getConfig().getString("registry.tnt-run"),
-                        player.getDatabaseIdentifier()
-                ) + "",
+				"%run_victories%",
+				modeVictoryProvider.getWonMatches(
+						plugin.getConfig().getString("registry.tnt-run"),
+						player.getDatabaseIdentifier()
+				) + "",
 
-                "%spleef_victories%",
-                modeVictoryProvider.getWonMatches(
-                        plugin.getConfig().getString("registry.bow-spleef"),
-                        player.getDatabaseIdentifier()
-                ) + ""
+				"%spleef_victories%",
+				modeVictoryProvider.getWonMatches(
+						plugin.getConfig().getString("registry.bow-spleef"),
+						player.getDatabaseIdentifier()
+				) + ""
 
-        );
+		);
 
-        if (!objectiveOptional.isPresent()) {
-            ScoreboardBuilder builder =
-                    scoreboardManagerProvider.getScoreboard().newScoreboard("tntlobby_" + player.getDatabaseIdentifier());
-            scoreTranslation.forEach(builder::addLine);
-            builder.setTitle(messageHandler.get(player, "board.title"));
-            scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
-        } else {
-            objectiveOptional.get().setStringLines(scoreTranslation);
-            objectiveOptional.get().updateScoreboard();
-        }
+		if (!objectiveOptional.isPresent()) {
+			ScoreboardBuilder builder =
+					scoreboardManagerProvider.getScoreboard().newScoreboard("tntlobby_" + player.getDatabaseIdentifier());
+			scoreTranslation.forEach(builder::addLine);
+			builder.setTitle(messageHandler.get(player, "board.title"));
+			scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
+		} else {
+			objectiveOptional.get().setStringLines(scoreTranslation);
+			objectiveOptional.get().updateScoreboard();
+		}
 
-    }
+	}
 
 }

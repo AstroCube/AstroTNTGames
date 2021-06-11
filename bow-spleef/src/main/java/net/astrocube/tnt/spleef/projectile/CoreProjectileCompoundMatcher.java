@@ -10,21 +10,21 @@ import java.util.function.Consumer;
 
 @Singleton
 public class CoreProjectileCompoundMatcher implements ProjectileCompoundMatcher {
-    @Override
-    public ProjectileCompound getChosenCompound(Player player) {
-        return new ProjectileCompound() {
-            @Override
-            public String getName() {
-                return "default";
-            }
+	@Override
+	public ProjectileCompound getChosenCompound(Player player) {
+		return new ProjectileCompound() {
+			@Override
+			public String getName() {
+				return "default";
+			}
 
-            @Override
-            public Consumer<ProjectileLaunchEvent> getRunnable() {
-                return event -> {
-                    World world = player.getWorld();
-                    world.playEffect(event.getEntity().getLocation(), Effect.LAVA_POP, 1);
-                };
-            }
-        };
-    }
+			@Override
+			public Consumer<ProjectileLaunchEvent> getRunnable() {
+				return event -> {
+					World world = player.getWorld();
+					world.playEffect(event.getEntity().getLocation(), Effect.LAVA_POP, 1);
+				};
+			}
+		};
+	}
 }

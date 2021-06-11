@@ -27,54 +27,56 @@ import java.util.stream.Collectors;
 
 public class PlayerDisqualificationListener implements Listener {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject ScoreboardProvider scoreboardProvider;
-    private @Inject MatchProgressHandler matchProgressHandler;
-    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
-    private @Inject Plugin plugin;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject ScoreboardProvider scoreboardProvider;
+	private @Inject MatchProgressHandler matchProgressHandler;
+	private @Inject
+	@Named("doubleJump")
+	CachedPerkHandler cachedPerkHandler;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onPlayerDisqualification(PlayerDisqualificationEvent event) {
+	@EventHandler
+	public void onPlayerDisqualification(PlayerDisqualificationEvent event) {
 
-        try {
+		try {
 
-            Optional<Match> match = actualMatchCache.get(event.getPlayer().getDatabaseIdentifier());
+			Optional<Match> match = actualMatchCache.get(event.getPlayer().getDatabaseIdentifier());
 
-            if (match.isPresent()) {
+			if (match.isPresent()) {
 
-                Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(event.getPlayer(), match.get().getId()));
+				Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(event.getPlayer(), match.get().getId()));
 
-                Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get());
-                matchProgressHandler.disqualify(match.get().getId(), event.getPlayer().getDatabaseIdentifier());
+				Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get());
+				matchProgressHandler.disqualify(match.get().getId(), event.getPlayer().getDatabaseIdentifier());
 
-                players.forEach(p -> scoreboardProvider.setupBoard(p));
+				players.forEach(p -> scoreboardProvider.setupBoard(p));
 
-                MatchProgress progress = matchProgressHandler.getMatchProgress(match.get().getId())
-                        .orElseThrow(() -> new GameControlException("Error obtaining match progress"));
+				MatchProgress progress = matchProgressHandler.getMatchProgress(match.get().getId())
+						.orElseThrow(() -> new GameControlException("Error obtaining match progress"));
 
-                Set<MatchProgress.Participant> alive =
-                        progress.getDisqualifiedPlayers()
-                                .stream().filter(p -> p.getDisqualificationDate() == null).collect(Collectors.toSet());
+				Set<MatchProgress.Participant> alive =
+						progress.getDisqualifiedPlayers()
+								.stream().filter(p -> p.getDisqualificationDate() == null).collect(Collectors.toSet());
 
-                cachedPerkHandler.clearUses(event.getPlayer());
+				cachedPerkHandler.clearUses(event.getPlayer());
 
-                if (alive.size() <= 1) {
-                    Bukkit.getPluginManager().callEvent(
-                            new MatchFinishEvent(
-                                    match.get().getId(),
-                                    alive.stream().map(MatchProgress.Participant::getPlayerId).collect(Collectors.toSet())
-                            )
-                    );
-                }
+				if (alive.size() <= 1) {
+					Bukkit.getPluginManager().callEvent(
+							new MatchFinishEvent(
+									match.get().getId(),
+									alive.stream().map(MatchProgress.Participant::getPlayerId).collect(Collectors.toSet())
+							)
+					);
+				}
 
-            }
+			}
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error during match disqualification.", e);
-            Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error during match disqualification.", e);
+			Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+		}
 
 
-    }
+	}
 
 }

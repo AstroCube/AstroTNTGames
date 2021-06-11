@@ -29,87 +29,89 @@ import java.util.stream.Collectors;
 
 public class GameReadyListener implements Listener {
 
-    private @Inject FindService<Match> findService;
-    private @Inject FloorCooldownChecker floorCooldownChecker;
+	private @Inject FindService<Match> findService;
+	private @Inject FloorCooldownChecker floorCooldownChecker;
 
-    private @Inject MapConfigurationProvider mapConfigurationProvider;
-    private @Inject Plugin plugin;
+	private @Inject MapConfigurationProvider mapConfigurationProvider;
+	private @Inject Plugin plugin;
 
-    private @Inject PlayerSpawner playerSpawner;
-    private @Inject ScoreboardProvider scoreboardProvider;
-    private @Inject MatchProgressHandler matchProgressHandler;
-    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
+	private @Inject PlayerSpawner playerSpawner;
+	private @Inject ScoreboardProvider scoreboardProvider;
+	private @Inject MatchProgressHandler matchProgressHandler;
+	private @Inject
+	@Named("doubleJump")
+	CachedPerkHandler cachedPerkHandler;
 
-    @EventHandler
-    public void onGameReady(GameReadyEvent event) {
+	@EventHandler
+	public void onGameReady(GameReadyEvent event) {
 
-        findService.find(event.getMatch()).callback(response -> {
+		findService.find(event.getMatch()).callback(response -> {
 
-            try {
+			try {
 
-                if (!response.isSuccessful()) {
-                    throw new GameControlException("The requested match was not found");
-                }
+				if (!response.isSuccessful()) {
+					throw new GameControlException("The requested match was not found");
+				}
 
-                MapConfiguration configuration =
-                        mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
+				MapConfiguration configuration =
+						mapConfigurationProvider.parseConfiguration(event.getConfiguration(), MapConfiguration.class);
 
-                floorCooldownChecker.scheduleCooldown(event.getMatch());
-                matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
-                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                ).collect(Collectors.toSet()));
+				floorCooldownChecker.scheduleCooldown(event.getMatch());
+				matchProgressHandler.registerMatch(event.getMatch(), event.getTeams().stream().flatMap(team ->
+						team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+				).collect(Collectors.toSet()));
 
-                int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
+				int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
 
-                response.ifSuccessful(match -> {
+				response.ifSuccessful(match -> {
 
-                    executeForInvolved(
-                            event.getTeams(),
-                            (p) -> {
-                                playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
-                                cachedPerkHandler.registerJumps(p);
-                                playerSpawner.announce(p);
-                            });
+					executeForInvolved(
+							event.getTeams(),
+							(p) -> {
+								playerSpawner.spawn(p, match.getId(), configuration.getSpawn());
+								cachedPerkHandler.registerJumps(p);
+								playerSpawner.announce(p);
+							});
 
 
-                    Bukkit.getScheduler().runTaskLater(
-                            plugin,
-                            () -> executeForInvolved(event.getTeams(), (p) -> {
-                                p.setAllowFlight(true);
-                                scoreboardProvider.setupBoard(p);
-                            }),
-                            20L * cooldown
-                    );
+					Bukkit.getScheduler().runTaskLater(
+							plugin,
+							() -> executeForInvolved(event.getTeams(), (p) -> {
+								p.setAllowFlight(true);
+								scoreboardProvider.setupBoard(p);
+							}),
+							20L * cooldown
+					);
 
-                    Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
+					Bukkit.getPluginManager().callEvent(new MatchStartEvent(match.getId()));
 
-                });
+				});
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error processing game ready event.", e);
-                Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(),false));
-            }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "There was an error processing game ready event.", e);
+				Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+			}
 
-        });
+		});
 
-    }
+	}
 
-    private void executeForInvolved(Set<MatchDoc.Team> teamSet, Consumer<Player> consumer) {
-        teamSet.stream()
-                .flatMap(team ->
-                        team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
-                )
-                .forEach(player -> {
+	private void executeForInvolved(Set<MatchDoc.Team> teamSet, Consumer<Player> consumer) {
+		teamSet.stream()
+				.flatMap(team ->
+						team.getMembers().stream().map(MatchDoc.TeamMember::getUser)
+				)
+				.forEach(player -> {
 
-                    Player online = Bukkit.getPlayerByIdentifier(player);
+					Player online = Bukkit.getPlayerByIdentifier(player);
 
-                    if (online != null) {
+					if (online != null) {
 
-                        consumer.accept(online);
+						consumer.accept(online);
 
-                    }
+					}
 
-                });
-    }
+				});
+	}
 
 }

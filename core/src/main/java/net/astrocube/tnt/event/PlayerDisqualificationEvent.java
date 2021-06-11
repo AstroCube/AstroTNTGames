@@ -8,24 +8,24 @@ import javax.annotation.Nullable;
 
 public class PlayerDisqualificationEvent extends PlayerEvent {
 
-    private static final HandlerList HANDLER_LIST = new HandlerList();
-    private final String match;
+	private static final HandlerList HANDLER_LIST = new HandlerList();
+	private final String match;
 
-    public PlayerDisqualificationEvent(Player player, String match) {
-        super(player);
-        this.match = match;
-    }
+	public PlayerDisqualificationEvent(Player player, String match) {
+		super(player);
+		this.match = match;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
+	public static HandlerList getHandlerList() {
+		return HANDLER_LIST;
+	}
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return HANDLER_LIST;
+	}
 
-    public String getMatch() {
-        return match;
-    }
+	public String getMatch() {
+		return match;
+	}
 }

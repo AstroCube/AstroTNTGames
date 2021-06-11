@@ -22,38 +22,38 @@ import java.util.Map;
 
 public class ProjectileLaunchListener implements Listener {
 
-    private @Inject Plugin plugin;
-    private @Inject ProjectileCompoundMatcher projectileCompoundMatcher;
-    private @Inject ProjectileTaskTracker projectileTaskTracker;
+	private @Inject Plugin plugin;
+	private @Inject ProjectileCompoundMatcher projectileCompoundMatcher;
+	private @Inject ProjectileTaskTracker projectileTaskTracker;
 
-    @EventHandler
-    public void onProjectileLaunch(ProjectileLaunchEvent event) {
+	@EventHandler
+	public void onProjectileLaunch(ProjectileLaunchEvent event) {
 
-        if (event.getEntity().getShooter() instanceof Player) {
+		if (event.getEntity().getShooter() instanceof Player) {
 
-            Player player = (Player) event.getEntity().getShooter();
+			Player player = (Player) event.getEntity().getShooter();
 
-            player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1f, 1f);
+			player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1f, 1f);
 
-            event.getEntity().setFireTicks(10);
+			event.getEntity().setFireTicks(10);
 
-            projectileTaskTracker.schedule(
-                    event.getEntity().getEntityId(),
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            projectileCompoundMatcher.getChosenCompound(player).getRunnable().accept(event);
-                        }
-                    }.runTaskTimer(plugin, (long) (0.5 * 1L), 1L));
-        }
-    }
+			projectileTaskTracker.schedule(
+					event.getEntity().getEntityId(),
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							projectileCompoundMatcher.getChosenCompound(player).getRunnable().accept(event);
+						}
+					}.runTaskTimer(plugin, (long) (0.5 * 1L), 1L));
+		}
+	}
 
-    @EventHandler
-    public void onProjectileHit(ProjectileHitEvent event) {
+	@EventHandler
+	public void onProjectileHit(ProjectileHitEvent event) {
 
-        projectileTaskTracker.unlink(event.getEntity().getEntityId());
-        event.getEntity().remove();
+		projectileTaskTracker.unlink(event.getEntity().getEntityId());
+		event.getEntity().remove();
 
-    }
+	}
 
 }

@@ -8,13 +8,13 @@ import net.astrocube.tnt.shared.SharedModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new TranslationModule());
-        install(new LoaderModule());
-        install(new StatisticModule());
-        install(new SharedModule());
-        install(new MenuModule());
-    }
+	@Override
+	public void configure() {
+		install(new TranslationModule());
+		install(new LoaderModule());
+		install(new StatisticModule());
+		install(new SharedModule());
+		install(new MenuModule());
+	}
 
 }

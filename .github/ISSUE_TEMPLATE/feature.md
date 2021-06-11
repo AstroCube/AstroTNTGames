@@ -1,8 +1,5 @@
 ---
-name: Feature
-about: Feature part of user story.
-title: ''
-labels: Feature
-assignees: ''
+name: Feature about: Feature part of user story. title: ''
+labels: Feature assignees: ''
 
 ---

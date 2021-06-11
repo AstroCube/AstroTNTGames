@@ -13,16 +13,18 @@ import javax.inject.Named;
 
 public class GameModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new CommonGameModule());
-        bind(ScoreboardProvider.class).to(CoreScoreboardProvider.class);
-        bind(PerkProvider.class).annotatedWith(Names.named("doubleJump")).to(CoreDoubleJumpProvider.class);
-    }
+	@Override
+	public void configure() {
+		install(new CommonGameModule());
+		bind(ScoreboardProvider.class).to(CoreScoreboardProvider.class);
+		bind(PerkProvider.class).annotatedWith(Names.named("doubleJump")).to(CoreDoubleJumpProvider.class);
+	}
 
-    @Provides @Named("doubleJump") @Singleton
-    public CachedPerkHandler createDoubleJumpHandler(@Named("doubleJump") PerkProvider provider) {
-        return new CoreCachedPerkHandler(provider);
-    }
+	@Provides
+	@Named("doubleJump")
+	@Singleton
+	public CachedPerkHandler createDoubleJumpHandler(@Named("doubleJump") PerkProvider provider) {
+		return new CoreCachedPerkHandler(provider);
+	}
 
 }

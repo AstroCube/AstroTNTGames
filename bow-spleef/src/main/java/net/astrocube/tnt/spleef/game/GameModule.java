@@ -14,22 +14,26 @@ import javax.inject.Named;
 
 public class GameModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new CommonGameModule());
-        bind(ScoreboardProvider.class).to(CoreScoreboardProvider.class);
-        bind(PerkProvider.class).annotatedWith(Names.named("doubleJump")).to(CoreDoubleJumpProvider.class);
-        bind(PerkProvider.class).annotatedWith(Names.named("tripleShot")).to(CoreTripleShotProvider.class);
-    }
+	@Override
+	public void configure() {
+		install(new CommonGameModule());
+		bind(ScoreboardProvider.class).to(CoreScoreboardProvider.class);
+		bind(PerkProvider.class).annotatedWith(Names.named("doubleJump")).to(CoreDoubleJumpProvider.class);
+		bind(PerkProvider.class).annotatedWith(Names.named("tripleShot")).to(CoreTripleShotProvider.class);
+	}
 
-    @Provides @Named("doubleJump") @Singleton
-    public CachedPerkHandler provideDoubleJump(@Named("doubleJump") PerkProvider perkProvider) {
-        return new CoreCachedPerkHandler(perkProvider);
-    }
+	@Provides
+	@Named("doubleJump")
+	@Singleton
+	public CachedPerkHandler provideDoubleJump(@Named("doubleJump") PerkProvider perkProvider) {
+		return new CoreCachedPerkHandler(perkProvider);
+	}
 
-    @Provides @Named("tripleShot") @Singleton
-    public CachedPerkHandler provideTripleShot(@Named("tripleShot") PerkProvider perkProvider) {
-        return new CoreCachedPerkHandler(perkProvider);
-    }
+	@Provides
+	@Named("tripleShot")
+	@Singleton
+	public CachedPerkHandler provideTripleShot(@Named("tripleShot") PerkProvider perkProvider) {
+		return new CoreCachedPerkHandler(perkProvider);
+	}
 
 }

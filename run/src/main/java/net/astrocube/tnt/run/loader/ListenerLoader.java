@@ -10,16 +10,16 @@ import java.util.logging.Level;
 
 public class ListenerLoader implements Loader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject GameListenerLoader gameListenerLoader;
-    private @Inject CommonListenerLoader commonListenerLoader;
+	private @Inject GameListenerLoader gameListenerLoader;
+	private @Inject CommonListenerLoader commonListenerLoader;
 
-    @Override
-    public void load() {
-        plugin.getLogger().log(Level.INFO, "Initializing event listeners");
-        gameListenerLoader.registerEvents();
-        commonListenerLoader.registerEvents();
-    }
+	@Override
+	public void load() {
+		plugin.getLogger().log(Level.INFO, "Initializing event listeners");
+		gameListenerLoader.registerEvents();
+		commonListenerLoader.registerEvents();
+	}
 
 }

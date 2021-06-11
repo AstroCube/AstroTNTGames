@@ -6,54 +6,58 @@ import java.util.Optional;
 
 public interface TNTPerkProvider {
 
-    /**
-     * Retrieves perk manifest from {@link StorablePerk}.
-     * @param playerId to retrieve
-     * @return optional containing possible manifest
-     */
-    Optional<TNTPerkManifest> getManifest(String playerId) throws Exception;
+	static TNTPerkManifest generateDefault() {
+		return new TNTPerkManifest() {
+			@Override
+			public int getMoney() {
+				return 0;
+			}
 
-    /**
-     * updates a certain manifest according to player stored {@link StorablePerk}.
-     * @param playerId to update
-     * @param manifest to update
-     */
-    void update(String playerId, TNTPerkManifest manifest) throws Exception;
+			@Override
+			public void setMoney(int money) {
+			}
 
-    static TNTPerkManifest generateDefault() {
-        return new TNTPerkManifest() {
-            @Override
-            public int getMoney() {
-                return 0;
-            }
+			@Override
+			public String getRunJumpTier() {
+				return "rookie";
+			}
 
-            @Override
-            public void setMoney(int money) { }
+			@Override
+			public void setRunJumpTier(String tier) {
+			}
 
-            @Override
-            public String getRunJumpTier() {
-                return "rookie";
-            }
+			@Override
+			public String getSpleefJumpTier() {
+				return "rookie";
+			}
 
-            @Override
-            public void setRunJumpTier(String tier) { }
+			@Override
+			public void setSpleefJumpTier(String tier) {
+			}
 
-            @Override
-            public String getSpleefJumpTier() {
-                return "rookie";
-            }
+			@Override
+			public String getSpleefTripleShot() {
+				return "rookie";
+			}
 
-            @Override
-            public void setSpleefJumpTier(String tier) { }
+			@Override
+			public void setSpleefTripleShot(String tier) {
+			}
+		};
+	}
 
-            @Override
-            public String getSpleefTripleShot() {
-                return "rookie";
-            }
+	/**
+	 * Retrieves perk manifest from {@link StorablePerk}.
+	 * @param playerId to retrieve
+	 * @return optional containing possible manifest
+	 */
+	Optional<TNTPerkManifest> getManifest(String playerId) throws Exception;
 
-            @Override
-            public void setSpleefTripleShot(String tier) { }
-        };
-    }
+	/**
+	 * updates a certain manifest according to player stored {@link StorablePerk}.
+	 * @param playerId to update
+	 * @param manifest to update
+	 */
+	void update(String playerId, TNTPerkManifest manifest) throws Exception;
 
 }

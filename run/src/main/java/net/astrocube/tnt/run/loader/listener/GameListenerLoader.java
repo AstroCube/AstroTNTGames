@@ -9,21 +9,21 @@ import org.bukkit.plugin.Plugin;
 
 public class GameListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject GameReadyListener gameReadyListener;
-    private @Inject GamePairEnableListener gamePairEnableListener;
-    private @Inject GameUserDisconnectListener gameUserDisconnectListener;
+	private @Inject GameReadyListener gameReadyListener;
+	private @Inject GamePairEnableListener gamePairEnableListener;
+	private @Inject GameUserDisconnectListener gameUserDisconnectListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                gameReadyListener,
-                gameUserDisconnectListener,
-                gamePairEnableListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+				plugin,
+				gameReadyListener,
+				gameUserDisconnectListener,
+				gamePairEnableListener
+		);
+	}
 
 
 }

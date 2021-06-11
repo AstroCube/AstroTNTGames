@@ -16,50 +16,52 @@ import java.util.logging.Level;
 
 public class TNTLobbyLoader implements Loader {
 
-    private @Inject @Named("listener") Loader listenerLoader;
+	private @Inject
+	@Named("listener")
+	Loader listenerLoader;
 
-    private @Inject FindService<GameMode> findService;
-    private @Inject Plugin plugin;
-    private @Inject PerkConfigurationCache perkConfigurationCache;
+	private @Inject FindService<GameMode> findService;
+	private @Inject Plugin plugin;
+	private @Inject PerkConfigurationCache perkConfigurationCache;
 
-    @Override
-    public void load() {
-        try {
+	@Override
+	public void load() {
+		try {
 
-            GameMode mode = findService.findSync(plugin.getConfig().getString("registry.mode"));
+			GameMode mode = findService.findSync(plugin.getConfig().getString("registry.mode"));
 
-            if (mode.getSubTypes() == null) {
-                throw new GameControlException("Registered mode has no child subModes");
-            }
+			if (mode.getSubTypes() == null) {
+				throw new GameControlException("Registered mode has no child subModes");
+			}
 
-            Set<SubGameMode> subGameModes = mode.getSubTypes();
+			Set<SubGameMode> subGameModes = mode.getSubTypes();
 
-            if (checkRegistryAbsence("registry.tnt-run", subGameModes)) {
-                throw new GameControlException("No TNT Run registered");
-            }
+			if (checkRegistryAbsence("registry.tnt-run", subGameModes)) {
+				throw new GameControlException("No TNT Run registered");
+			}
 
-            if (checkRegistryAbsence("registry.bow-spleef", subGameModes)) {
-                throw new GameControlException("No Bow Spleef registered");
-            }
+			if (checkRegistryAbsence("registry.bow-spleef", subGameModes)) {
+				throw new GameControlException("No Bow Spleef registered");
+			}
 
-            plugin.getLogger().info("Successfully paired with modes.");
+			plugin.getLogger().info("Successfully paired with modes.");
 
-            perkConfigurationCache.generate();
+			perkConfigurationCache.generate();
 
-            listenerLoader.load();
+			listenerLoader.load();
 
-        } catch (Exception e) {
-            Bukkit.getPluginManager().disablePlugin(plugin);
-            plugin.getLogger().log(Level.SEVERE, "Error while validating registered modes.");
-        }
-    }
+		} catch (Exception e) {
+			Bukkit.getPluginManager().disablePlugin(plugin);
+			plugin.getLogger().log(Level.SEVERE, "Error while validating registered modes.");
+		}
+	}
 
-    private boolean checkRegistryAbsence(String mode, Set<SubGameMode> subGameModes) {
-        return subGameModes.stream().noneMatch(
-                m -> m.getId().equalsIgnoreCase(
-                        plugin.getConfig().getString(mode)
-                )
-        );
-    }
+	private boolean checkRegistryAbsence(String mode, Set<SubGameMode> subGameModes) {
+		return subGameModes.stream().noneMatch(
+				m -> m.getId().equalsIgnoreCase(
+						plugin.getConfig().getString(mode)
+				)
+		);
+	}
 
 }

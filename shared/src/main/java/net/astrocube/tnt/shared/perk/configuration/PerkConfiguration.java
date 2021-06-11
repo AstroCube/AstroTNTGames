@@ -8,63 +8,63 @@ import java.util.Set;
 
 public interface PerkConfiguration {
 
-    /**
-     * @return list of tiers registered at configuration.
-     */
-    Set<Purchasable> getTiers();
+	/**
+	 * @return list of tiers registered at configuration.
+	 */
+	Set<Purchasable> getTiers();
 
-    /**
-     * Purchasable item for configuration
-     */
-    interface Purchasable {
+	/**
+	 * Purchasable item for configuration
+	 */
+	interface Purchasable {
 
-        /**
-         * @return name of the purchase
-         */
-        String getName();
+		/**
+		 * @return name of the purchase
+		 */
+		String getName();
 
-        /**
-         * @return type of the purchase.
-         */
-        Type getType();
+		/**
+		 * @return type of the purchase.
+		 */
+		Type getType();
 
-        /**
-         * @return order in line to be shown.
-         */
-        int getOrder();
+		/**
+		 * @return order in line to be shown.
+		 */
+		int getOrder();
 
-        /**
-         * @return quantity of the new item
-         */
-        int getQuantity();
+		/**
+		 * @return quantity of the new item
+		 */
+		int getQuantity();
 
-        /**
-         * @return price of the new item
-         */
-        int getPrice();
+		/**
+		 * @return price of the new item
+		 */
+		int getPrice();
 
-        /**
-         * @return if is the default item for new users
-         */
-        boolean isDefault();
+		/**
+		 * @return if is the default item for new users
+		 */
+		boolean isDefault();
 
-        /**
-         * @return required {@link Purchasable}s to gain this one.
-         */
-        Set<String> getRequired();
+		/**
+		 * @return required {@link Purchasable}s to gain this one.
+		 */
+		Set<String> getRequired();
 
-        @Getter
-        @AllArgsConstructor
-        enum Type {
+		@Getter
+		@AllArgsConstructor
+		enum Type {
 
-            RUN_JUMP("upgrade.run.double-jump", Material.DIAMOND_BOOTS),
-            SPLEEF_JUMP("upgrade.spleef.double-jump", Material.DIAMOND_BOOTS),
-            SPLEEF_SHOT("upgrade.spleef.triple-shot", Material.ARROW);
+			RUN_JUMP("upgrade.run.double-jump", Material.DIAMOND_BOOTS),
+			SPLEEF_JUMP("upgrade.spleef.double-jump", Material.DIAMOND_BOOTS),
+			SPLEEF_SHOT("upgrade.spleef.triple-shot", Material.ARROW);
 
-            private final String translation;
-            private final Material material;
-        }
+			private final String translation;
+			private final Material material;
+		}
 
-    }
+	}
 
 }

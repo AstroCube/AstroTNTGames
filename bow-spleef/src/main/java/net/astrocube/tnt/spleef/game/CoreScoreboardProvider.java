@@ -23,67 +23,71 @@ import java.util.logging.Level;
 @Singleton
 public class CoreScoreboardProvider implements ScoreboardProvider {
 
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
-    private @Inject @Named("doubleJump") CachedPerkHandler cachedPerkHandler;
-    private @Inject @Named("tripleShot") CachedPerkHandler tripleShotPerkHandler;
-    private @Inject MessageHandler messageHandler;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject Plugin plugin;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject
+	@Named("doubleJump")
+	CachedPerkHandler cachedPerkHandler;
+	private @Inject
+	@Named("tripleShot")
+	CachedPerkHandler tripleShotPerkHandler;
+	private @Inject MessageHandler messageHandler;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void setupBoard(Player player) {
+	@Override
+	public void setupBoard(Player player) {
 
-        Optional<ScoreboardObjective> objectiveOptional =
-                scoreboardManagerProvider.getScoreboard().getScoreboard("bs_" + player.getDatabaseIdentifier());
-        int alive;
-        boolean playing = false;
+		Optional<ScoreboardObjective> objectiveOptional =
+				scoreboardManagerProvider.getScoreboard().getScoreboard("bs_" + player.getDatabaseIdentifier());
+		int alive;
+		boolean playing = false;
 
-        try {
-            Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+		try {
+			Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-            if (matchOptional.isPresent()) {
+			if (matchOptional.isPresent()) {
 
-                Match match = matchOptional.get();
+				Match match = matchOptional.get();
 
-                alive = (int) match.getTeams().parallelStream()
-                        .map(MatchDoc.Team::getMembers)
-                        .flatMap(u -> u.stream().filter(MatchDoc.TeamMember::isActive))
-                        .count();
+				alive = (int) match.getTeams().parallelStream()
+						.map(MatchDoc.Team::getMembers)
+						.flatMap(u -> u.stream().filter(MatchDoc.TeamMember::isActive))
+						.count();
 
-                if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
-                    playing = true;
-                }
+				if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+					playing = true;
+				}
 
-            } else {
-                return;
-            }
+			} else {
+				return;
+			}
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error obtaining actual match", e);
-            return;
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "Error obtaining actual match", e);
+			return;
+		}
 
-        int jumps = cachedPerkHandler.getRemainingUses(player);
-        int tripleShot = tripleShotPerkHandler.getRemainingUses(player);
+		int jumps = cachedPerkHandler.getRemainingUses(player);
+		int tripleShot = tripleShotPerkHandler.getRemainingUses(player);
 
-        StringList scoreTranslation = messageHandler.replacingMany(
-                player, "game.board.lines",
-                "%survivors%", alive,
-                "%jumps%", playing ? jumps : messageHandler.get(player, "game.board.empty"),
-                "%shots%", playing ? tripleShot : messageHandler.get(player, "game.board.empty")
-        );
+		StringList scoreTranslation = messageHandler.replacingMany(
+				player, "game.board.lines",
+				"%survivors%", alive,
+				"%jumps%", playing ? jumps : messageHandler.get(player, "game.board.empty"),
+				"%shots%", playing ? tripleShot : messageHandler.get(player, "game.board.empty")
+		);
 
-        if (!objectiveOptional.isPresent()) {
-            ScoreboardBuilder builder =
-                    scoreboardManagerProvider.getScoreboard().newScoreboard("bs_" + player.getDatabaseIdentifier());
-            scoreTranslation.forEach(builder::addLine);
-            builder.setTitle(messageHandler.get(player, "game.board.title"));
-            scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
-        } else {
-            objectiveOptional.get().setStringLines(scoreTranslation);
-            objectiveOptional.get().updateScoreboard();
-        }
+		if (!objectiveOptional.isPresent()) {
+			ScoreboardBuilder builder =
+					scoreboardManagerProvider.getScoreboard().newScoreboard("bs_" + player.getDatabaseIdentifier());
+			scoreTranslation.forEach(builder::addLine);
+			builder.setTitle(messageHandler.get(player, "game.board.title"));
+			scoreboardManagerProvider.getScoreboard().setToPlayer(player, builder.build());
+		} else {
+			objectiveOptional.get().setStringLines(scoreTranslation);
+			objectiveOptional.get().updateScoreboard();
+		}
 
-    }
+	}
 
 }

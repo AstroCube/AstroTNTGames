@@ -6,14 +6,14 @@ import java.util.function.Consumer;
 
 public interface ProjectileCompound {
 
-    /**
-     * @return registered at the database.
-     */
-    String getName();
+	/**
+	 * @return registered at the database.
+	 */
+	String getName();
 
-    /**
-     * @return runnable to be executed while
-     */
-    Consumer<ProjectileLaunchEvent> getRunnable();
+	/**
+	 * @return runnable to be executed while
+	 */
+	Consumer<ProjectileLaunchEvent> getRunnable();
 
 }

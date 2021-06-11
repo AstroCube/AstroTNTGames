@@ -4,10 +4,10 @@ import org.bukkit.entity.Player;
 
 public interface LobbyScoreboardProvider {
 
-    /**
-     * Setup scoreboard for player on join.
-     * @param player to setup
-     */
-    void setup(Player player);
+	/**
+	 * Setup scoreboard for player on join.
+	 * @param player to setup
+	 */
+	void setup(Player player);
 
 }

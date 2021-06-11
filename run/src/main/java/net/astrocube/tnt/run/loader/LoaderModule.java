@@ -7,10 +7,10 @@ import net.astrocube.api.core.loader.Loader;
 
 public class LoaderModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(Loader.class).to(LayoutLoader.class).in(Scopes.SINGLETON);
-        bind(Loader.class).annotatedWith(Names.named("listener")).to(ListenerLoader.class);
-    }
+	@Override
+	public void configure() {
+		bind(Loader.class).to(LayoutLoader.class).in(Scopes.SINGLETON);
+		bind(Loader.class).annotatedWith(Names.named("listener")).to(ListenerLoader.class);
+	}
 
 }

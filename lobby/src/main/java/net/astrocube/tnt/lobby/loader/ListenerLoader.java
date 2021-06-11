@@ -9,14 +9,14 @@ import java.util.logging.Level;
 
 public class ListenerLoader implements Loader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject UserListenerLoader userListenerLoader;
+	private @Inject UserListenerLoader userListenerLoader;
 
-    @Override
-    public void load() {
-        plugin.getLogger().log(Level.INFO, "Initializing event listeners");
-        userListenerLoader.registerEvents();
-    }
+	@Override
+	public void load() {
+		plugin.getLogger().log(Level.INFO, "Initializing event listeners");
+		userListenerLoader.registerEvents();
+	}
 
 }

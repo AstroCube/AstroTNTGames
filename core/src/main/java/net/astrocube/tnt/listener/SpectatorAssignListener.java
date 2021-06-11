@@ -9,13 +9,13 @@ import org.bukkit.event.Listener;
 
 public class SpectatorAssignListener implements Listener {
 
-    private @Inject ScoreboardProvider scoreboardProvider;
+	private @Inject ScoreboardProvider scoreboardProvider;
 
-    @EventHandler
-    public void onFlightToggled(SpectatorAssignEvent event) {
+	@EventHandler
+	public void onFlightToggled(SpectatorAssignEvent event) {
 
-        scoreboardProvider.setupBoard(event.getPlayer());
+		scoreboardProvider.setupBoard(event.getPlayer());
 
-    }
+	}
 
 }

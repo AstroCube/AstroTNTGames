@@ -19,54 +19,54 @@ import java.util.logging.Level;
 @AllArgsConstructor
 public class FloorRemovalTask implements Runnable {
 
-    private static final long DELAY_MS = 160;
+	private static final long DELAY_MS = 160;
 
-    private final ActualMatchCache actualMatchCache;
-    private final FloorRemover floorRemover;
-    private final Plugin plugin;
-    private final FloorCooldownChecker floorCooldownChecker;
-    private final Map<Location, Long> delayedLocations = new ConcurrentHashMap<>();
+	private final ActualMatchCache actualMatchCache;
+	private final FloorRemover floorRemover;
+	private final Plugin plugin;
+	private final FloorCooldownChecker floorCooldownChecker;
+	private final Map<Location, Long> delayedLocations = new ConcurrentHashMap<>();
 
-    @Override
-    public void run() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+	@Override
+	public void run() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
 
-            try {
+			try {
 
-                Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
+				Optional<Match> matchOptional = actualMatchCache.get(player.getDatabaseIdentifier());
 
-                if (!matchOptional.isPresent()) {
-                    continue;
-                }
+				if (!matchOptional.isPresent()) {
+					continue;
+				}
 
-                if (
-                        matchOptional.get().getStatus() != MatchDoc.Status.RUNNING
-                ) {
-                    continue;
-                }
+				if (
+						matchOptional.get().getStatus() != MatchDoc.Status.RUNNING
+				) {
+					continue;
+				}
 
-                if (!MatchParticipantsProvider.getOnlineIds(matchOptional.get()).contains(player.getDatabaseIdentifier())){
-                    continue;
-                }
+				if (!MatchParticipantsProvider.getOnlineIds(matchOptional.get()).contains(player.getDatabaseIdentifier())) {
+					continue;
+				}
 
-                if (floorCooldownChecker.hasCooldown(matchOptional.get().getId())) {
-                    continue;
-                }
+				if (floorCooldownChecker.hasCooldown(matchOptional.get().getId())) {
+					continue;
+				}
 
-                if (!delayedLocations.containsKey(player.getLocation())) {
-                    delayedLocations.put(player.getLocation(), System.currentTimeMillis());
-                }
+				if (!delayedLocations.containsKey(player.getLocation())) {
+					delayedLocations.put(player.getLocation(), System.currentTimeMillis());
+				}
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error while checking match floor removal", e);
-            }
-        }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "There was an error while checking match floor removal", e);
+			}
+		}
 
-        for (Map.Entry<Location, Long> entry : new ArrayList<>(delayedLocations.entrySet())) {
-            if (entry.getValue() + DELAY_MS <= System.currentTimeMillis()) {
-                floorRemover.removeFloor(entry.getKey());
-                delayedLocations.remove(entry.getKey());
-            }
-        }
-    }
+		for (Map.Entry<Location, Long> entry : new ArrayList<>(delayedLocations.entrySet())) {
+			if (entry.getValue() + DELAY_MS <= System.currentTimeMillis()) {
+				floorRemover.removeFloor(entry.getKey());
+				delayedLocations.remove(entry.getKey());
+			}
+		}
+	}
 }

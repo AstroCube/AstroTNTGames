@@ -17,48 +17,48 @@ import team.unnamed.gui.core.gui.type.GUIBuilder;
 @Singleton
 public class TNTRunMenu implements MainShopMenu.SubMenu {
 
-    private @Inject TNTMenuHelper tntMenuHelper;
-    private @Inject MessageHandler messageHandler;
-    private @Inject MainShopMenu mainShopMenu;
-    private @Inject GenericHeadHelper genericHeadHelper;
-    private @Inject
-    CoreUpgradeShopMenu upgradeShopMenu;
+	private @Inject TNTMenuHelper tntMenuHelper;
+	private @Inject MessageHandler messageHandler;
+	private @Inject MainShopMenu mainShopMenu;
+	private @Inject GenericHeadHelper genericHeadHelper;
+	private @Inject
+	CoreUpgradeShopMenu upgradeShopMenu;
 
-    @Override
-    public void open(Player player, int money) {
+	@Override
+	public void open(Player player, int money) {
 
-        GUIBuilder builder = GUIBuilder.builder(
-                messageHandler.get(player, "child.run.title")
-        );
+		GUIBuilder builder = GUIBuilder.builder(
+				messageHandler.get(player, "child.run.title")
+		);
 
-        tntMenuHelper.addDefaultButtons(
-                builder,
-                player,
-                money,
-                (p) -> mainShopMenu.open(player)
-        );
+		tntMenuHelper.addDefaultButtons(
+				builder,
+				player,
+				money,
+				(p) -> mainShopMenu.open(player)
+		);
 
-        ItemStack doubleJump = genericHeadHelper.generateMetaAndPlace(
-                new ItemStack(Material.DIAMOND_BOOTS),
-                messageHandler.get(player, "child.run.double-jump.title"),
-                messageHandler.getMany(player, "child.run.double-jump.lore")
-        );
+		ItemStack doubleJump = genericHeadHelper.generateMetaAndPlace(
+				new ItemStack(Material.DIAMOND_BOOTS),
+				messageHandler.get(player, "child.run.double-jump.title"),
+				messageHandler.getMany(player, "child.run.double-jump.lore")
+		);
 
-        builder.addItem(
-                genericHeadHelper.generateDefaultClickable(
-                        doubleJump,
-                        22,
-                        ClickType.LEFT,
-                        (p) -> upgradeShopMenu.open(
-                                p, money, PerkConfiguration.Purchasable.Type.RUN_JUMP,
-                                doubleJump,
-                                (back) -> open(back, money)
-                        )
-                )
-        );
+		builder.addItem(
+				genericHeadHelper.generateDefaultClickable(
+						doubleJump,
+						22,
+						ClickType.LEFT,
+						(p) -> upgradeShopMenu.open(
+								p, money, PerkConfiguration.Purchasable.Type.RUN_JUMP,
+								doubleJump,
+								(back) -> open(back, money)
+						)
+				)
+		);
 
-        player.openInventory(builder.build());
+		player.openInventory(builder.build());
 
-    }
+	}
 
 }

@@ -7,24 +7,24 @@ import org.bukkit.plugin.Plugin;
 
 public class CommonListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
+	private @Inject Plugin plugin;
 
-    private @Inject DoubleJumpListener doubleJumpListener;
-    private @Inject
-    PlayerActionsListener playerActionsListener;
-    private @Inject PlayerDisqualificationListener playerDisqualificationListener;
-    private @Inject SpectatorAssignListener spectatorAssignListener;
-    private @Inject GameFinishListener gameFinishListener;
+	private @Inject DoubleJumpListener doubleJumpListener;
+	private @Inject
+	PlayerActionsListener playerActionsListener;
+	private @Inject PlayerDisqualificationListener playerDisqualificationListener;
+	private @Inject SpectatorAssignListener spectatorAssignListener;
+	private @Inject GameFinishListener gameFinishListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                doubleJumpListener,
-                playerActionsListener,
-                playerDisqualificationListener,
-                gameFinishListener,
-                spectatorAssignListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+				plugin,
+				doubleJumpListener,
+				playerActionsListener,
+				playerDisqualificationListener,
+				gameFinishListener,
+				spectatorAssignListener
+		);
+	}
 }

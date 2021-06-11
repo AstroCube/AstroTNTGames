@@ -4,14 +4,14 @@ import java.util.Set;
 
 public interface PerkConfigurationCache {
 
-    /**
-     * Generate cache at server loading.
-     */
-    void generate();
+	/**
+	 * Generate cache at server loading.
+	 */
+	void generate();
 
-    /**
-     * @return cached items.
-     */
-    Set<PerkConfiguration.Purchasable> getCachedItems();
+	/**
+	 * @return cached items.
+	 */
+	Set<PerkConfiguration.Purchasable> getCachedItems();
 
 }

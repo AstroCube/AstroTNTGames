@@ -9,14 +9,14 @@ import org.bukkit.event.block.Action;
 
 public class ShopActionableListener implements Listener {
 
-    private @Inject MainShopMenu mainShopMenu;
+	private @Inject MainShopMenu mainShopMenu;
 
-    @EventHandler
-    public void onShopAction(ActionableItemEvent event) {
-        if (event.getAction().equalsIgnoreCase("tnt_shop") &&
-                (event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)) {
-            mainShopMenu.open(event.getPlayer());
-        }
-    }
+	@EventHandler
+	public void onShopAction(ActionableItemEvent event) {
+		if (event.getAction().equalsIgnoreCase("tnt_shop") &&
+				(event.getClick() == Action.RIGHT_CLICK_AIR || event.getClick() == Action.RIGHT_CLICK_BLOCK)) {
+			mainShopMenu.open(event.getPlayer());
+		}
+	}
 
 }

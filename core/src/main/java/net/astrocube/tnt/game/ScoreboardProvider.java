@@ -4,6 +4,6 @@ import org.bukkit.entity.Player;
 
 public interface ScoreboardProvider {
 
-    void setupBoard(Player player);
+	void setupBoard(Player player);
 
 }

@@ -18,31 +18,32 @@ import java.util.logging.Level;
 
 public class GameUserDisconnectListener implements Listener {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject Plugin plugin;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onGameUserDisconnect(GameUserDisconnectEvent event) {
+	@EventHandler
+	public void onGameUserDisconnect(GameUserDisconnectEvent event) {
 
-        try {
+		try {
 
-            Optional<Match> matchOptional = actualMatchCache.get(event.getPlayer().getDatabaseIdentifier());
+			Optional<Match> matchOptional = actualMatchCache.get(event.getPlayer().getDatabaseIdentifier());
 
-            matchOptional.ifPresent(match -> {
+			matchOptional.ifPresent(match -> {
 
-                try {
-                    if (UserMatchJoiner.checkOrigin(event.getPlayer().getDatabaseIdentifier(), match) == UserMatchJoiner.Origin.PLAYING)  {
-                        Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(event.getPlayer(), match.getId()));
-                    }
-                } catch (GameControlException ignore) {}
+				try {
+					if (UserMatchJoiner.checkOrigin(event.getPlayer().getDatabaseIdentifier(), match) == UserMatchJoiner.Origin.PLAYING) {
+						Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(event.getPlayer(), match.getId()));
+					}
+				} catch (GameControlException ignore) {
+				}
 
-            });
+			});
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error trying to obtain match from user disconnection", e);
-            Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error trying to obtain match from user disconnection", e);
+			Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(event.getMatch(), false));
+		}
 
-    }
+	}
 
 }

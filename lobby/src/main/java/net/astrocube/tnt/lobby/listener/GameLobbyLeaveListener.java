@@ -11,18 +11,18 @@ import java.util.Optional;
 
 public class GameLobbyLeaveListener implements Listener {
 
-    private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
+	private @Inject ScoreboardManagerProvider scoreboardManagerProvider;
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
 
-        Optional<ScoreboardObjective> objectiveOptional =
-                scoreboardManagerProvider.getScoreboard().getScoreboard(
-                        "tntlobby_" + event.getPlayer().getDatabaseIdentifier()
-                );
+		Optional<ScoreboardObjective> objectiveOptional =
+				scoreboardManagerProvider.getScoreboard().getScoreboard(
+						"tntlobby_" + event.getPlayer().getDatabaseIdentifier()
+				);
 
-        objectiveOptional.ifPresent(objective -> scoreboardManagerProvider.getScoreboard().removeScoreboard(objective));
+		objectiveOptional.ifPresent(objective -> scoreboardManagerProvider.getScoreboard().removeScoreboard(objective));
 
-    }
+	}
 
 }

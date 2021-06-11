@@ -18,47 +18,47 @@ import java.util.logging.Level;
 
 public class PlayerActionsListener implements Listener {
 
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject Plugin plugin;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageEvent event) {
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent event) {
 
-        if (!event.isCancelled()) {
-            if (!(event.getEntity() instanceof Player)) {
-                return;
-            }
+		if (!event.isCancelled()) {
+			if (!(event.getEntity() instanceof Player)) {
+				return;
+			}
 
-            Player player = (Player) event.getEntity();
+			Player player = (Player) event.getEntity();
 
-            if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
-                event.setCancelled(true);
-                return;
-            }
+			if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
+				event.setCancelled(true);
+				return;
+			}
 
-            try {
+			try {
 
-                Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
+				Optional<Match> match = actualMatchCache.get(player.getDatabaseIdentifier());
 
-                if (!match.isPresent() || !MatchParticipantsProvider.getOnlineIds(match.get()).contains(player.getDatabaseIdentifier())) {
-                    event.setCancelled(true);
-                    return;
-                }
+				if (!match.isPresent() || !MatchParticipantsProvider.getOnlineIds(match.get()).contains(player.getDatabaseIdentifier())) {
+					event.setCancelled(true);
+					return;
+				}
 
-                Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player, match.get().getId()));
-                event.setCancelled(true);
+				Bukkit.getPluginManager().callEvent(new PlayerDisqualificationEvent(player, match.get().getId()));
+				event.setCancelled(true);
 
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "There was an error while logging error.");
-                event.setCancelled(true);
-            }
-        }
+			} catch (Exception e) {
+				plugin.getLogger().log(Level.SEVERE, "There was an error while logging error.");
+				event.setCancelled(true);
+			}
+		}
 
-    }
+	}
 
-    @EventHandler
-    public void onPlayerItemDrop(PlayerDropItemEvent event) {
-        event.setCancelled(true);
-    }
+	@EventHandler
+	public void onPlayerItemDrop(PlayerDropItemEvent event) {
+		event.setCancelled(true);
+	}
 
 }

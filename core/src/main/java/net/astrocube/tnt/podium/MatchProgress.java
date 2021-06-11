@@ -5,44 +5,44 @@ import java.util.Set;
 
 public interface MatchProgress {
 
-    /**
-     * @return date where match started.
-     */
-    Date getStartDate();
+	/**
+	 * @return date where match started.
+	 */
+	Date getStartDate();
 
-    /**
-     * @return set of disqualified players.
-     */
-    Set<Participant> getDisqualifiedPlayers();
+	/**
+	 * @return set of disqualified players.
+	 */
+	Set<Participant> getDisqualifiedPlayers();
 
-    void setDisqualifiedPlayers(Set<Participant> participants);
+	void setDisqualifiedPlayers(Set<Participant> participants);
 
-    /**
-     * @return match where player was disqualified
-     */
-    String getMatch();
+	/**
+	 * @return match where player was disqualified
+	 */
+	String getMatch();
 
-    /**
-     * Wrapper providing every disqualified player
-     */
-    interface Participant {
+	/**
+	 * Wrapper providing every disqualified player
+	 */
+	interface Participant {
 
-        /**
-         * @return disqualification date of the player
-         */
-        Date getDisqualificationDate();
+		/**
+		 * @return disqualification date of the player
+		 */
+		Date getDisqualificationDate();
 
-        /**
-         * Updates disqualification date.
-         * @param date to update
-         */
-        void setDisqualificationDate(Date date);
+		/**
+		 * Updates disqualification date.
+		 * @param date to update
+		 */
+		void setDisqualificationDate(Date date);
 
-        /**
-         * @return get player who got disqualified
-         */
-        String getPlayerId();
+		/**
+		 * @return get player who got disqualified
+		 */
+		String getPlayerId();
 
-    }
+	}
 
 }

@@ -14,23 +14,23 @@ import org.bukkit.plugin.Plugin;
 
 public class GamePairEnableListener implements Listener {
 
-    private @Inject Plugin plugin;
-    private @Inject FloorRemover floorRemover;
-    private @Inject ActualMatchCache actualMatchCache;
-    private @Inject FloorCooldownChecker floorCooldownChecker;
+	private @Inject Plugin plugin;
+	private @Inject FloorRemover floorRemover;
+	private @Inject ActualMatchCache actualMatchCache;
+	private @Inject FloorCooldownChecker floorCooldownChecker;
 
-    @EventHandler
-    public void onPairEnable(GamePairEnableEvent event) {
+	@EventHandler
+	public void onPairEnable(GamePairEnableEvent event) {
 
-        Bukkit.getPluginManager().callEvent(
-                new GameModePairEvent(
-                        plugin.getConfig().getString("centauri.mode"),
-                        plugin.getConfig().getString("centauri.subMode"))
-        );
+		Bukkit.getPluginManager().callEvent(
+				new GameModePairEvent(
+						plugin.getConfig().getString("centauri.mode"),
+						plugin.getConfig().getString("centauri.subMode"))
+		);
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
-                new FloorRemovalTask(actualMatchCache, floorRemover, plugin, floorCooldownChecker), 0L, 1L);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin,
+				new FloorRemovalTask(actualMatchCache, floorRemover, plugin, floorCooldownChecker), 0L, 1L);
 
-    }
+	}
 
 }

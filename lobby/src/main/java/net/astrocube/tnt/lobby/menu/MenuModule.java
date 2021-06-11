@@ -7,13 +7,13 @@ import net.astrocube.tnt.lobby.menu.category.TNTRunMenu;
 
 public class MenuModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(MainShopMenu.class).to(CoreMainShopMenu.class);
-        bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("spleef")).to(SpleefMenu.class);
-        bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("run")).to(TNTRunMenu.class);
-        bind(UpgradeConfirmationMenu.class).to(CoreUpgradeConfirmationMenu.class);
-        bind(UpgradeShopMenu.class).to(CoreUpgradeShopMenu.class);
-    }
+	@Override
+	public void configure() {
+		bind(MainShopMenu.class).to(CoreMainShopMenu.class);
+		bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("spleef")).to(SpleefMenu.class);
+		bind(MainShopMenu.SubMenu.class).annotatedWith(Names.named("run")).to(TNTRunMenu.class);
+		bind(UpgradeConfirmationMenu.class).to(CoreUpgradeConfirmationMenu.class);
+		bind(UpgradeShopMenu.class).to(CoreUpgradeShopMenu.class);
+	}
 
 }

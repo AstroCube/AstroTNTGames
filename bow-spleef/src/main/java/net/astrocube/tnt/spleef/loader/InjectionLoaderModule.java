@@ -10,16 +10,16 @@ import net.astrocube.tnt.spleef.projectile.ProjectileModule;
 
 public class InjectionLoaderModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        install(new LoaderModule());
-        install(new TranslationModule());
-        install(new GameModule());
-        install(new ProjectileModule());
-        install(new SharedModule());
+	@Override
+	public void configure() {
+		install(new LoaderModule());
+		install(new TranslationModule());
+		install(new GameModule());
+		install(new ProjectileModule());
+		install(new SharedModule());
 
-        bind(MatchProgressHandler.class).to(CoreMatchProgressHandler.class);
+		bind(MatchProgressHandler.class).to(CoreMatchProgressHandler.class);
 
-    }
+	}
 
 }

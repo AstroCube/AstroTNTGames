@@ -6,10 +6,10 @@ import net.astrocube.tnt.shared.money.MoneyTransactionHandler;
 
 public class StatisticModule extends ProtectedModule {
 
-    @Override
-    public void configure() {
-        bind(LobbyScoreboardProvider.class).to(CoreLobbyScoreboardProvider.class);
-        bind(ModeVictoryProvider.class).to(CoreModeVictoryProvider.class);
-    }
+	@Override
+	public void configure() {
+		bind(LobbyScoreboardProvider.class).to(CoreLobbyScoreboardProvider.class);
+		bind(ModeVictoryProvider.class).to(CoreModeVictoryProvider.class);
+	}
 
 }

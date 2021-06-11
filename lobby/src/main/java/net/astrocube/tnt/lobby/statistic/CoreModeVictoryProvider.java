@@ -13,31 +13,31 @@ import java.util.logging.Level;
 @Singleton
 public class CoreModeVictoryProvider implements ModeVictoryProvider {
 
-    private @Inject QueryService<Match> queryService;
-    private @Inject ObjectMapper mapper;
-    private @Inject Plugin plugin;
+	private @Inject QueryService<Match> queryService;
+	private @Inject ObjectMapper mapper;
+	private @Inject Plugin plugin;
 
-    @Override
-    public int getWonMatches(String mode, String player)  {
+	@Override
+	public int getWonMatches(String mode, String player) {
 
-        ObjectNode nodes = mapper.createObjectNode();
+		ObjectNode nodes = mapper.createObjectNode();
 
-        String gameMode = plugin.getConfig().getString("registry.mode");
+		String gameMode = plugin.getConfig().getString("registry.mode");
 
-        if (gameMode == null || gameMode.equalsIgnoreCase("")) {
-            return 0;
-        }
+		if (gameMode == null || gameMode.equalsIgnoreCase("")) {
+			return 0;
+		}
 
-        nodes.put("winner", player);
-        nodes.put("gamemode", gameMode);
-        nodes.put("subGamemode", mode);
+		nodes.put("winner", player);
+		nodes.put("gamemode", gameMode);
+		nodes.put("subGamemode", mode);
 
-        try {
-            return queryService.querySync(nodes).getFoundModels().size();
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error while retrieving won matches", e);
-            return -1;
-        }
-    }
+		try {
+			return queryService.querySync(nodes).getFoundModels().size();
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "Error while retrieving won matches", e);
+			return -1;
+		}
+	}
 
 }

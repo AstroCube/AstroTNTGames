@@ -20,58 +20,58 @@ import java.util.logging.Level;
 
 public class GameFinishListener implements Listener {
 
-    private @Inject MatchProgressHandler matchProgressHandler;
-    private @Inject MessageHandler messageHandler;
-    private @Inject FindService<Match> findService;
-    private @Inject FindService<User> userFindService;
-    private @Inject DisplayMatcher displayMatcher;
-    private @Inject Plugin plugin;
+	private @Inject MatchProgressHandler matchProgressHandler;
+	private @Inject MessageHandler messageHandler;
+	private @Inject FindService<Match> findService;
+	private @Inject FindService<User> userFindService;
+	private @Inject DisplayMatcher displayMatcher;
+	private @Inject Plugin plugin;
 
-    @EventHandler
-    public void onGameFinish(MatchFinishEvent event) {
+	@EventHandler
+	public void onGameFinish(MatchFinishEvent event) {
 
-        List<MatchProgress.Participant> podium = matchProgressHandler.getPodium(event.getMatch());
+		List<MatchProgress.Participant> podium = matchProgressHandler.getPodium(event.getMatch());
 
-        findService.find(event.getMatch()).callback(matchCallback ->
-                matchCallback.ifSuccessful(match -> {
+		findService.find(event.getMatch()).callback(matchCallback ->
+				matchCallback.ifSuccessful(match -> {
 
-                    MatchParticipantsProvider.getInvolved(match).forEach(participant -> {
+					MatchParticipantsProvider.getInvolved(match).forEach(participant -> {
 
-                        messageHandler.sendReplacing(
-                                participant,
-                                "game.podium.listing",
-                                "%first%", generatePodiumSlug(podium, participant, 0),
-                                "%second%", generatePodiumSlug(podium, participant, 1),
-                                "%third%", generatePodiumSlug(podium, participant, 2)
-                        );
+						messageHandler.sendReplacing(
+								participant,
+								"game.podium.listing",
+								"%first%", generatePodiumSlug(podium, participant, 0),
+								"%second%", generatePodiumSlug(podium, participant, 1),
+								"%third%", generatePodiumSlug(podium, participant, 2)
+						);
 
-                    });
+					});
 
-                    matchProgressHandler.clearMatch(event.getMatch());
+					matchProgressHandler.clearMatch(event.getMatch());
 
-                })
-        );
+				})
+		);
 
-    }
+	}
 
-    private String generatePodiumSlug(List<MatchProgress.Participant> podium, Player player, int position) {
+	private String generatePodiumSlug(List<MatchProgress.Participant> podium, Player player, int position) {
 
-        if (podium.size() <= position) {
-            return messageHandler.get(player, "game.podium.empty");
-        }
+		if (podium.size() <= position) {
+			return messageHandler.get(player, "game.podium.empty");
+		}
 
-        MatchProgress.Participant participant = podium.get(position);
+		MatchProgress.Participant participant = podium.get(position);
 
-        User user;
-        try {
-            user = userFindService.findSync(participant.getPlayerId());
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error while obtaining user podium", e);
-            return player.getName();
-        }
+		User user;
+		try {
+			user = userFindService.findSync(participant.getPlayerId());
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error while obtaining user podium", e);
+			return player.getName();
+		}
 
-        return displayMatcher.getDisplay(player, user).getColor() + user.getDisplay();
+		return displayMatcher.getDisplay(player, user).getColor() + user.getDisplay();
 
-    }
+	}
 
 }

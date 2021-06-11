@@ -8,42 +8,42 @@ import java.util.Map;
 
 public class CoreCachedPerkHandler implements CachedPerkHandler {
 
-    private final PerkProvider perkProvider;
-    private final Map<String, Integer> cachedPerk = new HashMap<>();
+	private final PerkProvider perkProvider;
+	private final Map<String, Integer> cachedPerk = new HashMap<>();
 
-    public CoreCachedPerkHandler(PerkProvider provider) {
-        this.perkProvider = provider;
-    }
+	public CoreCachedPerkHandler(PerkProvider provider) {
+		this.perkProvider = provider;
+	}
 
-    @Override
-    public void registerJumps(Player player) {
+	@Override
+	public void registerJumps(Player player) {
 
-        int base;
+		int base;
 
-        base = perkProvider.getPlayerPerk(player);
+		base = perkProvider.getPlayerPerk(player);
 
-        cachedPerk.put(player.getDatabaseIdentifier(), base);
+		cachedPerk.put(player.getDatabaseIdentifier(), base);
 
-    }
+	}
 
-    @Override
-    public void usePerk(Player player) {
-        int update = getRemainingUses(player);
-        cachedPerk.put(player.getDatabaseIdentifier(), update - 1);
-    }
+	@Override
+	public void usePerk(Player player) {
+		int update = getRemainingUses(player);
+		cachedPerk.put(player.getDatabaseIdentifier(), update - 1);
+	}
 
-    @Override
-    public boolean hasRemainingUses(Player player) {
-        return getRemainingUses(player) > 0;
-    }
+	@Override
+	public boolean hasRemainingUses(Player player) {
+		return getRemainingUses(player) > 0;
+	}
 
-    @Override
-    public int getRemainingUses(Player player) {
-        return cachedPerk.get(player.getDatabaseIdentifier());
-    }
+	@Override
+	public int getRemainingUses(Player player) {
+		return cachedPerk.get(player.getDatabaseIdentifier());
+	}
 
-    @Override
-    public void clearUses(Player player) {
-        cachedPerk.remove(player.getDatabaseIdentifier());
-    }
+	@Override
+	public void clearUses(Player player) {
+		cachedPerk.remove(player.getDatabaseIdentifier());
+	}
 }

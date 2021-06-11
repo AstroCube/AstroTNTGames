@@ -17,44 +17,46 @@ import javax.inject.Named;
 
 public class TripleShotListener implements Listener {
 
-    private @Inject @Named("tripleShot") CachedPerkHandler cachedPerkHandler;
-    private @Inject ScoreboardProvider scoreboardProvider;
+	private @Inject
+	@Named("tripleShot")
+	CachedPerkHandler cachedPerkHandler;
+	private @Inject ScoreboardProvider scoreboardProvider;
 
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
 
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 
-            Player player = event.getPlayer();
+			Player player = event.getPlayer();
 
-            if (player.getInventory().getItemInHand().getType() == Material.BOW) {
+			if (player.getInventory().getItemInHand().getType() == Material.BOW) {
 
-                if (cachedPerkHandler.hasRemainingUses(player)) {
-                    Vector leftArrow = rotateVector(player.getLocation().getDirection(), -79.8);
-                    Vector playerDirection = rotateVector(player.getLocation().getDirection(), -80.1);
-                    Vector rightArrow = rotateVector(player.getLocation().getDirection(), -80.4);
+				if (cachedPerkHandler.hasRemainingUses(player)) {
+					Vector leftArrow = rotateVector(player.getLocation().getDirection(), -79.8);
+					Vector playerDirection = rotateVector(player.getLocation().getDirection(), -80.1);
+					Vector rightArrow = rotateVector(player.getLocation().getDirection(), -80.4);
 
-                    player.launchProjectile(Arrow.class, playerDirection);
-                    player.launchProjectile(Arrow.class, rightArrow);
-                    player.launchProjectile(Arrow.class, leftArrow);
+					player.launchProjectile(Arrow.class, playerDirection);
+					player.launchProjectile(Arrow.class, rightArrow);
+					player.launchProjectile(Arrow.class, leftArrow);
 
-                    cachedPerkHandler.usePerk(player);
-                    scoreboardProvider.setupBoard(player);
-                }
+					cachedPerkHandler.usePerk(player);
+					scoreboardProvider.setupBoard(player);
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    public Vector rotateVector(Vector vector, double whatAngle) {
-        double sin = Math.cos(whatAngle);
-        double cos = Math.sin(whatAngle);
-        double x = vector.getX() * cos + vector.getZ() * sin;
-        double z = vector.getX() * -sin + vector.getZ() * cos;
+	public Vector rotateVector(Vector vector, double whatAngle) {
+		double sin = Math.cos(whatAngle);
+		double cos = Math.sin(whatAngle);
+		double x = vector.getX() * cos + vector.getZ() * sin;
+		double z = vector.getX() * -sin + vector.getZ() * cos;
 
-        return vector.setX(x).setZ(z);
-    }
+		return vector.setX(x).setZ(z);
+	}
 
 }

@@ -14,27 +14,27 @@ import org.bukkit.plugin.Plugin;
 @Singleton
 public class CorePlayerSpawner implements PlayerSpawner {
 
-    private @Inject MessageHandler messageHandler;
-    private @Inject Plugin plugin;
+	private @Inject MessageHandler messageHandler;
+	private @Inject Plugin plugin;
 
-    @Override
-    public void spawn(Player player, String match, CoordinatePoint point) {
+	@Override
+	public void spawn(Player player, String match, CoordinatePoint point) {
 
-        World world = Bukkit.getWorld("match_" + match);
+		World world = Bukkit.getWorld("match_" + match);
 
-        if (world == null) {
-            Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(match, false));
-            return;
-        }
+		if (world == null) {
+			Bukkit.getPluginManager().callEvent(new MatchInvalidateEvent(match, false));
+			return;
+		}
 
-        Location location = new Location(world, point.getX(), point.getY(), point.getZ());
+		Location location = new Location(world, point.getX(), point.getY(), point.getZ());
 
-        Bukkit.getScheduler().runTask(plugin, () -> player.teleport(location));
-    }
+		Bukkit.getScheduler().runTask(plugin, () -> player.teleport(location));
+	}
 
-    @Override
-    public void announce(Player player) {
-        messageHandler.send(player, "game.help");
-    }
+	@Override
+	public void announce(Player player) {
+		messageHandler.send(player, "game.help");
+	}
 
 }

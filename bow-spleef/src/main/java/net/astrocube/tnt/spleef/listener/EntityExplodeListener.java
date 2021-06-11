@@ -10,22 +10,22 @@ import org.bukkit.util.Vector;
 
 public class EntityExplodeListener implements Listener {
 
-    @EventHandler
-    public void onExplode(EntityExplodeEvent event) {
+	@EventHandler
+	public void onExplode(EntityExplodeEvent event) {
 
-        if (event.getEntityType() != EntityType.PRIMED_TNT) {
-            return;
-        }
-        event.setCancelled(true);
-        event.getEntity().remove();
+		if (event.getEntityType() != EntityType.PRIMED_TNT) {
+			return;
+		}
+		event.setCancelled(true);
+		event.getEntity().remove();
 
-    }
+	}
 
-    @EventHandler
-    public void onIgnite(BlockIgniteEvent event) {
-        if (event.getIgnitingBlock().getType() == Material.TNT) {
-            event.getIgnitingEntity().setVelocity(new Vector().zero());
-        }
-    }
+	@EventHandler
+	public void onIgnite(BlockIgniteEvent event) {
+		if (event.getIgnitingBlock().getType() == Material.TNT) {
+			event.getIgnitingEntity().setVelocity(new Vector().zero());
+		}
+	}
 
 }

@@ -18,34 +18,34 @@ import java.util.Set;
 @Singleton
 public class CoreTNTPerkProvider implements TNTPerkProvider {
 
-    private @Inject PerkManifestProvider perkManifestProvider;
-    private @Inject UpdateService<StorablePerk, StorablePerkDoc.Partial> updateService;
-    private @Inject ObjectMapper mapper;
+	private @Inject PerkManifestProvider perkManifestProvider;
+	private @Inject UpdateService<StorablePerk, StorablePerkDoc.Partial> updateService;
+	private @Inject ObjectMapper mapper;
 
-    @Override
-    public Optional<TNTPerkManifest> getManifest(String playerId) throws Exception {
-        return getFromUser(playerId).stream().map(manifest -> (TNTPerkManifest) manifest.getStored()).findAny();
-    }
+	@Override
+	public Optional<TNTPerkManifest> getManifest(String playerId) throws Exception {
+		return getFromUser(playerId).stream().map(manifest -> (TNTPerkManifest) manifest.getStored()).findAny();
+	}
 
-    @Override
-    public void update(String playerId, TNTPerkManifest manifest) throws Exception {
+	@Override
+	public void update(String playerId, TNTPerkManifest manifest) throws Exception {
 
-        StorablePerk perk = getFromUser(playerId).stream().findAny().orElseThrow(
-                () -> new GameControlException("Not found any storable perk to be updated.")
-        );
+		StorablePerk perk = getFromUser(playerId).stream().findAny().orElseThrow(
+				() -> new GameControlException("Not found any storable perk to be updated.")
+		);
 
-        perk.setStored(manifest);
-        updateService.updateSync(perk);
+		perk.setStored(manifest);
+		updateService.updateSync(perk);
 
-    }
+	}
 
-    private Set<StorablePerk> getFromUser(String playerId) throws Exception {
-        ObjectNode node = mapper.createObjectNode();
+	private Set<StorablePerk> getFromUser(String playerId) throws Exception {
+		ObjectNode node = mapper.createObjectNode();
 
-        node.put("responsible", playerId);
-        node.put("type", "tnt_games_manifest");
+		node.put("responsible", playerId);
+		node.put("type", "tnt_games_manifest");
 
-        return perkManifestProvider.query(node, TNTPerkManifest.class);
-    }
+		return perkManifestProvider.query(node, TNTPerkManifest.class);
+	}
 
 }

@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 
 public interface FloorRemover {
 
-    void removeFloor(Location location);
+	void removeFloor(Location location);
 
-    default void removeFloorTo(Player player) {
-        removeFloor(player.getLocation());
-    }
+	default void removeFloorTo(Player player) {
+		removeFloor(player.getLocation());
+	}
 
 }

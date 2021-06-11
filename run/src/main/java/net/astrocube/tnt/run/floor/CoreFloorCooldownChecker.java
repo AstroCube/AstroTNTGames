@@ -12,35 +12,34 @@ import java.util.Set;
 @Singleton
 public class CoreFloorCooldownChecker implements FloorCooldownChecker {
 
-    private @Inject Plugin plugin;
+	private final Set<String> registry = new HashSet<>();
+	private @Inject Plugin plugin;
 
-    private final Set<String> registry = new HashSet<>();
+	@Override
+	public void scheduleCooldown(String match) {
 
-    @Override
-    public void scheduleCooldown(String match) {
+		if (registry.contains(match)) {
+			throw new IllegalArgumentException("Can not re-register match");
+		}
 
-        if (registry.contains(match)) {
-            throw new IllegalArgumentException("Can not re-register match");
-        }
+		int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
 
-        int cooldown = plugin.getConfig().getInt("game.cooldown", 5);
+		registry.add(match);
 
-        registry.add(match);
+		Bukkit.getScheduler().runTaskLater(
+				plugin,
+				() -> {
+					registry.remove(match);
+					Bukkit.getPluginManager().callEvent(new CooldownFinishEvent(match));
+				},
+				20L * cooldown
+		);
 
-        Bukkit.getScheduler().runTaskLater(
-                plugin,
-                () -> {
-                    registry.remove(match);
-                    Bukkit.getPluginManager().callEvent(new CooldownFinishEvent(match));
-                },
-                20L * cooldown
-        );
+	}
 
-    }
-
-    @Override
-    public boolean hasCooldown(String match) {
-        return registry.contains(match);
-    }
+	@Override
+	public boolean hasCooldown(String match) {
+		return registry.contains(match);
+	}
 
 }

@@ -16,31 +16,31 @@ import java.util.logging.Level;
 @Singleton
 public class CoreDoubleJumpProvider implements PerkProvider {
 
-    private @Inject TNTPerkProvider tntPerkProvider;
-    private @Inject PerkConfigurationCache perkConfigurationCache;
-    private @Inject Plugin plugin;
+	private @Inject TNTPerkProvider tntPerkProvider;
+	private @Inject PerkConfigurationCache perkConfigurationCache;
+	private @Inject Plugin plugin;
 
-    @Override
-    public int getPlayerPerk(Player player) {
+	@Override
+	public int getPlayerPerk(Player player) {
 
-        try {
-            TNTPerkManifest manifest = tntPerkProvider.getManifest(player.getDatabaseIdentifier())
-                    .orElseThrow(() -> new GameControlException("Manifest not found"));
+		try {
+			TNTPerkManifest manifest = tntPerkProvider.getManifest(player.getDatabaseIdentifier())
+					.orElseThrow(() -> new GameControlException("Manifest not found"));
 
-            return perkConfigurationCache.getCachedItems()
-                    .stream()
-                    .filter(item -> item.getType().equals(PerkConfiguration.Purchasable.Type.RUN_JUMP) &&
-                            item.getName().equalsIgnoreCase(manifest.getRunJumpTier())
-                    )
-                    .map(PerkConfiguration.Purchasable::getPrice)
-                    .findFirst()
-                    .orElse(3);
+			return perkConfigurationCache.getCachedItems()
+					.stream()
+					.filter(item -> item.getType().equals(PerkConfiguration.Purchasable.Type.RUN_JUMP) &&
+							item.getName().equalsIgnoreCase(manifest.getRunJumpTier())
+					)
+					.map(PerkConfiguration.Purchasable::getPrice)
+					.findFirst()
+					.orElse(3);
 
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "There was an error parsing player perks", e);
-        }
+		} catch (Exception e) {
+			plugin.getLogger().log(Level.SEVERE, "There was an error parsing player perks", e);
+		}
 
-        return 3;
-    }
+		return 3;
+	}
 
 }

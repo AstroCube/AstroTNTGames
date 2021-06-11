@@ -9,18 +9,18 @@ import org.bukkit.plugin.Plugin;
 
 public class UserListenerLoader implements ListenerLoader {
 
-    private @Inject Plugin plugin;
-    private @Inject GameLobbyJoinListener gameLobbyJoinListener;
-    private @Inject GameLobbyLeaveListener gameLobbyLeaveListener;
-    private @Inject ShopActionableListener shopActionableListener;
+	private @Inject Plugin plugin;
+	private @Inject GameLobbyJoinListener gameLobbyJoinListener;
+	private @Inject GameLobbyLeaveListener gameLobbyLeaveListener;
+	private @Inject ShopActionableListener shopActionableListener;
 
-    @Override
-    public void registerEvents() {
-        registerEvent(
-                plugin,
-                gameLobbyJoinListener,
-                gameLobbyLeaveListener,
-                shopActionableListener
-        );
-    }
+	@Override
+	public void registerEvents() {
+		registerEvent(
+				plugin,
+				gameLobbyJoinListener,
+				gameLobbyLeaveListener,
+				shopActionableListener
+		);
+	}
 }
