@@ -40,7 +40,7 @@ public class DoubleJumpListener implements Listener {
 
 			optionalMatch.ifPresent(match -> {
 
-				if (!MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+				if (!MatchParticipantsProvider.getOnlinePlayers(match, t -> true).contains(player)) {
 					return;
 				}
 

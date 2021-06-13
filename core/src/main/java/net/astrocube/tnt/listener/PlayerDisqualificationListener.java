@@ -46,7 +46,7 @@ public class PlayerDisqualificationListener implements Listener {
 
 				Bukkit.getPluginManager().callEvent(new SpectatorAssignEvent(event.getPlayer(), match.get().getId()));
 
-				Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get());
+				Set<Player> players = MatchParticipantsProvider.getOnlinePlayers(match.get(), t -> true);
 				matchProgressHandler.disqualify(match.get().getId(), event.getPlayer().getDatabaseIdentifier());
 
 				players.forEach(p -> scoreboardProvider.setupBoard(p));

@@ -51,7 +51,7 @@ public class CoreScoreboardProvider implements ScoreboardProvider {
 						.flatMap(u -> u.stream().filter(MatchDoc.TeamMember::isActive))
 						.count();
 
-				if (MatchParticipantsProvider.getOnlinePlayers(match).contains(player)) {
+				if (MatchParticipantsProvider.getOnlinePlayers(match, t -> true).contains(player)) {
 					playing = true;
 				}
 
