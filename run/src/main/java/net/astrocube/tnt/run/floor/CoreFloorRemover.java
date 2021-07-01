@@ -14,18 +14,28 @@ import java.util.List;
 @Singleton
 public class CoreFloorRemover implements FloorRemover {
 
+	/**
+	 * Distance used when checking block below a player,
+	 * if it's small, it won't remove floor check when
+	 * the distance is large, i.e. when a player jumps
+	 */
+	private static final float Y_DISTANCE_FACTOR = 0.8F;
+
 	@Override
 	public void removeFloor(Location location) {
 		for (Block block : getBlocksBelow(location)) {
 			Block blockBelow = block.getRelative(BlockFace.DOWN);
-			if ((blockBelow.getType() == Material.TNT) && (block.getType() == Material.SAND || block.getType() == Material.GRAVEL)) {
-				block.setType(Material.AIR);
-				blockBelow.setType(Material.AIR);
-
-				block.getWorld().playEffect(block.getLocation().add(.5, .5, .5), Effect.SMOKE, 1, 1);
-				blockBelow.getWorld().playEffect(block.getLocation().add(.5, .5, .5), Effect.SMOKE, 1, 1);
+			if ((blockBelow.getType() == Material.TNT)
+					&& (block.getType() == Material.SAND || block.getType() == Material.GRAVEL)) {
+				removeBlockMagically(block);
+				removeBlockMagically(blockBelow);
 			}
 		}
+	}
+
+	private void removeBlockMagically(Block block) {
+		block.setType(Material.AIR);
+		block.getWorld().playEffect(block.getLocation().add(.5, .5, .5), Effect.SMOKE, 1, 1);
 	}
 
 	private List<Block> getBlocksBelow(Location entityLocation) {
@@ -34,7 +44,7 @@ public class CoreFloorRemover implements FloorRemover {
 		double x = entityLocation.getX();
 		double z = entityLocation.getZ();
 		World world = entityLocation.getWorld();
-		double yBelow = entityLocation.getY() - 0.0001;
+		double yBelow = entityLocation.getY() - Y_DISTANCE_FACTOR;
 
 		Block northEast = new Location(world, x + 0.3, yBelow, z - 0.3).getBlock();
 		Block northWest = new Location(world, x - 0.3, yBelow, z - 0.3).getBlock();
