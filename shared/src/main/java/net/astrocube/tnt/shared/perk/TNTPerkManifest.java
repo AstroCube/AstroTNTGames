@@ -2,46 +2,82 @@ package net.astrocube.tnt.shared.perk;
 
 import net.astrocube.api.bukkit.perk.AbstractPerk;
 
-public interface TNTPerkManifest extends AbstractPerk {
+import java.beans.ConstructorProperties;
+
+public class TNTPerkManifest implements AbstractPerk {
+
+	private int money;
+	private String runJumpTier;
+	private String spleefJumpTier;
+	private String spleefTripleShot;
+
+	@ConstructorProperties({"money", "runJumpTier", "spleefJumpTier", "spleefTripleShot"})
+	public TNTPerkManifest(
+			int money,
+			String runJumpTier,
+			String spleefJumpTier,
+			String spleefTripleShot
+	) {
+		this.money = money;
+		this.runJumpTier = runJumpTier;
+		this.spleefJumpTier = spleefJumpTier;
+		this.spleefTripleShot = spleefTripleShot;
+	}
 
 	/**
 	 * @return actual money of the player
 	 */
-	int getMoney();
+	public int getMoney() {
+		return money;
+	}
 
 	/**
 	 * @param money to be updated.
 	 */
-	void setMoney(int money);
+	public void setMoney(int money) {
+		this.money = money;
+	}
 
 	/**
 	 * @return actual tier of user's TNT run double jump.
 	 */
-	String getRunJumpTier();
+	public String getRunJumpTier() {
+		return runJumpTier;
+	}
 
 	/**
 	 * @param tier to be updated at user's TNT run double jump.
 	 */
-	void setRunJumpTier(String tier);
+	public void setRunJumpTier(String tier) {
+		this.runJumpTier = tier;
+	}
 
 	/**
 	 * @return actual tier of user's BowSpleef double jump.
 	 */
-	String getSpleefJumpTier();
+	public String getSpleefJumpTier() {
+		return spleefJumpTier;
+	}
 
 	/**
 	 * @param tier to be updated at user's Bow Spleef double jump.
 	 */
-	void setSpleefJumpTier(String tier);
+	public void setSpleefJumpTier(String tier) {
+		this.spleefJumpTier = tier;
+	}
 
 	/**
 	 * @return actual tier of user's Bow Spleef triple shot.
 	 */
-	String getSpleefTripleShot();
+	public String getSpleefTripleShot() {
+		return spleefTripleShot;
+	}
 
 	/**
 	 * @param tier to be updated at user's Triple Shot.
 	 */
-	void setSpleefTripleShot(String tier);
+	public void setSpleefTripleShot(String tier) {
+		this.spleefTripleShot = tier;
+	}
 
 }

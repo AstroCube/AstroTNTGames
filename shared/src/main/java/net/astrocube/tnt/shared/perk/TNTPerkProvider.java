@@ -7,43 +7,12 @@ import java.util.Optional;
 public interface TNTPerkProvider {
 
 	static TNTPerkManifest generateDefault() {
-		return new TNTPerkManifest() {
-			@Override
-			public int getMoney() {
-				return 0;
-			}
-
-			@Override
-			public void setMoney(int money) {
-			}
-
-			@Override
-			public String getRunJumpTier() {
-				return "rookie";
-			}
-
-			@Override
-			public void setRunJumpTier(String tier) {
-			}
-
-			@Override
-			public String getSpleefJumpTier() {
-				return "rookie";
-			}
-
-			@Override
-			public void setSpleefJumpTier(String tier) {
-			}
-
-			@Override
-			public String getSpleefTripleShot() {
-				return "rookie";
-			}
-
-			@Override
-			public void setSpleefTripleShot(String tier) {
-			}
-		};
+		return new TNTPerkManifest(
+				0,
+				"rookie",
+				"rookie",
+				"rookie"
+		);
 	}
 
 	/**
