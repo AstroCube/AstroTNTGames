@@ -10,10 +10,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 @AllArgsConstructor
@@ -25,10 +24,18 @@ public class FloorRemovalTask implements Runnable {
 	private final FloorRemover floorRemover;
 	private final Plugin plugin;
 	private final FloorCooldownChecker floorCooldownChecker;
-	private final Map<Location, Long> delayedLocations = new ConcurrentHashMap<>();
+	private final Map<Location, Long> delayedLocations = new HashMap<>();
 
 	@Override
 	public void run() {
+
+		for (Map.Entry<Location, Long> entry : delayedLocations.entrySet()) {
+			if (entry.getValue() + DELAY_MS <= System.currentTimeMillis()) {
+				floorRemover.removeFloor(entry.getKey());
+				delayedLocations.remove(entry.getKey());
+			}
+		}
+
 		for (Player player : Bukkit.getOnlinePlayers()) {
 
 			try {
@@ -51,13 +58,6 @@ public class FloorRemovalTask implements Runnable {
 
 			} catch (Exception e) {
 				plugin.getLogger().log(Level.SEVERE, "There was an error while checking match floor removal", e);
-			}
-		}
-
-		for (Map.Entry<Location, Long> entry : new ArrayList<>(delayedLocations.entrySet())) {
-			if (entry.getValue() + DELAY_MS <= System.currentTimeMillis()) {
-				floorRemover.removeFloor(entry.getKey());
-				delayedLocations.remove(entry.getKey());
 			}
 		}
 	}
