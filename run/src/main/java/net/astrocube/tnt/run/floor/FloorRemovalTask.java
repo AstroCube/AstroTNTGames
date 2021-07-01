@@ -39,23 +39,15 @@ public class FloorRemovalTask implements Runnable {
 					continue;
 				}
 
-				if (
-						matchOptional.get().getStatus() != MatchDoc.Status.RUNNING
-				) {
+				Match match = matchOptional.get();
+
+				if (match.getStatus() != MatchDoc.Status.RUNNING
+						|| !MatchParticipantsProvider.getOnlineIds(match).contains(player.getDatabaseIdentifier())
+						|| floorCooldownChecker.hasCooldown(match.getId())) {
 					continue;
 				}
 
-				if (!MatchParticipantsProvider.getOnlineIds(matchOptional.get()).contains(player.getDatabaseIdentifier())) {
-					continue;
-				}
-
-				if (floorCooldownChecker.hasCooldown(matchOptional.get().getId())) {
-					continue;
-				}
-
-				if (!delayedLocations.containsKey(player.getLocation())) {
-					delayedLocations.put(player.getLocation(), System.currentTimeMillis());
-				}
+				delayedLocations.put(player.getLocation(), System.currentTimeMillis());
 
 			} catch (Exception e) {
 				plugin.getLogger().log(Level.SEVERE, "There was an error while checking match floor removal", e);
