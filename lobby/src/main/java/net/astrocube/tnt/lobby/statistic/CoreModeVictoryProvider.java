@@ -24,7 +24,7 @@ public class CoreModeVictoryProvider implements ModeVictoryProvider {
 
 		String gameMode = plugin.getConfig().getString("registry.mode");
 
-		if (gameMode == null || gameMode.equalsIgnoreCase("")) {
+		if (gameMode == null || gameMode.isEmpty()) {
 			return 0;
 		}
 
