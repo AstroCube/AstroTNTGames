@@ -32,6 +32,7 @@ public class ProjectileLaunchListener implements Listener {
 
 			player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1f, 1f);
 
+			System.out.println("called");
 			projectile.setFireTicks(Integer.MAX_VALUE);
 
 			projectileTaskTracker.schedule(
@@ -41,7 +42,7 @@ public class ProjectileLaunchListener implements Listener {
 						public void run() {
 							projectileCompoundMatcher.getChosenCompound(player).getRunnable().accept(event);
 						}
-					}.runTaskTimer(plugin, 0L, 1L));
+					}.runTaskTimer(plugin, 0L, 2L));
 		}
 	}
 
