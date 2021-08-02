@@ -17,6 +17,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,7 +69,7 @@ public class ProjectileLaunchListener implements Listener {
 			if (damager instanceof Arrow) {
 				System.out.println("c");
 				Arrow arrow = (Arrow) damager;
-				arrow.setVelocity(arrow.getVelocity().multiply(-0.8));
+				arrow.setVelocity(arrow.getVelocity().multiply(new Vector(-0.8, 1, -0.8)));
 				hits.add(arrow.getUniqueId());
  			}
 		}
