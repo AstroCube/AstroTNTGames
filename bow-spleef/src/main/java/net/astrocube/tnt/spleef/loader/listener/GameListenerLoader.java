@@ -9,7 +9,7 @@ public class GameListenerLoader implements ListenerLoader {
 
 	private @Inject Plugin plugin;
 
-	private @Inject TripleShotListener tripleShotListener;
+	private @Inject MultiShotListener multiShotListener;
 	private @Inject GamePairEnableListener gamePairEnableListener;
 	private @Inject GameReadyListener gameReadyListener;
 	private @Inject ProjectileLaunchListener projectileLaunchListener;
@@ -19,7 +19,7 @@ public class GameListenerLoader implements ListenerLoader {
 	public void registerEvents() {
 		registerEvent(
 				plugin,
-				tripleShotListener,
+			multiShotListener,
 				gameReadyListener,
 				gamePairEnableListener,
 				projectileLaunchListener,

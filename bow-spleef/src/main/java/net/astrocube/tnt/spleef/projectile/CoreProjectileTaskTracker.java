@@ -10,7 +10,7 @@ import java.util.Map;
 @Singleton
 public class CoreProjectileTaskTracker implements ProjectileTaskTracker {
 
-	private Map<Integer, Integer> runnables = new HashMap<>();
+	private final Map<Integer, Integer> runnables = new HashMap<>();
 
 	@Override
 	public void schedule(int arrow, BukkitTask bukkitRunnable) {
@@ -19,9 +19,9 @@ public class CoreProjectileTaskTracker implements ProjectileTaskTracker {
 
 	@Override
 	public void unlink(int arrow) {
-		if (runnables.containsKey(arrow)) {
-			int cancellable = runnables.get(arrow);
-			Bukkit.getScheduler().cancelTask(cancellable);
+		Integer taskId = runnables.get(arrow);
+		if (taskId != null) {
+			Bukkit.getScheduler().cancelTask(taskId);
 			runnables.remove(arrow);
 		}
 	}
