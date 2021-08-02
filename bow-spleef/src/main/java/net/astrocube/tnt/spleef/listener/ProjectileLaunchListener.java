@@ -3,6 +3,7 @@ package net.astrocube.tnt.spleef.listener;
 import com.google.inject.Inject;
 import net.astrocube.tnt.spleef.projectile.ProjectileCompoundMatcher;
 import net.astrocube.tnt.spleef.projectile.ProjectileTaskTracker;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -17,7 +18,17 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 public class ProjectileLaunchListener implements Listener {
+
+	/**
+	 * Set of entity uuids that hit a player,
+	 * so they don't get removed after that
+	 */
+	private final Set<UUID> hits = new HashSet<>();
 
 	private @Inject Plugin plugin;
 	private @Inject ProjectileCompoundMatcher projectileCompoundMatcher;
@@ -58,6 +69,7 @@ public class ProjectileLaunchListener implements Listener {
 				System.out.println("c");
 				Arrow arrow = (Arrow) damager;
 				arrow.setVelocity(arrow.getVelocity().multiply(-0.8));
+				hits.add(arrow.getUniqueId());
  			}
 		}
 	}
@@ -65,8 +77,17 @@ public class ProjectileLaunchListener implements Listener {
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent event) {
 		Projectile projectile = event.getEntity();
-		projectileTaskTracker.unlink(projectile.getEntityId());
-		projectile.remove();
+		Bukkit.getScheduler().runTaskLater(
+			plugin,
+			() -> {
+				if (hits.remove(projectile.getUniqueId())) {
+					return;
+				}
+				projectileTaskTracker.unlink(projectile.getEntityId());
+				projectile.remove();
+			},
+			2L
+		);
 	}
 
 }
