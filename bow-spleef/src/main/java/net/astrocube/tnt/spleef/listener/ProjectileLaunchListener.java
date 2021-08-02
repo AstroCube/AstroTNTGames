@@ -4,10 +4,13 @@ import com.google.inject.Inject;
 import net.astrocube.tnt.spleef.projectile.ProjectileCompoundMatcher;
 import net.astrocube.tnt.spleef.projectile.ProjectileTaskTracker;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.plugin.Plugin;
@@ -42,6 +45,20 @@ public class ProjectileLaunchListener implements Listener {
 							projectileCompoundMatcher.getChosenCompound(player).getRunnable().accept(event);
 						}
 					}.runTaskTimer(plugin, 0L, 2L));
+		}
+	}
+
+	@EventHandler
+	public void onEntityDamage(EntityDamageByEntityEvent event) {
+		System.out.println("a");
+		if (event.getEntity() instanceof Player) {
+			System.out.println("b");
+			Entity damager = event.getDamager();
+			if (damager instanceof Arrow) {
+				System.out.println("c");
+				Arrow arrow = (Arrow) damager;
+				arrow.setVelocity(arrow.getVelocity().multiply(-0.8));
+ 			}
 		}
 	}
 
