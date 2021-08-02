@@ -19,10 +19,9 @@ public class CoreProjectileTaskTracker implements ProjectileTaskTracker {
 
 	@Override
 	public void unlink(int arrow) {
-		Integer taskId = runnables.get(arrow);
+		Integer taskId = runnables.remove(arrow);
 		if (taskId != null) {
 			Bukkit.getScheduler().cancelTask(taskId);
-			runnables.remove(arrow);
 		}
 	}
 }

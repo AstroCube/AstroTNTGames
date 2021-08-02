@@ -28,7 +28,7 @@ public class MultiShotListener implements Listener {
 	}
 
 	static {
-		double delta = Math.toRadians(20);
+		double delta = Math.toRadians(30);
 		ANGLES = new double[][] {
 			sinCos(-delta),
 			sinCos(0),
@@ -58,10 +58,7 @@ public class MultiShotListener implements Listener {
 						double z = playerDirection.getX() * -sin + playerDirection.getZ() * cos;
 
 						Vector direction = new Vector(x, playerDirection.getY(), z);
-						Arrow arrow = player.launchProjectile(Arrow.class, direction);
-
-						// call it manually since LivingEntity#launchProjectile doesn't (:nomeparese: md_5)
-						Bukkit.getPluginManager().callEvent(new ProjectileLaunchEvent(arrow));
+						player.launchProjectile(Arrow.class, direction);
 					}
 
 					cachedPerkHandler.usePerk(player);
