@@ -69,8 +69,9 @@ public class ProjectileLaunchListener implements Listener {
 			if (damager instanceof Arrow) {
 				System.out.println("c");
 				Arrow arrow = (Arrow) damager;
-				arrow.setVelocity(arrow.getVelocity().multiply(new Vector(-0.8, 1, -0.8)));
+				arrow.setVelocity(arrow.getVelocity().multiply(new Vector(-1, 1, -1)));
 				hits.add(arrow.getUniqueId());
+				event.setCancelled(true);
  			}
 		}
 	}
