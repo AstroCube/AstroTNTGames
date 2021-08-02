@@ -28,10 +28,11 @@ public class MultiShotListener implements Listener {
 	}
 
 	static {
+		double delta = Math.toRadians(1);
 		ANGLES = new double[][] {
-			sinCos(-79.8F),
-			sinCos(-80.1F),
-			sinCos(-80.4F)
+			sinCos(-delta),
+			sinCos(0),
+			sinCos(delta)
 		};
 	}
 
