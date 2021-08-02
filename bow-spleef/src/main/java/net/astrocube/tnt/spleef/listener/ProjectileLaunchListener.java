@@ -62,12 +62,9 @@ public class ProjectileLaunchListener implements Listener {
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		System.out.println("a");
 		if (event.getEntity() instanceof Player) {
-			System.out.println("b");
 			Entity damager = event.getDamager();
 			if (damager instanceof Arrow) {
-				System.out.println("c");
 				Arrow arrow = (Arrow) damager;
 				arrow.setVelocity(arrow.getVelocity().multiply(new Vector(-1, 1, -1)));
 				hits.add(arrow.getUniqueId());
